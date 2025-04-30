@@ -54,6 +54,9 @@ namespace TchaComBack.Models
 
         public SetoresModel Setor { get; set; }
 
+        public RacaModel RacaNav { get; set; }
+
+        public EstadoCivilModel EstadoCivilNav { get; set; }
         public void Desativar()
         {
             this.Ativo = 'N';

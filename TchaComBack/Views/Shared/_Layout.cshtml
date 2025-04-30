@@ -1,178 +1,113 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@functions {
+    public string GetPrimeiroESegundoNome(string nomeCompleto)
+    {
+        if (string.IsNullOrWhiteSpace(nomeCompleto))
+            return "";
+
+        var partes = nomeCompleto.Trim().Split(' ');
+        if (partes.Length == 1)
+            return partes[0];
+
+        return $"{partes[0]} {partes[1]}";
+    }
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] </title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/TchaComBack.styles.css" asp-append-version="true" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="~/css/Shared/shared.css" rel="stylesheet" />
 
-    <link href="~/css/shared.css" rel="stylesheet" />
+
 </head>
-<body>
-    <header class="d-flex justify-content-between align-items-center p-3 bg-dark border-bottom shadow-sm" style="position:fixed; width:100%; z-index: 10000000; background:black;">
-        <!-- Botão do menu lateral -->
-        <button class="btn botao-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" >
-            <i class="bi bi-three-dots" style="font-size:25px;"></i>
-        </button>
+<body style="background-color:black;">
 
-        <!-- Offcanvas Menu -->
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-            <div class="offcanvas-header" >
-                <a  class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
-                    <h3>TCB</h3>
-                </a>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
 
-                <!-- Dropdown de usuário -->
-                <div class="dropdown">
-                    <img src="https://i.ibb.co/DPymZqqd/image-removebg-preview-1.png" alt="Avatar" class="rounded-circle" />
-                    <div class="flex-user-body" >
-                        <span class="me-2 nome-user" data-bs-toggle="dropdown" aria-expanded="false">Olá, @ViewBag.NomeCompleto!</span>
-                        @if(ViewBag.TipoPerfil == 1)
-                        {
-                            <span class="me-2" style="color:gray; font-weight:bold;font-size:.8rem;" data-bs-toggle="dropdown" aria-expanded="false">Administrador <span><i class="bi bi-caret-down-fill"></i></span></span>
-                        }
-                        else
-                        {
-                            <span class="me-2" style="color:gray; font-weight:bold;font-size:.8rem;" data-bs-toggle="dropdown" aria-expanded="false">Lider <span><i class="bi bi-caret-down-fill"></i></span></span>
-                        }
-                        <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <a class="dropdown-item" asp-controller="Login" asp-action="Logout">
-                                        <i class="bi bi-box-arrow-right me-2"></i> Sair
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-controller="Usuarios" asp-action="AtualizarSenha">
-                                        <i class="bi bi-key-fill me-2"></i> Alterar Senha
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-controller="Usuarios" asp-action="MeusDados">
-                                        <i class="bi bi-person-fill me-2"></i> Meus Dados
-                                    </a>
-                                </li>
-                            </ul>
-                    </div>
-                </div>
-                    <hr />
-                    <ul class="nav flex-column">
-                 
-                        <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-house"></i> Página Inicial</a>
-                        </li>
-
-                        @if(ViewBag.TipoPerfil == 1)
-                        {
-                            <div class="accordion accordion-flush" id="accordionSetores">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneSetores" aria-expanded="false" aria-controls="flush-collapseOne">
-                                            <i class="bi bi-building" style="padding-right:5px;"></i> Setores
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseOneSetores" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Setores" asp-action="Index"><i class="bi bi-diagram-3"></i> Todos os Setores</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-
-                        @if (ViewBag.TipoPerfil == 1)
-                        {
-                            <div class="accordion accordion-flush" id="accordionFuncionarios">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneFuncionarios" aria-expanded="false" aria-controls="flush-collapseOne">
-                                            <i class="bi bi-people" style="padding-right:5px;"></i> Funcionários
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseOneFuncionarios" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Funcionarios" asp-action="Index"><i class="bi bi-diagram-3"></i> Todos os Funcionários</a>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Funcionarios" asp-action="Criar"><i class="bi bi-person-plus"></i> Cadastrar Novo Funcionário</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-
-                        @if (ViewBag.TipoPerfil == 1)
-                        {
-                            <div class="accordion accordion-flush" id="accordionUsuarios">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneUsuarios" aria-expanded="false" aria-controls="flush-collapseOne">
-                                            <i class="bi bi-person-gear" style="padding-right:5px;"></i> Usuários
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseOneUsuarios" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index"><i class="bi bi-diagram-3"></i> Todos os Usuários</a>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Cadastrar"><i class="bi bi-person-plus"></i> Cadastrar Novo Usuário</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-
-                        <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="bi bi-shield-lock"></i> Privacidade</a>
-                        </li>
-                </ul>
-            </div>
-
-            <footer class="border-top footer text-muted"  >
-                <div class="container">
-                    &copy; 2025 - TchaComBack - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                </div>
-            </footer>
+    <div id="spinner-loading" class="flex-spinner">
+        <div class="spinner-border text-light" role="status" style="width: 4rem; height: 4rem;">
+            <span class="visually-hidden">Loading...</span>
         </div>
-
-    
-
-    </header>
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
     </div>
 
-@*     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - TchaComBack - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    @await Html.PartialAsync("~/Views/Componentes/Shared/MenuLeft.cshtml");
+
+    <div class="layout">
+        <div class="menu-top">
+            <button id="toggle-btn">
+                <i class="bi bi-layout-sidebar-inset"></i>
+            </button>
+            <div class="dropdown">
+                <img src="https://i.ibb.co/DPymZqqd/image-removebg-preview-1.png" alt="Avatar" class="rounded-circle" />
+                <div class="flex-user-body">
+                    <span class="me-2 nome-user" data-bs-toggle="dropdown" aria-expanded="false">Olá, @GetPrimeiroESegundoNome(@ViewBag.NomeCompleto)!</span>
+                    @if (ViewBag.TipoPerfil == 1)
+                    {
+                        <span class="me-2" style="color:gray; font-weight:bold;font-size:.8rem;" data-bs-toggle="dropdown" aria-expanded="false">Administrador <span><i class="bi bi-caret-down-fill"></i></span></span>
+                    }
+                    else
+                    {
+                        <span class="me-2" style="color:gray; font-weight:bold;font-size:.8rem;" data-bs-toggle="dropdown" aria-expanded="false">Lider <span><i class="bi bi-caret-down-fill"></i></span></span>
+                    }
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" asp-controller="Login" asp-action="Logout">
+                                <i class="bi bi-box-arrow-right me-2"></i> Sair
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-controller="Usuario" asp-action="AtualizarSenha">
+                                <i class="bi bi-key-fill me-2"></i> Alterar Senha
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-controller="Usuario" asp-action="MeusDados">
+                                <i class="bi bi-person-fill me-2"></i> Meus Dados
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </footer> *@
-    @* <script src="~/js/security.js"></script> *@
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <div class="p-3 flex-container">
+
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
+
+    <script>
+
+        window.addEventListener('load', function () {
+            var spinner = document.getElementById('spinner-loading');
+
+             spinner.style.opacity = '0';
+
+            setTimeout(function () {
+                  spinner.style.display = 'none';
+              }, 500);
+        });
+    </script>
+
 </body>
+
 </html>

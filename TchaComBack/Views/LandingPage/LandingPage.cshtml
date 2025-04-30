@@ -7,33 +7,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tchá Com Back</title>
-    <link rel="stylesheet" href="~/css/landingPage.css" />
-    <link rel="stylesheet" href="~/css/menuHamburguer.css" />
+    <link rel="stylesheet" href="~/css/LandingPage/landingPage.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-          rel="stylesheet">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    
-    <script src="~/js/landingPage.js" defer></script>
-    <script src="~/js/menuHamburguer.js" defer></script>
-
+    <script src="~/js/LandingPage/landingPage.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
-
-
-
 </head>
 <body>
     <div class="cabecalho-box-one" id="cabecalho-box-one">
-        <div class="menu-desktop" >
+        <div class="menu-desktop">
             <img style="height: 13vh;" src="~/img/logotcb.png" alt="Alternate Text" />
             <nav class="cabecalho-barra-navegacao">
                 <div class="flex-links-cabecalho">
@@ -43,131 +31,190 @@
                     <a id="contatos-navegacao">Contatos</a>
                 </div>
                 <div class="flex-botao-cabecalho">
-                    <a href="/login">Entrar</a>
+                    <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
+                             view-data=@(new ViewDataDictionary(ViewData){
+                             { "Texto", "Entrar" },
+                             { "Url", "/Login" },
+                             { "ClasseExtra", "" },
+                             { "Id", "" },
+                             { "Elemento", "a"}
+                             }) />
                 </div>
             </nav>
         </div>
-        
-        <div class="menu-hamburger" >
+        <div class="menu-hamburger">
             <h2>TCB</h2>
-            @Html.Partial("~/Views/Componentes/MenuHamburguer.cshtml")
+            <partial name="~/Views/Componentes/Menu-Hamburger/MenuHamburguer.cshtml" />
         </div>
     </div>
     <div id="rolagem-animação">
         <div id="principal-rolagem-animação">
             <div class="invólucro-paralaxe">
                 <header class="cabecalho" id="home-sessao">
-                    <div class="flex-cabecalho" >
+                    <div class="flex-cabecalho">
                         <div class="cabecalho-box-two">
                             <div class="flex-conteudo-box-two animar-com-scroll">
-                                <h1>TcháComBack </h1>
-                                <h2>
-                                    Centralize os <strong>dados</strong> da sua <strong>equipe</strong>,
-                                    organize informações essenciais e tenha tudo à
-                                    mão para <strong>decisões mais eficientes!.</strong>
-                                </h2>
+                                <partial name="~/Views/Componentes/Titulo-Quaternario/TituloQuaternario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                         { "Texto", "TcháComBack" },
+                                         { "ClasseExtra", "animar-com-scroll " }
+                                         }) />
+                                <partial name="~/Views/Componentes/Paragrafo-Primario/ParagrafoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                         { "Texto", " Centralize os <strong>dados</strong> da sua <strong>equipe</strong>, organize informações essenciais e tenha tudo àmão para <strong>decisões mais eficientes!.</strong> " },
+                                         { "ClasseExtra", "" }
+                                         }) />
                                 <div class="flex-botoes-box-two">
-                                    <a href="/Usuarios/Cadastrar" class="botao-cadastrar">Cadastrar-se</a>
-                                    <a href="/login" class="botao-entrar">Entrar</a>
+                                    <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
+                                             view-data=@(new ViewDataDictionary(ViewData)
+                                             {
+                                             { "Texto", "Cadastrar-se" },
+                                             { "Url", "/Usuarios/Cadastrar" },
+                                             { "ClasseExtra", "botao-cadastrar" },
+                                             { "Id", "btn-cadastrar" },
+                                             { "Elemento", "a"}
+                                             }) />
+                                    <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                                             view-data=@(new ViewDataDictionary(ViewData)
+                                             {
+                                             { "Texto", "Entrar" },
+                                             { "Url", "/Login" },
+                                             { "ClasseExtra", "" },
+                                             { "Id", "" },
+                                             { "Elemento", "a"}
+                                             }) />
                                 </div>
                             </div>
                             <div class="flex-imagem-box-two">
                             </div>
                         </div>
-
                     </div>
                 </header>
-
                 <section class="conteúdo">
                     <div class="flex-conteúdos">
                         <div class="conteúdo-box-one" id="servico-sessao">
                             <div class="conteúdo-title-box-one">
-                                <h1 class="animar-com-scroll">Explore <span>Nossos Serviços</span> </h1>
+                                <partial name="~/Views/Componentes/Titulo-Terceario/TituloTerceario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                         { "Texto", "Explore <span>Nossos Serviços</span>" },
+                                         { "ClasseExtra", "animar-com-scroll " }
+                                         }) />
                             </div>
                             <div class="flex-cards-servicos">
-                                <div class="card-servicos">
-                                    <div class="flex-title-card">
-                                        <img src="~/img/group.png" alt="Alternate Text" />
-                                        <h4>Desenvolvimento de Talentos</h4>
-                                    </div>
-                                    <div class="flex-body-card">
-                                        <p>
-                                            Sabia que a <strong>chave para o sucesso</strong> da sua empresa está na <strong>gestão certa das pessoas?</strong> Com nosso <strong>sistema de RH</strong>, você pode transformar <strong>dados</strong> em <strong>decisões estratégicas</strong> e potencializar o <strong>desenvolvimento dos seus talentos</strong>. Descubra como nossos <strong>dashboards</strong> e <strong>relatórios</strong> podem ajudar sua empresa a <strong>atrair</strong>, <strong>capacitar</strong> e <strong>reter</strong> os <strong>melhores profissionais</strong>. Clique agora e saiba mais!
-                                        </p>
-                                    </div>
-                                    <div class="flex-botao-card">
-                                        <a id="desenvolvimento-navegacao">Saiba Mais</a>
-                                    </div>
-                                </div>
-                                <div class="card-servicos">
-                                    <div class="flex-title-card">
-                                        <img src="~/img/data-server.png" alt="Alternate Text" />
-                                        <h4>Gestão de Dados</h4>
-                                    </div>
-                                    <div class="flex-body-card">
-                                        <p>
-                                            Como seus <strong>dados de RH</strong> podem transformar a <strong>gestão</strong> da sua empresa? Com nossa <strong>plataforma robusta</strong> e <strong>segura</strong>, você terá acesso a <strong>informações precisas</strong> e <strong>organizadas</strong> que permitem <strong>decisões estratégicas</strong>. Descubra como <strong>centralizar</strong> e <strong>otimizar</strong> os dados dos seus colaboradores para <strong>aumentar a eficiência</strong> e <strong>reduzir erros</strong>. Clique agora e saiba mais!
-                                        </p>
-                                    </div>
-                                    <div class="flex-botao-card">
-                                        <a id="gestaodados-navegacao">Saiba Mais</a>
-                                    </div>
-                                </div>
-                                <div class="card-servicos">
-                                    <div class="flex-title-card">
-                                        <img src="~/img/analysis.png" alt="Alternate Text" />
-                                        <h4>Relatórios Pesonalizados</h4>
-                                    </div>
-                                    <div class="flex-body-card">
-                                        <p>
-                                            Como tomar decisões mais <strong>assertivas</strong> com <strong>clareza</strong> e <strong>transparência?</strong> Nosso serviço de <strong>Relatórios</strong> oferece <strong>dashboards dinâmicos</strong> e <strong>relatórios detalhados</strong> que transformam dados complexos em <strong>insights visuais</strong> e fáceis de entender. Descubra como monitorar <strong>métricas-chave</strong> em <strong>tempo real</strong> e impulsionar sua <strong>gestão</strong>. Clique agora e saiba mais!
-                                        </p>
-                                    </div>
-                                    <div class="flex-botao-card">
-                                        <a id="relatorios-navegacao">Saiba Mais</a>
-                                    </div>
-                                </div>
+                                <partial name="~/Views/Componentes/Card-Servicos/CardServicos.cshtml"
+                                         view-data=@(new ViewDataDictionary(ViewData)
+                                         {
+                                         { "ImagemUrl", "~/img/group.png" },
+                                         { "Titulo", "Desenvolvimento de Talentos" },
+                                         { "Descricao", "Potencialize o sucesso da sua empresa com nosso sistema de RH, transformando <strong>dados em decisões estratégicas</strong> para <strong>atrair, capacitar e reter talentos</strong>. Com relatórios precisos e eficientes, você alcança <strong>resultados extraordinários</strong>. Clique agora e impulse sua gestão!" },
+                                         { "BotaoTexto", "Saiba Mais" },
+                                         { "BotaoUrl", "#" },
+                                         { "BotaoClasseExtra", "btn-extra" },
+                                         { "BotaoId", "desenvolvimento-navegacao" },
+                                         { "BotaoElemento", "a" }
+                                         }) />
+                                <partial name="~/Views/Componentes/Card-Servicos/CardServicos.cshtml"
+                                         view-data=@(new ViewDataDictionary(ViewData)
+                                         {
+                                         { "ImagemUrl", "~/img/data-server.png" },
+                                         { "Titulo", "Gestão de Dados" },
+                                         { "Descricao", "Descubra como nossos dados de RH podem transformar a <strong>gestão da sua empresa .</strong> Com uma plataforma robusta e segura , você acessa informações precisas para tomar <strong>decisões estratégicas, otimizar processos e reduzir erros </strong>. Clique agora e impulse sua gestão!" },
+                                         { "BotaoTexto", "Saiba Mais" },
+                                         { "BotaoUrl", "#" },
+                                         { "BotaoClasseExtra", "btn-extra" },
+                                         { "BotaoId", "gestaodados-navegacao" },
+                                         { "BotaoElemento", "a" }
+                                         }) />
+                                <partial name="~/Views/Componentes/Card-Servicos/CardServicos.cshtml"
+                                         view-data=@(new ViewDataDictionary(ViewData)
+                                         {
+                                         { "ImagemUrl", "~/img/analysis.png" },
+                                         { "Titulo", "Relatórios Pesonalizados" },
+                                         { "Descricao", "Decisões assertivas começam com <strong>clareza</strong> e <strong>transparência</strong>. Nosso serviço de relatórios oferece <strong>dashboards dinâmicos</strong> e <strong>insights visuais</strong> que simplificam dados complexos. Monitore <strong>métricas-chave em tempo real</strong>. Clique agora e e impulse sua gestão!" },
+                                         { "BotaoTexto", "Saiba Mais" },
+                                         { "BotaoUrl", "#" },
+                                         { "BotaoClasseExtra", "btn-extra" },
+                                         { "BotaoId", "relatorios-navegacao" },
+                                         { "BotaoElemento", "a" }
+                                         }) />
                             </div>
                         </div>
-                        <div class="conteúdo-box-two" >
+                        <div class="conteúdo-box-two">
                             <div class="flex-card-servicos-detalhado-right" id="desenvolvimento-sessao">
-                                <div class="box-card-servicos-detalhado-one" >
-                                    <h3 class="animar-com-scroll">Potencialize Sua Gestão de Pessoas com Dados e Estratégia</h3>
-                                    <p>
-                                        A gestão de pessoas nunca foi tão <strong>estratégica</strong> e <strong>assertiva</strong>. Nosso sistema de RH vai além de simples ferramentas: ele é uma <strong>solução completa</strong> para desenvolver os <strong>talentos</strong> que sua empresa precisa para <strong>crescer</strong>. Por meio de <strong>dashboards personalizados</strong>, você terá acesso a <strong>insights em tempo real</strong> sobre o <strong>desempenho</strong> e o <strong>potencial</strong> da sua equipe. Isso permite identificar <strong>lacunas de competências</strong>, implementar <strong>treinamentos focados</strong> nas necessidades reais do negócio e acompanhar a <strong>evolução</strong> de cada colaborador.
-                                    </p>
-                                    <p>
-                                        Além disso, nossos recursos de <strong>mentoring</strong> e <strong>avaliações contínuas</strong> garantem que os profissionais estejam sempre alinhados às <strong>metas organizacionais</strong>. O resultado? Uma equipe <strong>engajada</strong>, <strong>produtiva</strong> e preparada para impulsionar sua empresa rumo ao <strong>sucesso</strong>.
-                                    </p>
-                                    <a href="/login">Impulsione Agora!</a>
+                                <div class="box-card-servicos-detalhado-one">
+                                    <partial name="~/Views/Componentes/Titulo-Secundario/TituloSecundario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                             { "Texto", "Potencialize Sua Gestão de Pessoas com Dados e Estratégia" },
+                                             { "ClasseExtra", "animar-com-scroll" }
+                                             }) />
+                                    <partial name="~/Views/Componentes/Paragrafo-Primario/ParagrafoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                             { "Texto", " A gestão de pessoas é mais <strong>estratégica</strong> com nosso sistema de RH, que oferece <strong>dashboards personalizados</strong> e <strong>insights em tempo real</strong>. Identifique <strong>lacunas</strong>, aplique <strong>treinamentos</strong> e acompanhe a <strong>evolução</strong> da equipe." },
+                                             { "ClasseExtra", "paragrafo-black" }
+                                             }) />
+                                    <partial name="~/Views/Componentes/Paragrafo-Primario/ParagrafoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                             { "Texto", " Com mentoring e avaliações contínua, alinhamos profissionais às <strong>metas organizacionais</strong>, criando uma equipe <strong>engajada</strong> e <strong>produtiva</strong> para impulsionar o <strong>sucesso</strong> do seu negócio." },
+                                             { "ClasseExtra", "paragrafo-black" }
+                                             }) />
+                                    <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
+                                             view-data=@(new ViewDataDictionary(ViewData)
+                                             {
+                                             { "Texto", "Impulsione Agora!" },
+                                             { "Url", "/login" },
+                                             { "ClasseExtra", "" },
+                                             { "Id", "" },
+                                             { "Elemento", "a"}
+                                             }) />
                                 </div>
                                 <div class="box-card-servicos-detalhado-two">
                                 </div>
                             </div>
                             <div class="flex-card-servicos-detalhado-left" id="gestaodados-sessao">
                                 <div class="box-card-servicos-detalhado-one-left">
-                                    <h3 class="animar-com-scroll">Dados que Transformam: Centralize, Organize e Decida com Precisão!</h3>
-                                    <p>
-                                        A base de uma estratégia de RH <strong>eficiente</strong> começa com <strong>dados precisos</strong> e bem organizados, e é exatamente isso que oferecemos com nosso serviço de <strong>Gestão de Dados</strong>. Nossa plataforma <strong>robusta</strong> e <strong>segura</strong> centraliza todas as informações relacionadas aos seus colaboradores, desde <strong>registros básicos</strong> até <strong>indicadores avançados</strong>. Com acesso <strong>instantâneo</strong> a dados <strong>confiáveis</strong>, você pode tomar decisões <strong>estratégicas</strong> com total <strong>clareza</strong> e <strong>segurança</strong>.
-                                    </p>
-                                    <p>
-                                        Além disso, ao <strong>automatizar processos</strong> e reduzir <strong>erros manuais</strong>, sua equipe ganha mais tempo para focar no que realmente importa: o <strong>desenvolvimento</strong> e <strong>engajamento</strong> das pessoas. <strong>Simplifique sua gestão</strong>, aumente a <strong>eficiência operacional</strong> e <strong>impulsione os resultados</strong> do seu negócio com uma solução <strong>completa</strong> de dados.
-                                    </p>
-                                    <a href="/login">Impulsione Agora!</a>
+                                    <partial name="~/Views/Componentes/Titulo-Secundario/TituloSecundario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                             { "Texto", "Centralize e organize dados para decisões precisas e estratégicas" },
+                                             { "ClasseExtra", "animar-com-scroll" }
+                                             }) />
+                                    <partial name="~/Views/Componentes/Paragrafo-Primario/ParagrafoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                             { "Texto", "Uma estratégia de RH eficiente começa com <strong>dados precisos</strong>. Nossa plataforma robusta centraliza informações, desde <strong>registros básicos</strong> até <strong>indicadores avançados</strong>, garantindo decisões <strong>estratégicas</strong> com <strong>clareza</strong>." },
+                                             { "ClasseExtra", "paragrafo-black" }
+                                             }) />
+                                    <partial name="~/Views/Componentes/Paragrafo-Primario/ParagrafoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                             { "Texto", " Automatize processos, reduza <strong>erros manuais</strong> e foque no <strong>desenvolvimento</strong> e <strong>engajamento</strong>. Simplifique sua gestão, aumente a <strong>eficiência</strong> e <strong>impulsione resultados</strong>." },
+                                             { "ClasseExtra", "paragrafo-black" }
+                                             }) />
+                                    <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
+                                             view-data=@(new ViewDataDictionary(ViewData)
+                                             {
+                                             { "Texto", "Impulsione Agora!" },
+                                             { "Url", "/login" },
+                                             { "ClasseExtra", "" },
+                                             { "Id", "" },
+                                             { "Elemento", "a"}
+                                             }) />
                                 </div>
                                 <div class="box-card-servicos-detalhado-three-left">
                                 </div>
                             </div>
                             <div class="flex-card-servicos-detalhado-right" id="relatorios-sessao">
                                 <div class="box-card-servicos-detalhado-one">
-                                    <h3 class="animar-com-scroll">Relatórios que Revelam Insights para Decisões Estratégicas</h3>
-                                    <p>
-                                        Tomar decisões <strong>assertivas</strong> começa com ter as <strong>informações certas</strong> na hora certa. Nosso serviço de <strong>Relatórios</strong> foi desenvolvido para fornecer <strong>dashboards dinâmicos</strong> e <strong>relatórios detalhados</strong>, traduzindo dados complexos em visualizações <strong>claras</strong> e <strong>acessíveis</strong>. Acompanhe métricas essenciais, como <strong>turnover</strong>, <strong>absenteísmo</strong>, <strong>produtividade</strong> e <strong>engajamento</strong>, em <strong>tempo real</strong>, permitindo que você identifique <strong>tendências</strong>, antecipe <strong>desafios</strong> e tome <strong>ações estratégicas</strong>.
-                                    </p>
-                                    <p>
-                                        Com uma visão <strong>clara</strong> e <strong>transparente</strong> dos seus indicadores, você garante <strong>maior eficiência</strong> na gestão e resultados mais <strong>consistentes</strong> para o seu negócio. Transforme dados em decisões <strong>poderosas</strong> e leve sua empresa para o <strong>próximo nível</strong>.
-                                    </p>
-                                    <a href="/login">Impulsione Agora!</a>
+                                    <partial name="~/Views/Componentes/Titulo-Secundario/TituloSecundario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                             { "Texto", "Relatórios que Revelam Insights para Decisões Estratégicas" },
+                                             { "ClasseExtra", "animar-com-scroll" }
+                                             }) />
+                                    <partial name="~/Views/Componentes/Paragrafo-Primario/ParagrafoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                             { "Texto", " Tomar decisões assertivas depende de <strong>informações precisas</strong>. Nosso serviço de <strong>relatórios</strong> oferece <strong>dashboards dinâmicos</strong> e relatórios claros, transformando dados complexos em visualizações acessíveis. Monitore <strong>turnover</strong>, <strong>produtividade</strong> e <strong>engajamento</strong> em tempo real." },
+                                             { "ClasseExtra", "paragrafo-black" }
+                                             }) />
+                                    <partial name="~/Views/Componentes/Paragrafo-Primario/ParagrafoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                             { "Texto", " Tenha uma visão <strong>clara</strong> e <strong>transparente</strong> dos seus indicadores para garantir <strong>eficiência</strong> na gestão. Transforme dados em <strong>decisões estratégicas</strong> e leve sua empresa ao próximo nível." },
+                                             { "ClasseExtra", "paragrafo-black" }
+                                             }) />
+
+                                    <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
+                                             view-data=@(new ViewDataDictionary(ViewData)
+                                             {
+                                             { "Texto", "Impulsione Agora!" },
+                                             { "Url", "/login" },
+                                             { "ClasseExtra", "" },
+                                             { "Id", "" },
+                                             { "Elemento", "a"}
+                                             }) />
                                 </div>
                                 <div class="box-card-servicos-detalhado-for">
                                 </div>
@@ -178,106 +225,89 @@
                             <div class="flex-conteúdo-box-three">
                                 <div class="flex-sobre-nos-one">
                                     <div class="body-sobre-nos">
-                                        <h1 class="animar-com-scroll">Sobre Nós</h1>
-                                        <p>
-                                            Na <strong>TchaComBack</strong>, estamos <strong>redefinindo</strong> a gestão de <strong>recursos humanos</strong>. Somos uma equipe de jovens <strong>entusiasmados</strong>, dedicados a transformar os <strong>desafios de RH</strong> em <strong>oportunidades</strong> através da <strong>tecnologia</strong>. Nossa plataforma foi criada para <strong>simplificar</strong> e <strong>potencializar</strong> os processos de RH, com soluções <strong>inovadoras</strong> que realmente fazem a diferença. Se você busca uma forma mais <strong>ágil</strong> e <strong>inteligente</strong> de gerenciar <strong>talentos</strong>, está na hora de conhecer o que podemos fazer pela sua empresa. Junte-se à <strong>revolução no RH</strong> com a <strong>TchaComBack!</strong>
-                                        </p>
-                                        <a href="https://wa.me/5565984152703?text=Vamos%20Tomar%20um%20Tcha!!%20,%20gostaria%20de%20mais%20informações%20sobre%20a%20TCB!" target="_blank">Fale Conosco!</a>
+                                        <partial name="~/Views/Componentes/Titulo-Primario/TituloPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                                 { "Texto", "Sobre Nós" },
+                                                 { "ClasseExtra", "animar-com-scroll" }
+                                                 }) />
+                                        <partial name="~/Views/Componentes/Paragrafo-Primario/ParagrafoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                                 { "Texto", "Na TchaComBack, estamos redefinindo a gestão de recursos humanos com uma equipe entusiasmada e dedicada. Transformamos <strong>desafios de RH</strong> em <strong>oportunidades</strong> usando tecnologia inovadora. Nossa plataforma simplifica processos, oferece soluções <strong>inteligentes</strong> e potencializa a gestão de <strong>talentos</strong>. Junte-se à <strong>revolução no RH</strong> com a <strong>TchaComBack!</strong>" },
+                                                 { "ClasseExtra", "" }
+                                                 }) />
+
+                                        <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
+                                                 view-data=@(new ViewDataDictionary(ViewData)
+                                                 {
+                                                 { "Texto", "Impulsione Agora!" },
+                                                 { "Url", "https://wa.me/5565984152703?text=Vamos%20Tomar%20um%20Tcha!!%20,%20gostaria%20de%20mais%20informações%20sobre%20a%20TCB!" },
+                                                 { "ClasseExtra", "Fale Conosco!" },
+                                                 { "Id", "" },
+                                                 { "Elemento", "a"}
+                                                 }) />
                                     </div>
                                     <div class="body-imagem-equipe">
                                     </div>
                                 </div>
                                 <div class="flex-sobre-nos-two" id="contato-sessao">
-                                    <div class="carousel-container">
-                                        <div class="glide">
-                                            <div class="glide__track" data-glide-el="track">
-                                                <ul class="glide__slides">
-                                                    <li class="glide__slide">
-                                                        <div>
-                                                            <img src="~/img/joaogabriel.jpg" alt="Funcionário 1">
-                                                        </div>
-                                                        <h3>João Gabriel</h3>
-                                                        <p>Cientista de Dados</p>
-                                                    </li>
-                                                    <li class="glide__slide">
-                                                        <div>
-                                                            <img src="~/img/joaomedrado.jpeg" alt="Funcionário 2">
-                                                        </div>
-                                                        <h3>João Medrado</h3>
-                                                        <p>Desenvolvedor Front-end</p>
-                                                    </li>
-                                                    <li class="glide__slide">
-                                                        <div>
-                                                            <img src="~/img/luiz.jpeg" alt="Funcionário 1">
-                                                        </div>
-                                                        <h3>Luiz Armendro</h3>
-                                                        <p>Desenvolvedor Back-end</p>
-                                                    </li>
-                                                    <li class="glide__slide">
-                                                        <div>
-                                                            <img src="~/img/bruno.jpg" alt="Funcionário 3">
-                                                        </div>
-                                                        <h3>Bruno Alves</h3>
-                                                        <p>Desenvolvedor Front-end</p>
-                                                    </li>
-                                                    <li class="glide__slide">
-                                                        <div>
-                                                            <img src="~/img/jorge.jpeg" alt="Funcionário 4">
-                                                        </div>
-                                                        <h3>Jorge Luiz</h3>
-                                                        <p>Designer</p>
-                                                    </li>
-                                                    <li class="glide__slide">
-                                                        <div>
-                                                            <img src="~/img/edivaldo.jpeg" alt="Funcionário 5">
-                                                        </div>
-                                                        <h3>Edivaldo</h3>
-                                                        <p>Analista de Requisitos</p>
-                                                    </li>
-                                                    <li class="glide__slide">
-                                                        <div>
-                                                            <img src="~/img/andrey.jpeg" alt="Funcionário 6">
-                                                        </div>
-                                                        <h3>Andrey Calvacante</h3>
-                                                        <p>Analista de Requisitos</p>
-                                                    </li>
-                                                </ul>
-                                            </div>
 
-                                            <div class="glide__bullets" data-glide-el="controls[nav]">
-                                                <button class="glide__bullet" data-glide-dir="=0"></button>
-                                                <button class="glide__bullet" data-glide-dir="=1"></button>
-                                                <button class="glide__bullet" data-glide-dir="=2"></button>
-                                                <button class="glide__bullet" data-glide-dir="=3"></button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <partial name="~/Views/Componentes/Carrossel-Equipe/CarrosselEquipe.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                             { "Membros", new List<dynamic>
+                                             {
+                                             new { Imagem = "~/img/joaogabriel.jpg", Nome = "João Gabriel", Cargo = "Cientista de Dados" },
+                                             new { Imagem = "~/img/joaomedrado.jpeg", Nome = "João Medrado", Cargo = "Desenvolvedor Front-end" },
+                                             new { Imagem = "~/img/luiz.jpeg", Nome = "Luiz Armendro", Cargo = "Desenvolvedor Back-end" },
+                                             new { Imagem = "~/img/bruno.jpg", Nome = "Bruno Alves", Cargo = "Desenvolvedor Front-end" },
+                                             new { Imagem = "~/img/jorge.jpeg", Nome = "Jorge Luiz", Cargo = "Designer" },
+                                             new { Imagem = "~/img/edivaldo.jpeg", Nome = "Edivaldo", Cargo = "Analista de Requisitos" },
+                                             new { Imagem = "~/img/andrey.jpeg", Nome = "Andrey Calvacante", Cargo = "Analista de Requisitos" }
+                                             }
+                                             }
+                                             }) />
+
                                     <div class="contato-box-one">
-                                        <h1 class="animar-com-scroll">
-                                            Vamos tomar um Tchá?
-                                        </h1>
-                                        <p>
-                                            Conheça a sua equipe e descubra como podemos ajudar você a redefinir a gestão de recursos humanos.
-                                            <strong>Entre em contato agora!</strong>
-                                        </p>
-                                        <a href="https://wa.me/5565984152703?text=Vamos%20Tomar%20um%20Tcha!!%20,%20gostaria%20de%20mais%20informações%20sobre%20a%20TCB!" target="_blank">Vamos Conversar!</a>
+                                        <partial name="~/Views/Componentes/Titulo-Primario/TituloPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                                 { "Texto", "Vamos tomar um Tchá?" },
+                                                 { "ClasseExtra", "animar-com-scroll" }
+                                                 }) />
+
+                                        <partial name="~/Views/Componentes/Paragrafo-Primario/ParagrafoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                                 { "Texto", "Conheça a sua equipe e descubra como podemos ajudar você a <strong>impulsionar a gestão de recursos humanos</strong>. Entre em contato agora!" },
+                                                 { "ClasseExtra", "" }
+                                                 }) />
+                                        <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
+                                                 view-data=@(new ViewDataDictionary(ViewData)
+                                                 {
+                                                 { "Texto", "Vamos Conversar!" },
+                                                 { "Url", "https://wa.me/5565984152703?text=Vamos%20Tomar%20um%20Tcha!!%20,%20gostaria%20de%20mais%20informações%20sobre%20a%20TCB!" },
+                                                 { "ClasseExtra", "Fale Conosco!" },
+                                                 { "Id", "" },
+                                                 { "Elemento", "a"}
+                                                 }) />
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                         <div class="contato-box-two">
                             <div class="contato-box-two-principal">
                                 <div class="contato-body">
-                                    <div class="contato-body-box-one" >
-                                        <h1 class="animar-com-scroll">Prepare seu Tchá de Decisões Inteligentes!</h1>
-                                        <p>
-                                            Não fique na fila do café enquanto sua equipe espera por decisões eficientes.
-                                            Centralize seus dados, organize informações essenciais e tenha tudo à mão para
-                                            impulsionar sua empresa rumo ao sucesso. Junte-se à revolução no RH com a TchaComBack!
-                                        </p>
-                                        <a href="/Usuarios/Cadastrar" class="botao-cadastrar">CADASTRE-SE AGORA!</a>
+                                    <div class="contato-body-box-one">
+                                        <partial name="~/Views/Componentes/Titulo-Primario/TituloPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                                 { "Texto", "Prepare seu Tchá de Decisões Inteligentes!" },
+                                                 { "ClasseExtra", "animar-com-scroll" }
+                                                 }) />
+                                        <partial name="~/Views/Componentes/Paragrafo-Primario/ParagrafoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                                 { "Texto", " Não fique na <strong>fila do café</strong> enquanto sua equipe espera por decisões eficientes.Centralize <strong>seus dados, organize informações essenciais</strong> e tenha tudo na mão para impulsionar sua empresa rumo ao sucesso. Junte-se à revolução no <strong>RH com a TchaComBack!</strong>" },
+                                                 { "ClasseExtra", "" }
+                                                 }) />
+
+                                        <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
+                                                 view-data=@(new ViewDataDictionary(ViewData)
+                                                 {
+                                                 { "Texto", "CADASTRE - SE AGORA!" },
+                                                 { "Url", "/Usuarios/Cadastrar" },
+                                                 { "ClasseExtra", "" },
+                                                 { "Id", "" },
+                                                 { "Elemento", "a"}
+                                                 }) />
                                     </div>
                                     <div>
                                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3842.6791316414606!2d-56.10327522482623!3d-15.608783218412182!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x939db1efac8af70f%3A0x688cbb59c2540eb!2sFATEC%20SENAI%20MT%20-%20Faculdade%20de%20Tecnologia%20SENAI%20MT!5e0!3m2!1spt-BR!2sbr!4v1743537233288!5m2!1spt-BR!2sbr"
@@ -289,16 +319,16 @@
                                                 referrerpolicy="no-referrer-when-downgrade">
                                         </iframe>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </section>
                 <footer>
                     <div class="footer-box-one">
                         <div class="footer-links">
                             <div class="footer-column">
-                                <h4>Acessos Rápidos !</h4>
+                                <h4>Acessos Rápidos</h4>
                                 <ul>
                                     <li><a href="#">Home</a></li>
                                     <li><a href="#">Serviços</a></li>
@@ -307,7 +337,7 @@
                                 </ul>
                             </div>
                             <div class="footer-column">
-                                <h4>Descrubra Agora!</h4>
+                                <h4>Descubra Agora</h4>
                                 <ul>
                                     <li><a href="/login">Entrar</a></li>
                                     <li><a href="/Usuarios/Cadastrar">Cadastrar-se</a></li>
@@ -324,7 +354,6 @@
                                     <li><a href="https://wa.me/5565984152703?text=Vamos%20Tomar%20um%20Tcha!!%20,%20gostaria%20de%20mais%20informações%20sobre%20a%20TCB!" target="_blank">Fale Conosco</a></li>
                                 </ul>
                             </div>
-
                             <div class="footer-social">
                                 <h4>Siga-nos</h4>
                                 <div class="social-icons">
@@ -333,7 +362,6 @@
                                     <a href="#" aria-label="Whatsapp"><img src="~/img/whatsapp.png" alt="Whatsapp"></a>
                                     <a href="#" aria-label="LinkedIn"><img src="~/img/linkedin (1).png" alt="LinkedIn"></a>
                                 </div>
-
                                 <div class="footer-legal">
                                     <p>&copy; 2023 TchaComBack. Todos os direitos reservados.</p>
                                     <ul>
@@ -349,37 +377,5 @@
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            new Glide('.glide', {
-                type: 'carousel',
-                perView: 3, // Número de slides visíveis
-                gap: 20, // Espaçamento entre os slides
-                autoplay: 2000, // Intervalo de autoplay (em milissegundos)
-                hoverpause: true, // Pausa o autoplay ao passar o mouse
-                breakpoints: {
-                    1024: {
-                        perView: 2, // Número de slides visíveis em telas menores
-                        focusAt: 'center',
-                        gap: 50, 
-                    },
-                    768: {
-                        perView: 2, // Número de slides visíveis em dispositivos móveis
-                        focusAt: 'center',
-                        gap: 50, 
-                    },
-                     600: {
-                        perView: 1, // Número de slides visíveis em dispositivos móveis
-                        focusAt: 'center',
-                    }
-                },
-            }).mount();
-        });
-
-
-
-    </script>
 </body>
-
 </html>

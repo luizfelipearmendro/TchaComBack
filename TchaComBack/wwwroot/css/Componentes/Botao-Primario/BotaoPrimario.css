@@ -1,18 +1,18 @@
-﻿body {
-}
+﻿
 .botao-primario {
-    color: white;
-    text-decoration: none;
-    font-family: "Roboto", sans-serif;
-    font-weight: bold;
-    cursor: pointer;
-    background: linear-gradient(90deg,#8A2BE2, #FFA500);
-    border-radius: .5vw;
-    padding: 2vh;
-    width: fit-content;
-    border: none;
+color: white;
+text-decoration: none;
+font-family: "Roboto", sans-serif;
+font-weight: bold;
+cursor: pointer;
+background: linear-gradient(90deg,#8A2BE2, #FFA500);
+border-radius: .5vw;
+padding: 2vh;
+width: fit-content;
+border: none;
 }
-.botao-primario:hover{
+
+.botao-primario:hover {
 background: #FFA500;
 transition: .5s ease-in-out;
 }

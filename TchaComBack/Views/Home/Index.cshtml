@@ -3,22 +3,24 @@
     ViewData["Title"] = "Home Page";
 }
 
+<link rel="stylesheet" href="~/css/Home/home.css">
+<script src="~/js/Home/home.js" defer></script>
 
 <section style="padding-top: 20vh;">
     <!-- Mensagens de alerta -->
     @if (TempData["MensagemSucesso"] != null)
     {
-        <div class="alert success" role="alert" style="z-index:1000000000">
-            <span class="closebtn">&times;</span>
-            <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+        <div id="successAlert" class="custom-alert success">
+            <span><strong>Sucesso!</strong> @TempData["MensagemSucesso"]</span>
+            <span class="closebtn" onclick="closeAlert('successAlert')">&times;</span>
         </div>
     }
 
     @if (TempData["MensagemErro"] != null)
     {
-        <div class="alert danger" role="alert" style="z-index:1000000000">
-            <span class="closebtn">&times;</span>
-            <strong>Atenção!</strong> @TempData["MensagemErro"]
+        <div id="errorAlert" class="custom-alert error">
+            <span><strong>Atenção!</strong> @TempData["MensagemErro"]</span>
+            <span class="closebtn" onclick="closeAlert('errorAlert')">&times;</span>
         </div>
     }
 </section>

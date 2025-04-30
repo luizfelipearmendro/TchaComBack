@@ -8,23 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-
-
-
-    <link rel="stylesheet" href="~/css/site.css">
-    <link rel="stylesheet" href="~/css/setores.css">
-
-    <script src="~/js/setores.js" defer></script>
+    <link rel="stylesheet" href="~/css/Setores/setores.css">
 
     <title>Setores</title>
 </head>
@@ -47,173 +31,98 @@
     }
 
     @{
+        var quantidadeFunc = Model.QuantidadePorSetor;
         var categorias = Model.Categorias;
+        var setores = Model.Setores;
         var possuiCategorias = Model.Categorias != null && Model.Categorias.Any();
         var possuiSetores = Model.Setores != null && Model.Setores.Any();
+        var setoresDisponiveis = Model.Setores != null && Model.Setores.Any(s => s.Ativo == 'S');
+
+
     }
 
+    @functions {
+        public string LimitarTexto(string texto, int limite)
+        {
+            if (string.IsNullOrEmpty(texto))
+                return string.Empty;
+
+            if (texto.Length > limite)
+                return texto.Substring(0, limite) + "...";
+
+            return texto;
+        }
+    }
     @if (possuiSetores || possuiCategorias)
     {
         <section class="sessao-setores">
-            <form asp-controller="Setores" asp-action="Index" method="get" class="form-inline mb-4 text-center filtro" id="id-filtro">
-                <div class="flex-input-group filtro-content">
-                    <div class="input-group">
-                        <p>Categorias</p>
-                        <div class="mb-2 mr-sm-2 text-left selected">
-                            @Html.DropDownList(
-                                         "categoriaId", 
-                                         ViewBag.CategoriasOpcoes as SelectList, 
-                                         "Todas as Categorias", 
-                                         new { @class = "form-select selected" }
-                                     )
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <p>Status</p>
-                        <div class="mb-2 mr-sm-2 text-left selected">
-                            @Html.DropDownList(
-                                         "ativo",
-                                         ViewBag.StatusOpcoes as SelectList,
-                                         "Todos",
-                                         new { @class = "form-select selected" }
-                                     )
-                        </div>
+
+            @if (!setoresDisponiveis)
+            {
+                <div class="flex-mensagem-inativo">
+                    <div class="box-mensegem-inativo">
+                        <h1>Nenhum Setor Inativo Disponível</h1>
+                        <p>Infelizmente, não há setores inativos no momento. Por favor, verifique novamente mais tarde ou entre em contato com o administrador para obter mais informações.</p>
+                        <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                         { "Texto", "Voltar a Sessão" },
+                         { "Url", "/Setores" },
+                         { "ClasseExtra", "" },
+                         { "Id", "" },
+                         { "Type", "" },
+                         { "elemento", "a"}
+                         }) />
                     </div>
                 </div>
-                <div class="flex-input-two filtro-content">
-                    <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control mb-2 mr-sm-2" placeholder="Buscar setor..." />
-                    <a type="button" class="botao-adicionar mb-2" data-bs-toggle="modal" data-bs-target="#modalCadastrarSetor">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                        </svg>
-                    </a>
-                    <button type="submit" class="btn btn-filtrar mb-2">Filtrar</button>
-                </div>
-                <button type="button" class="btn-fechar" id="toggle-filtro">˄</button>
-            </form>
-
-            <section id="conteudo-setores">
-                @foreach (var categoria in categorias)
-                {
-                    var setoresDaCategoria = Model.Setores.Where(s => s.CategoriaId == categoria.Id).ToList();
-                    if (setoresDaCategoria.Any())
-                    {
-                        <div>
-                            <h2 class="titulo-categoria">@categoria.Nome</h2>
-                        </div>
-
-                        <div class="carousel-container" id="carousel-@categoria.Id">
-                            <div class="glide">
-                                <div class="glide__arrows" data-glide-el="controls" style="width:100%;">
-                                    <button style="background-color: rgba(0, 0, 0, 0.5); left: -5vw;" class="glide__arrow glide__arrow--left"  data-glide-dir="<"><i class="fas fa-chevron-left"></i></button>
-                                    <button style="background-color: rgba(0, 0, 0, 0.5);right: -5vw;" class="glide__arrow glide__arrow--right" data-glide-dir=">"><i class="fas fa-chevron-right"></i></button>
+            }
+            else
+            {
+                <form asp-controller="Setores" asp-action="Index" method="get" class="form-inline mb-4 text-center filtro p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700" id="id-filtro">
+                    <h1>Setores</h1>
+                    <div class="flex-filtro">
+                        <div class="flex-input-group filtro-content">
+                            <div class="input-group">
+                                <p>Categorias</p>
+                                <div class="mb-2 mr-sm-2 text-left selected">
+                                    @Html.DropDownList(
+                                             "categoriaId",
+                                             ViewBag.CategoriasOpcoes as SelectList,
+                                             "Todas as Categorias",
+                                             new { @class = "form-select selected" }
+                                             )
                                 </div>
-
-                                <div class="glide__track" data-glide-el="track">
-                                    <ul class="glide__slides">
-                                        @foreach (var setor in setoresDaCategoria)
-                                        {
-                                            var acaoHtml = setor.Ativo == 'S'
-                                            ? $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalDesativarSetor' setor-id='{setor.Id}' setor-nome='{setor.Nome}'>Desativar</a>"
-                                            : $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalReativarSetor' data-id='{setor.Id}' data-nome='{setor.Nome}'>Reativar</a>";
-
-                                            var popoverHtml = $@"
-                                            <div class='popover-body'>
-                                            <a class='close-btn' aria-label='Close' style='margin-top: 15px;'>&times;</a>
-                                            <a role='button' class='rota-btn editar-setor' data-bs-toggle='modal' data-bs-target='#modalEditarSetor' data-id='{setor.Id}'>Editar</a>
-                                                            {acaoHtml}
-                                            </div>";
-
-                                            <li class="glide__slide">
-                                                <div class="card-container" style="background-image: url('@setor.ImagemSetor');">
-                                                    <main class="main-content">
-                                                        <div class="flex-botao-edition">
-                                                            <button type="button"
-                                                                    class="btn-popover"
-                                                                    data-bs-toggle="popover"
-                                                                    data-bs-placement="right"
-                                                                    data-bs-html="true"
-                                                                    data-bs-content="@popoverHtml">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                                                     class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                                                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                        <div class="flex-main">
-                                                            <h1><a href="/setores/@setor.Id">@setor.Nome</a></h1>
-                                                            <p>@setor.Descricao</p>
-
-                                                            <div class="card-attribute">
-                                                                <a asp-controller="Funcionarios" asp-action="Index" asp-route-id="@setor.Id" class="botao-saibamais">Acessar Setor</a>
-                                                                <div class="time-left" style="margin-left: 25px;">
-                                                                    @if (setor.SexoResponsavel == 'F')
-                                                                    {
-                                                                        <img src="https://i.ibb.co/WWT61zQb/image-removebg-preview.png" alt="Responsável" class="small-avatar" width="70" height="70"/>
-                                                                    }
-                                                                    @if (setor.SexoResponsavel == 'M')
-                                                                    {
-                                                                        <img src="https://i.ibb.co/DPymZqqd/image-removebg-preview-1.png" alt="Responsável" class="small-avatar" width="70" height="70" />
-                                                                    }
-
-                                                                    <div>
-                                                                        <p>
-                                                                            <span><a href="#">@setor.ResponsavelSetor</a></span>
-                                                                            <span class="me-3" style="color:gray; font-style:italic;font-size:10px;">Criado em:
-                                                                                <span style="color:white;font-size:11px;">@setor.DataCriacao.ToShortDateString()</span>
-                                                                            </span>
-                                                                            <span class="me-3" style="color:gray; font-style:italic;font-size:10px;">
-                                                                                Funcionários:
-                                                                                <span style="color:white;font-size:11px;">
-                                                                                    @(Model.QuantidadePorSetor.FirstOrDefault(q => q.SetorId == setor.Id)?.Quantidade ?? 0)
-                                                                                </span>
-                                                                            </span>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </main>
-                                                </div>
-                                            </li>
-                                        }
-                                        @{
-                                            int totalSlidesBreve = Math.Max(setoresDaCategoria.Count, 3);
-                                        }
-
-                                        @for (int i = setoresDaCategoria.Count; i < totalSlidesBreve; i++)
-                                        {
-                                            <li class="glide__slide">
-                                                <div class="card-container">
-                                                    <main class="main-content">
-                                                        <h1>EM BREVE</h1>
-                                                        <p>Novos setores serão adicionados nesta categoria.</p>
-                                                    </main>
-                                                </div>
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-
-                                <div class="glide__bullets" data-glide-el="controls[nav]">
-                                    @for (int i = 0; i < Math.Max(setoresDaCategoria.Count, 3); i++)
-                                    {
-                                        <button class="glide__bullet" data-glide-dir="=@i"></button>
-                                    }
+                            </div>
+                            <div class="input-group">
+                                <p>Status</p>
+                                <div class="mb-2 mr-sm-2 text-left selected">
+                                    @Html.DropDownList(
+                                             "ativo",
+                                             ViewBag.StatusOpcoes as SelectList,
+                                             "Todos",
+                                             new { @class = "form-select selected" }
+                                             )
                                 </div>
                             </div>
                         </div>
-                    }
-                    else
-                    {
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
+                        <div class="flex-input-two filtro-content">
+                            <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control mb-2 mr-sm-2" placeholder="Buscar setor..." />
+                            <a type="button" class="botao-adicionar mb-2" style="color:white;" data-bs-toggle="modal" data-bs-target="#modalCadastrarSetor">
+                                +
+                            </a>
+                            <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@( new ViewDataDictionary(ViewData){
+                             { "Texto", "Filtrar" },
+                             { "Url", "/Login" },
+                             { "ClasseExtra", "btn btn-filtrar mb-2 btn-filtrar" },
+                             { "Id", "" },
+                             { "Type", "submit" },
+                             { "elemento", "Button"}
+                             }) />
                         </div>
-                    }
-                }
-            </section>
+                        @*                         <button type="button" class="btn-fechar" id="toggle-filtro">˄</button>
+ *@                    </div>
+                </form>
+                <partial name="~/Views/Componentes/Carrossel-Setores/CarrosselSetores.cshtml" />
+            }
+
         </section>
 
         <partial name="Cadastrar" model="new SetoresModel()" />
@@ -266,28 +175,9 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-
-            const carousels = document.querySelectorAll('.glide');
-            carousels.forEach((carousel) => {
-                new Glide(carousel, {
-                    type: 'carousel',
-                    perView: 3,
-                    gap: 20,
-                    autoplay: 3000,
-                    focusAt: 'center',
-                    hoverpause: true,
-                    breakpoints: {
-                        1024: { perView: 2 },
-                        768: { perView: 2 },
-                        600: { perView: 1 }
-                    }
-                }).mount();
-            });
-        });
-
         document.addEventListener("click", function (event) {
             if (event.target.matches("[data-bs-target='#modalDesativarSetor']")) {
                 var button = event.target;
@@ -321,6 +211,8 @@
                 }
             }
         });
+        });
     </script>
+
 </body>
 </html>

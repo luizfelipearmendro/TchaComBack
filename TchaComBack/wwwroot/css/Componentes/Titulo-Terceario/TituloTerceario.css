@@ -8,9 +8,9 @@ font-family: "Bebas Neue", sans-serif;
 }
 
 .titulo-terceario span {
-    background: linear-gradient(90deg, #8A2BE2, #FFA500 );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    width: 100%;
-    font-weight: bold;
+background: linear-gradient(90deg, #8A2BE2, #FFA500 );
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+width: 100%;
+font-weight: bold;
 }

@@ -1,6 +1,8 @@
 ﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
 <link rel="stylesheet" href="~/css/Componentes/Carrossel-Setores/CarrosselSetores.css" />
+<script src="~/js/Setores/setores.js" defer></script>
+
 @model SetoresViewModel
 
 @if (Model.Categorias == null || !Model.Categorias.Any())
@@ -28,7 +30,7 @@
             </div>
             <div class="carousel-container" id="carousel-@categoria.Id">
                 <div class="glide">
-                    <div class="glide__arrows" data-glide-el="controls" style="width:100%;">
+                    <div class="glide__arrows" data-glide-el="controls" >
                         <button style="background-color: rgba(0, 0, 0, 0.5); left: -5vw;" class="glide__arrow glide__arrow--left" data-glide-dir="<"><i class="fas fa-chevron-left"></i></button>
                         <button style="background-color: rgba(0, 0, 0, 0.5);right: -5vw;" class="glide__arrow glide__arrow--right" data-glide-dir=">"><i class="fas fa-chevron-right"></i></button>
                     </div>
@@ -36,19 +38,17 @@
                         <ul class="glide__slides">
                             @foreach (var setor in setoresDaCategoria)
                             {
-                               
-                                string reativarLink = "";
-                                if (setor.Ativo == 'N')
-                                {
-                                    reativarLink = $@"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalReativarSetor' setor-reativ-id='{setor.Id}' setor-reativ-nome='{setor.Nome}'>Reativar</a>";
-                                }
+                                var acaoHtml = setor.Ativo == 'S'
+                                ? $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalDesativarSetor' setor-id='{setor.Id}' setor-nome='{setor.Nome}'>Desativar</a>"
+                                : $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalReativarSetor' data-id='{setor.Id}' data-nome='{setor.Nome}'>Reativar</a>";
+
                                 var popoverHtml = $@"
                                 <div class='popover-body'>
                                 <a class='close-btn' aria-label='Close' style='margin-top: 15px;'>&times;</a>
                                 <a role='button' class='rota-btn editar-setor' data-bs-toggle='modal' data-bs-target='#modalEditarSetor' data-id='{setor.Id}'>Editar</a>
-                                <a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalDesativarSetor' setor-id='{setor.Id}' setor-nome='{setor.Nome}'>Desativar</a>
-                                        {reativarLink}
+                                        {acaoHtml}
                                 </div>";
+
                                 <li class="glide__slide">
                                     <div class="card-container" style="background-image: url('@setor.ImagemSetor');">
                                         <main class="main-content">
@@ -144,23 +144,3 @@
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const carousels = document.querySelectorAll('.glide');
-        carousels.forEach((carousel) => {
-            new Glide(carousel, {
-                type: 'carousel',
-                perView: 3,
-                gap: 20,
-                autoplay: 3000,
-                focusAt: 'center',
-                hoverpause: true,
-                breakpoints: {
-                    1024: { perView: 2 },
-                    768: { perView: 2 },
-                    600: { perView: 1 }
-                }
-            }).mount();
-        });
-    });
-</script>

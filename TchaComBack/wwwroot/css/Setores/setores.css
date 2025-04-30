@@ -1,7 +1,6 @@
 ﻿
 html {
 box-sizing: border-box;
-
 }
 
 *, *::before, *::after {
@@ -10,36 +9,52 @@ margin: 0;
 padding: 0;
 }
 
-.sessao-setores{
-    padding-top: 20vh;
-}
 
 .flex-input-group .input-group {
-display:flex;
-flex-direction:column;
+display: flex;
+flex-direction: column;
 justify-content: center;
 align-items: flex-start;
-width:100%;
+width: 100%;
 }
 
 .filtro {
-position: sticky;
-top:0;
-z-index: 100;
-padding: 2vh;
 background-color: white;
 border-radius: 5px;
 transition: all 0.3s ease;
+background: #fafafa;
+display: flex;
+flex-direction: column;
+gap: 1vh;
 }
 
+.filtro h1 {
+color: black;
+text-align: start;
+font-size: 1.5rem;
+font-family: 'Montserrat';
+font-weight: 400;
+position: relative;
+}
+
+.filtro h1:before {
+content: "";
+position: absolute;
+bottom: 0;
+height: .3vh;
+width: 5%;
+background-color: #FFA500;
+}
+
+
 .filtro-content {
-max-height: 200px; 
+max-height: 200px;
 overflow: hidden;
 transition: max-height 0.5s ease, opacity 0.5s ease;
 opacity: 1;
-display:flex;
-justify-content:center;
-align-items:center;
+display: flex;
+justify-content: center;
+align-items: center;
 padding: .1vw;
 }
 
@@ -64,7 +79,7 @@ height: 40px;
 font-size: 1.5rem;
 cursor: pointer;
 transition: background-color 0.3s ease;
-display:none;
+display: none;
 transition: .2s ease-in-out;
 }
 
@@ -74,18 +89,21 @@ background-color: #FFA500;
 
 .input-group {
 color: black;
-font-weight:600;
+font-size: .9rem;
 }
+
 .input-group div {
 width: 100%;
 }
-.flex-input-two{
-display:flex;
-justify-content:center;
-align-items:center;
+
+.flex-input-two {
+display: flex;
+justify-content: center;
+align-items: center;
 gap: 1vw;
 }
-.flex-input-two button{
+
+.flex-input-two button {
 width: 20%;
 }
 
@@ -93,29 +111,29 @@ width: 20%;
 background: #f9f9ff;
 box-shadow: 5px 5px 20px #f2e9e9, -5px -5px 20px #ffffff;
 top: 14vh;
-
 }
-.filtro.filtro-scroll-active #toggle-filtro{
-display:block;
 
-
+.filtro.filtro-scroll-active #toggle-filtro {
+display: block;
 }
 
 .filtro input:focus,
 .filtro select:focus {
 border-color: #8A2BE2;
-box-shadow: 0 0 5px rgba(138, 43, 226, 0.5); 
+box-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
 }
 
 .btn-filtrar {
-
 padding: 1.2vh !important;
+font-weight: normal !important;
 }
-.btn-filtrar:hover{
-color:white
+
+.btn-filtrar:hover {
+color: white !important
 }
+
 .botao-adicionar {
-background-color: green;
+background-color: black;
 border-radius: .4vw;
 color: white;
 font-family: "Montserrat", sans-serif;
@@ -124,39 +142,42 @@ text-decoration: none;
 text-align: center;
 border: none;
 width: 4%;
-padding: .2vh;
+padding: .1vh;
 font-size: 1.5rem
 }
 
 .filtro.filtro-scroll-active .btn-filtrar {
 background: linear-gradient(90deg, #8A2BE2, #FFA500);
 }
-.btn-fechar{
-position:sticky;
+
+.btn-fechar {
+position: sticky;
 bottom: 0;
-color:white
+color: white
 }
 
 
-.flex-mensagem-inativo{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-    margin-top: 10%
+.flex-mensagem-inativo {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+text-align: center;
+margin-top: 10%
 }
+
 .box-mensegem-inativo {
-    width: 60%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    gap: 2vh;
+width: 60%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+text-align: center;
+gap: 2vh;
 }
-.box-mensegem-inativo h1{
- background: linear-gradient(90deg, #8A2BE2, #FFA500 );
+
+.box-mensegem-inativo h1 {
+background: linear-gradient(90deg, #8A2BE2, #FFA500 );
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 width: 100%;
@@ -165,10 +186,16 @@ font-family: "Bebas Neue", sans-serif;
 text-transform: uppercase;
 font-size: 3.5rem;
 }
-.box-mensegem-inativo p{
-    color: black;
-    font-family: "Montserrat"
+
+.box-mensegem-inativo p {
+color: black;
+font-family: "Montserrat"
 }
-.box-mensegem-inativo a{
-    color:white;
+
+.box-mensegem-inativo a {
+color: white;
+}
+
+.botao-saibamais {
+padding: 1.2vh !important;
 }

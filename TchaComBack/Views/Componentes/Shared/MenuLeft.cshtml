@@ -1,0 +1,179 @@
+﻿<link href="~/css/Shared/shared.css" rel="stylesheet" />
+
+
+<button data-drawer-target="sidebar-multi-level-sidebar" data-drawer-toggle="sidebar-multi-level-sidebar" aria-controls="sidebar-multi-level-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"> 
+   <span class="sr-only">Open sidebar</span> 
+    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> 
+        <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path> 
+     </svg> 
+ </button>
+<aside id="sidebar-multi-level-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 menu-left" aria-label="Sidebar" style="background:black;">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 flex-menu-left" style="background-color: black;">
+        <div >
+            <a class="flex-menu-logo"  asp-controller="Home" asp-action="Index">
+                <img src="~/img/logotcb.png" alt="Alternate Text" />
+                <h2>Sistema de <br /><strong>Recursos Humanos</strong> </h2>
+            </a>
+       
+        </div>
+        <ul class="flex-link-principal" style="padding-left:0vw;">
+            <li>
+                <a asp-controller="Home" asp-action="Index" class="links-items" style="color:white;">
+                    <i class="bi bi-house-fill"></i>
+                    <span class="">Página Inicial</span>
+                </a>
+            </li>
+            @if (ViewBag.TipoPerfil == 1)
+            {
+                <li>
+                    <button type="button" class="links-items accordion-botao">
+                        <div class="flex-submenu-title">
+                        <i class="bi bi-building-fill"></i>
+                        <span class="">Setores</span>
+                        </div>
+                        <svg class="w-3 h-3 accordion-arrow" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                        </svg>
+                     
+                    </button>
+                    <ul class="accordion-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out" style="padding-left:0vw">
+                        <li>
+                            <a asp-controller="Setores" asp-action="Index" class="links-items gap-[1vw]">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" aria-hidden="true" class="h-3 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+                                <span>Todos os Setores</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if (ViewBag.TipoPerfil == 1)
+            {
+                <li>
+                    <button type="button" class="links-items accordion-botao">
+                        <div class="flex-submenu-title">
+                        <i class="bi bi-people-fill"></i>
+                        <span class="">Funcionários</span>
+                        </div>
+                        <svg class="w-3 h-3 accordion-arrow" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                        </svg>
+                    
+                    </button>
+                    <ul class="accordion-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out" style="padding-left:0vw">
+                        <li>
+                            <a asp-controller="Funcionarios" asp-action="Index" class=" links-items gap-[1vw]">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" aria-hidden="true" class="h-3 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+                                <span>Todos os Funcionários</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Funcionarios" asp-action="Criar" class="links-items gap-[1vw]">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" aria-hidden="true" class="h-3 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+                                <span>Cadastrar Funcionários</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if (ViewBag.TipoPerfil == 1)
+            {
+                <li>
+                    <button type="button" class=" links-items accordion-botao">
+                        <div class="flex-submenu-title">
+                            <i class="bi bi-person-fill-gear"></i>
+                            <span class="">Usuários</span>
+                        </div>
+                        <svg class="w-3 h-3 accordion-arrow" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+                    <ul class="accordion-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out" style="padding-left:0vw">
+                        <li>
+                            <a asp-controller="Usuarios" asp-action="Index" class="links-items gap-[1vw]">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" aria-hidden="true" class="h-3 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+                                <span>Todos os Usuários</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Usuarios" asp-action="Cadastrar" class=" links-items gap-[1vw]">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" aria-hidden="true" class="h-3 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+                                <span>Cadastrar Usuário</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+        </ul>
+        <ul style="padding-left:0vw">
+            <li>
+                <a asp-controller="" asp-action="" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 btn-group links-items" style="color:white;">
+                    <i class="bi bi-gear-fill"></i>
+                    <span class="ms-3">Configurações</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
+<script src="https://cdn.tailwindcss.com" ></script>
+<script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+        const toggleBtn = document.getElementById("toggle-btn");
+        const menuLeft = document.getElementById("sidebar-multi-level-sidebar");
+        const layout = document.querySelector(".layout");
+
+        toggleBtn.addEventListener("click", function () {
+            menuLeft.classList.toggle("collapsed");
+            layout.classList.toggle('expanded');
+
+            if (menuLeft.classList.contains("collapsed")) {
+                menuLeft.style.width = "0";
+                layout.style.marginLeft = "0";
+            } else {
+
+                menuLeft.style.width = "16rem";
+                layout.style.marginLeft = "16rem";
+            }
+        });
+
+    });
+         const accordionButtons = document.querySelectorAll('.accordion-botao');
+
+    accordionButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const content = this.nextElementSibling;
+            const arrow = this.querySelector('.accordion-arrow');
+
+          
+            accordionButtons.forEach(btn => {
+                const otherContent = btn.nextElementSibling;
+                const otherArrow = btn.querySelector('.accordion-arrow');
+                if (otherContent !== content && otherContent.style.maxHeight) {
+                    otherContent.style.maxHeight = null;
+                    otherArrow.style.transform = "rotate(0deg)";
+                }
+            });
+
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                arrow.style.transform = "rotate(0deg)";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                arrow.style.transform = "rotate(180deg)";
+                arrow.style.transition = ".2s ease";
+            }
+        });
+    });
+
+</script>
