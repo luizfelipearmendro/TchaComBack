@@ -16,17 +16,17 @@
 
     @if (TempData["MensagemSucesso"] != null)
     {
-        <div class="alert success" role="alert">
-            <span class="closebtn">&times;</span>
-            <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+        <div id="successAlert" class="custom-alert success">
+            <span><strong>Sucesso!</strong> @TempData["MensagemSucesso"]</span>
+            <span class="closebtn" onclick="closeAlert('successAlert')">&times;</span>
         </div>
     }
 
     @if (TempData["MensagemErro"] != null)
     {
-        <div class="alert danger" role="alert">
-            <span class="closebtn">&times;</span>
-            <strong>Atenção!</strong> @TempData["MensagemErro"]
+        <div id="errorAlert" class="custom-alert error">
+            <span><strong>Atenção!</strong> @TempData["MensagemErro"]</span>
+            <span class="closebtn" onclick="closeAlert('errorAlert')">&times;</span>
         </div>
     }
 
