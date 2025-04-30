@@ -186,5 +186,40 @@ namespace TchaComBack.Controllers
 
             return View(viewModel);
         }
+
+        public IActionResult Funcionarios()
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios
+                .AsNoTracking()
+                .FirstOrDefault(u => u.Id == idUsuario && u.Hash == HttpContext.Session.GetString("hash"));
+
+            if (dbconsult == null) return RedirectToAction("Index", "Login");
+
+            var funcionariosQuery = db.Funcionarios
+                                      .AsNoTracking()
+                                      .Include(f => f.RacaNav)
+                                      .Include(f => f.EstadoCivilNav)
+                                      .Where(f => f.UsuarioId == idUsuario);
+
+
+            var funcionarios = funcionariosRepositorio.BuscarTodosFuncionarios((int)idUsuario);
+
+            var viewModel = new FuncionariosViewModel
+            {
+                NomeSetor = "Todos os Funcionários",
+                Funcionarios = funcionarios,
+                QuantidadeFuncAtivos = funcionarios.Count(f => f.Ativo == 'S'),
+                QuantidadeFuncInativos = funcionarios.Count(f => f.Ativo == 'N')
+            };
+
+            ViewBag.NomeCompleto = dbconsult.NomeCompleto;
+            ViewBag.Email = dbconsult.Email;
+            ViewBag.TipoPerfil = dbconsult.TipoPerfil;
+
+            return View(viewModel);
+        }
     }
 }

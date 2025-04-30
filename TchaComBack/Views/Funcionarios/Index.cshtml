@@ -122,28 +122,39 @@
             <div class="flex-titulo-card-funcionarios">
                 <h2 class="titulo-categoria">@Model.NomeSetor</h2>
                 <div class="flex-info-card-func">
-                    <div class="flex-status">
-                        <p>
-                            <span class="status-green"></span>
-                            <span class="status">Ativo</span>
-                        </p>
-                        <p>
-                            <span class="status-red"></span>
-                            <span class="status">Inativo</span>
-                        </p>
-                    </div>
 
                     @if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos == 0)
                     {
-                        <p class="p-func">@Model.QuantidadeFuncAtivos funcionário(s) ativo(s)</p>
+                        @* <p class="p-func">@Model.QuantidadeFuncAtivos funcionário(s) ativo(s)</p> *@
+                        <div class="flex-status">
+                            <p>
+                                <span class="status-green"></span>
+                                <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
+                            </p>
+                        </div>
                     }
                     else if (Model.QuantidadeFuncInativos > 0 && Model.QuantidadeFuncAtivos == 0)
                     {
-                        <p class="p-func">@Model.QuantidadeFuncInativos funcionário(s) inativo(s)</p>
+                        @* <p class="p-func">@Model.QuantidadeFuncInativos funcionário(s) inativo(s)</p> *@
+                        <div class="flex-status">
+                            <p>
+                                <span class="status-red"></span>
+                                <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
+                            </p>
+                        </div>
                     }
                     else if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos > 0)
                     {
-                        <p class="p-func">@(Model.QuantidadeFuncAtivos + @Model.QuantidadeFuncInativos) funcionário(s)</p>
+                        <div class="flex-status">
+                            <p>
+                                <span class="status-green"></span>
+                                <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
+                            </p>
+                            <p>
+                                <span class="status-red"></span>
+                                <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
+                            </p>
+                        </div>
                     }
                     else
                     {

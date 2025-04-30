@@ -1,0 +1,161 @@
+﻿@model FuncionariosViewModel
+@{
+    ViewData["Title"] = "Funcionários";
+}
+@functions {
+    public string GetPrimeiroESegundoNome(string nomeCompleto)
+    {
+        if (string.IsNullOrWhiteSpace(nomeCompleto))
+            return "";
+
+        var partes = nomeCompleto.Trim().Split(' ');
+        if (partes.Length == 1)
+            return partes[0];
+
+        return $"{partes[0]} {partes[1]}";
+    }
+}
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<link href="~/css/Funcionarios/setores-funcionarios.css" rel="stylesheet" />
+<script src="~/js/Funcionarios/setores-funcionarios.js" defer></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous" defer></script>
+<title>Funcionários</title>
+
+
+
+    @if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert success" role="alert">
+        <span class="closebtn">&times;</span>
+        <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+    </div>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert danger" role="alert">
+        <span class="closebtn">&times;</span>
+        <strong>Atenção!</strong> @TempData["MensagemErro"]
+    </div>
+}
+
+<section class="sessao-setores">
+    <div class="flex-body-funcionarios">
+        @foreach (var funcionario in Model.Funcionarios)
+        {
+            <div class="card-funcionario @(funcionario.Ativo != 'S' ? "inativo" : "ativo")">
+                <div class="flex-imagem-funcionario">
+                    @if (funcionario.Sexo == 'F')
+                    {
+                        <img src="https://i.ibb.co/WWT61zQb/image-removebg-preview.png" alt="Responsável" class="small-avatar" />
+                    }
+                    @if (funcionario.Sexo == 'M')
+                    {
+                        <img src="https://i.ibb.co/DPymZqqd/image-removebg-preview-1.png" alt="Responsável" class="small-avatar" />
+                    }
+                </div>
+                <div class="flex-body-card">
+                    <div class="flex-onda"></div>
+                    <div class="body-card ">
+                        <p><span>Nome</span> <span class="card-dado">@GetPrimeiroESegundoNome(funcionario.Nome)</span></p>
+                        <p><span>Cargo</span> <span class="card-dado">@funcionario.Cargo</span></p>
+                        <p><span>Email</span> <span class="card-dado">@funcionario.Email</span></p>
+                        <p><span>Telefone</span> <span class="card-dado">@funcionario.Celular</span></p>
+                        <p><span>Ativo</span> <span class="card-dado">@(funcionario.Ativo == 'S' ? "Sim" : "Não")</span></p>
+                        <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                                 view-data='@new ViewDataDictionary(ViewData) {
+                                 { "Texto", "Detalhar" },
+                                 { "Url", "/Funcionarios" },
+                                 { "ClasseExtra", "btn-detalhar" },
+                                 { "Id", "botaoDetalhar" },
+                                 { "Type", "button" },
+                                 { "Elemento", "button" },
+                                 { "Atributos", new Dictionary<string, string> {
+                                     { "data-bs-toggle", "modal" },
+                                     { "data-bs-target", $"#modal-{funcionario.Id}" },
+                                     { "aria-expanded", "false" }
+                                 }}
+                             }' />
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top:15vh;" class="modal fade" id="modal-@funcionario.Id" tabindex="-1" aria-labelledby="modalLabel-@funcionario.Id" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg-custom">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modalLabel-@funcionario.Id">@funcionario.Nome</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+    
+                            <div class="container-fluid">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="categoria">
+                                            <h5><i class="fa fa-user-circle" aria-hidden="true"></i> Informações Pessoais</h5>
+                                            <p><strong>Data de Nascimento:</strong> @funcionario.DataNascimento.ToString("dd/MM/yyyy")</p>
+                                            <p><strong>Sexo:</strong> @funcionario.Sexo</p>
+                                            <p><strong>Raça:</strong> @funcionario.RacaNav?.Raca</p>
+                                            <p><strong>Estado Civil:</strong> @funcionario.EstadoCivilNav?.EstadoCivil</p>
+                                            <p><strong>Nome da Mãe:</strong> @funcionario.NomeMae</p>
+                                            <p><strong>Naturalidade:</strong> @funcionario.Naturalidade</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="categoria">
+                                            <h5><i class="fa fa-home" aria-hidden="true"></i> Endereço</h5>
+                                            <p><strong>Endereço:</strong> @funcionario.Endereco</p>
+                                            <p><strong>Cidade:</strong> @funcionario.CidadeResidencia</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="categoria">
+                                            <h5><i class="fa fa-phone" aria-hidden="true"></i> Contato</h5>
+                                            <p><strong>Email:</strong> @funcionario.Email</p>
+                                            <p><strong>Telefone:</strong> @funcionario.Celular</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="categoria">
+                                            <h5><i class="fa fa-briefcase" aria-hidden="true"></i> Detalhes Profissionais</h5>
+                                            <p><strong>Cargo:</strong> @funcionario.Cargo</p>
+                                            <p><strong>Salário:</strong> R$ @funcionario.Salario.ToString("N2")</p>
+                                            <p><strong>Data de Ingresso:</strong> @funcionario.DataIngresso.ToString("dd/MM/yyyy")</p>
+                                            <p><strong>Dias Trabalhados:</strong> @funcionario.DiasTrabalhados</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="categoria">
+                                            <h5><i class="fa fa-calendar" aria-hidden="true"></i> Datas Importantes</h5>
+                                            <p><strong>Data de Cadastro:</strong> @funcionario.DataCadastro.ToString("dd/MM/yyyy")</p>
+                                            <p><strong>Data de Atualização:</strong> @funcionario.DataAtualizacao?.ToString("dd/MM/yyyy")</p>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+    
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

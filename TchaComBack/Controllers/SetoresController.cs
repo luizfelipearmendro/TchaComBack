@@ -46,8 +46,9 @@ namespace TchaComBack.Controllers
 
             // Consulta inicial dos setores
             var setoresQuery = db.Setores
-                .AsNoTracking()
-                .Where(s => s.UsuarioId == sessionIdUsuario);
+                                 .AsNoTracking()
+                                 .Include(s => s.Categoria)
+                                 .Where(s => s.UsuarioId == sessionIdUsuario);
 
             // Aplica o filtro de busca por nome, descrição ou responsável
             if (!string.IsNullOrEmpty(searchString))
@@ -95,6 +96,7 @@ namespace TchaComBack.Controllers
                                    })
                                    .ToList();
 
+
             var viewModel = new SetoresViewModel
             {
                 Setores = setoresFiltrados,
@@ -108,6 +110,10 @@ namespace TchaComBack.Controllers
             ViewBag.SearchString = searchString;
             ViewBag.CategoriaId = categoriaId;
             ViewBag.Ativo = ativo;
+
+            ViewBag.Categorias = db.Categorias
+                                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Nome })
+                                .ToList();
 
             // Prepara as opções para os dropdowns
             ViewBag.CategoriasOpcoes = new SelectList(todasCategorias, "Id", "Nome", categoriaId); // Todas as categorias
@@ -130,6 +136,10 @@ namespace TchaComBack.Controllers
                 return RedirectToAction("Index", "Login");
 
             var sessionIdUsuario = dbconsult.Id;
+
+            ViewBag.Categorias = db.Categorias
+                                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Nome })
+                                .ToList();
 
             ViewBag.NomeCompleto = dbconsult.NomeCompleto;
             ViewBag.Email = dbconsult.Email;
