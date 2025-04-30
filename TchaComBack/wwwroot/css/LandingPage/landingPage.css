@@ -1,0 +1,1521 @@
+﻿html {
+scroll-behavior: smooth;
+}
+
+* {
+padding: 0;
+margin: 0;
+}
+
+#rolagem-animação {
+overflow: hidden;
+}
+
+#principal-rolagem-animação {
+width: 100%;
+left: 0;
+position: fixed;
+}
+.cabecalho{
+    height:100vh;
+}
+header {
+    width: 100vw;
+    overflow: hidden;
+    top: 0;
+    position: fixed;
+    z-index: -1;
+    background-color: black;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    background: black;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.flex-cabecalho {
+display: flex;
+flex-direction: column;
+width: 100vw;
+height: 100%;
+}
+
+.cabecalho-box-one {
+transition: background-color 0.5s ease-in-out;
+padding: 0;
+position: fixed;
+z-index: 100000;
+gap: 30vw;
+padding: 1vh;
+
+}
+
+.cabecalho-box-one .menu-desktop {
+width: 100vw;
+height: auto;
+display: flex;
+justify-content: space-around;
+align-items: center;
+flex-direction: row;
+gap: 40vw;
+}
+
+.cabecalho-box-one .scroll-active {
+background-color: black;
+}
+
+
+.cabecalho-box-one .cabecalho-barra-navegacao {
+display: flex;
+justify-content: space-around;
+align-items: center;
+gap: 5vw;
+width: auto;
+}
+
+.cabecalho-box-one .cabecalho-barra-navegacao .flex-links-cabecalho {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 2vw;
+}
+
+.cabecalho-box-one .cabecalho-barra-navegacao .flex-links-cabecalho a {
+color: white;
+font-family: "Montserrat", sans-serif;
+cursor: pointer;
+font-size: 1.2rem;
+position: relative; /* Permite que os pseudo-elementos sejam posicionados em relação ao link */
+text-decoration: none; /* Remove sublinhado padrão */
+padding-bottom: 5px; /* Espaço para a borda crescente */
+transition: color 0.35s ease; /* Transição suave para a cor do texto */
+}
+
+/* Pseudo-elemento :before para criar a borda crescente */
+.cabecalho-box-one .cabecalho-barra-navegacao .flex-links-cabecalho a:before {
+content: '';
+position: absolute;
+left: 0;
+bottom: 0;
+width: 0;
+height: 2px; /* Altura da borda */
+background: #FFA500; /* Cor da borda */
+transition: width 0.35s ease; /* Transição suave para o crescimento da borda */
+}
+
+/* Efeito de borda crescente ao passar o mouse */
+.cabecalho-box-one .cabecalho-barra-navegacao .flex-links-cabecalho a:hover:before {
+width: 100%; /* A borda cresce até ocupar toda a largura do link */
+}
+
+.cabecalho-box-one .cabecalho-barra-navegacao .flex-links-cabecalho a:hover {
+color: #FFA500
+}
+
+.cabecalho-box-one .cabecalho-barra-navegacao .flex-botao-cabecalho {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+
+
+.cabecalho-box-one.scroll-active {
+background-color: black;
+box-sizing: border-box;
+}
+.cabecalho-box-one .menu-hamburger {
+display: none
+}
+.cabecalho-box-two {
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100vw;
+height: 100%;
+}
+
+.flex-conteudo-box-two {
+width: 30%;
+height: auto;
+display: flex;
+justify-content: center;
+align-items: flex-start;
+flex-direction: column;
+margin-left: 2vw;
+gap: 2vh;
+}
+
+.paragrafo-black{
+    color: black !important;
+}
+
+.flex-conteudo-box-two h1 {
+    color: white;
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 5rem;
+    width: fit-content;
+}
+
+.flex-conteudo-box-two p {
+color: white;
+width: fit-content;
+font-family: "Montserrat", sans-serif;
+font-size: 1rem;
+padding: 0px;
+margin: 0px;
+}
+
+
+.flex-conteudo-box-two .flex-botoes-box-two {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 1vw;
+}
+
+
+.flex-imagem-box-two {
+background: url("/img/3d-animal-shape-glowing-with-bright-holographic-colors (1).jpg");
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+width: 50%;
+height: 100%
+}
+
+.conteúdo {
+height: auto;
+background: white;
+position: relative;
+z-index: 1;
+}
+
+.conteúdo .flex-conteúdos {
+display: flex;
+flex-direction: column;
+gap: 0vh;
+height: auto;
+}
+
+.conteúdo .conteúdo-box-one {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+padding: 5vh;
+gap: 10vh;
+}
+
+.conteúdo .conteúdo-box-one .conteúdo-title-box-one {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+
+.conteúdo .conteúdo-box-one .flex-cards-servicos {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2vw;
+}
+
+.conteúdo .conteúdo-box-two {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 20vh;
+padding-bottom: 10vh;
+padding-top: 2vh;
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right {
+display: grid;
+grid-template-columns: repeat(2,1fr);
+justify-content: space-between;
+align-items: center;
+gap: 10vw
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-one-right {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+flex-direction: column;
+padding-left: 2vw;
+gap: 5vh;
+}
+
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-two {
+background: url("https://img.freepik.com/fotos-gratis/pessoas-usando-dispositivo-digital-durante-uma-reuniao_23-2149085983.jpg?t=st=1743433330~exp=1743436930~hmac=2d5063038471ccbc98ec69509728450218b88063eec320e4b96c31b55965364b&w=996");
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+width: 100%;
+height: 90vh;
+border-top-left-radius: 5vw;
+border-bottom-left-radius: 5vw;
+position: relative;
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-two::before {
+content: "";
+position: absolute;
+top: 0vh;
+right: -5vw;
+width: 115%;
+height: 90vh;
+background: linear-gradient(to right bottom, #FF9800, #FF5722);
+z-index: -1;
+transform: rotate(-10deg);
+border-top-left-radius: 5vw;
+border-bottom-left-radius: 5vw;
+}
+
+
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right {
+display: grid;
+grid-template-columns: repeat(2,1fr);
+justify-content: space-between;
+align-items: center;
+gap: 10vw
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-one-right {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+flex-direction: column;
+padding-left: 2vw;
+gap: 5vh;
+}
+
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one p {
+font-family: "Montserrat", sans-serif;
+font-size: 1.2rem;
+line-height: 1.5rem;
+}
+
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-two {
+background: url("https://img.freepik.com/fotos-gratis/pessoas-usando-dispositivo-digital-durante-uma-reuniao_23-2149085983.jpg?t=st=1743433330~exp=1743436930~hmac=2d5063038471ccbc98ec69509728450218b88063eec320e4b96c31b55965364b&w=996");
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+width: 100%;
+height: 90vh;
+border-top-left-radius: 5vw;
+border-bottom-left-radius: 5vw;
+position: relative;
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-two::before {
+content: "";
+position: absolute;
+top: 0vh;
+right: -5vw;
+width: 115%;
+height: 90vh;
+background: linear-gradient(to right bottom, #FF9800, #FF5722);
+z-index: -2;
+transform: rotate(-10deg);
+border-top-left-radius: 5vw;
+border-bottom-left-radius: 5vw;
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-for {
+background: url("https://img.freepik.com/fotos-gratis/grafico-grafico-de-barras-diagrama-estatistico-grafico_53876-120782.jpg?t=st=1743449329~exp=1743452929~hmac=c09fdc6a6b6e13e05f294d6f1ebc09f14aef5a37741690362b6ebd360ca79fd4&w=740");
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+width: 100%;
+height: 90vh;
+border-top-left-radius: 5vw;
+border-bottom-left-radius: 5vw;
+position: relative;
+order: 1;
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-for::before {
+content: "";
+position: absolute;
+top: 0vh;
+right: -5vw;
+width: 115%;
+height: 90vh;
+background: linear-gradient(to right bottom, #FF9800, #FF5722);
+z-index: -2;
+transform: rotate(-10deg);
+border-top-left-radius: 5vw;
+border-bottom-left-radius: 5vw;
+}
+
+
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left {
+display: grid;
+grid-template-columns: repeat(2,1fr);
+justify-content: space-between;
+align-items: center;
+flex-direction: row-reverse;
+gap: 10vw
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-one-left {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left .box-card-servicos-detalhado-one-left {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+flex-direction: column;
+padding-left: 2vw;
+gap: 5vh;
+order: 2;
+}
+
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left .box-card-servicos-detalhado-one-left p {
+font-family: "Montserrat", sans-serif;
+font-size: 1.2rem;
+line-height: 1.5rem;
+}
+
+
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left .box-card-servicos-detalhado-three-left {
+background: url("https://img.freepik.com/fotos-gratis/trabalhadores-de-escritorio-usando-graficos-de-financas_23-2150408661.jpg?t=st=1743449138~exp=1743452738~hmac=59de76f80385d77c03ac1fb87fdcf5d8a2c61205da72be290392fcf4b5cdca39&w=996");
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+width: 100%;
+height: 90vh;
+border-top-right-radius: 5vw;
+border-bottom-right-radius: 5vw;
+position: relative;
+order: 1;
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left .box-card-servicos-detalhado-three-left::before {
+content: "";
+position: absolute;
+top: 0vh;
+left: -5vw;
+width: 115%;
+height: 90vh;
+background: linear-gradient(to right bottom, #FF9800, #FF5722);
+z-index: -2;
+transform: rotate(-10deg);
+border-top-right-radius: 5vw;
+border-bottom-right-radius: 5vw;
+}
+
+
+.conteúdo .conteúdo-box-three {
+display: flex;
+flex-direction: column;
+background-color: black;
+height: auto;
+}
+
+.conteúdo .conteúdo-box-three .conteúdo-onda-two {
+position: relative;
+width: 100%;
+top: -1vh;
+right: 0;
+width: 100%;
+height: 10vh;
+background-color: white;
+}
+
+.conteúdo .conteúdo-box-three .conteúdo-onda-two::after {
+content: "";
+position: absolute;
+top: 10vh;
+right: 0;
+width: 10%;
+height: 10vh;
+background-color: black;
+border-top-right-radius: 10vw;
+}
+
+.conteúdo .conteúdo-box-three .conteúdo-onda-two::before {
+content: "";
+position: absolute;
+width: 100%;
+top: 10vh;
+right: 0;
+width: 10%;
+height: 10vh;
+background-color: white;
+}
+
+
+.conteúdo-box-three .flex-conteúdo-box-three {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 100%;
+height: 100%;
+margin-top: 10vh;
+padding: 0vh;
+gap: 5vh;
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-one {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+justify-content: center;
+align-items: center;
+gap: 10vw;
+margin-top: 5vh;
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .body-sobre-nos {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+width: 100%;
+height: 100%;
+padding-left: 2vw;
+padding-right: 2vw;
+gap: 5vh;
+}
+
+
+.conteúdo-box-three .flex-conteúdo-box-three .body-sobre-nos p {
+font-family: "Montserrat", sans-serif;
+font-size: 1.2rem;
+line-height: 1.7rem;
+color: white;
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .body-imagem-equipe {
+background: url("https://img.freepik.com/fotos-gratis/empresarios-em-reuniao-de-escritorio_23-2148908967.jpg?t=st=1743453372~exp=1743456972~hmac=8f2dcb8b30cd7a59ba9f0f31a85d06f3a88a2a0cbdc1fffb4e7226d9c4fa0b9a&w=996");
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+width: 100%;
+height: 70vh;
+border-top-left-radius: 5vw;
+border-bottom-left-radius: 5vw;
+position: relative;
+left: 0vw;
+border-top: 10px solid #FF9800;
+border-bottom: 10px solid #FF9800;
+border-left: 10px solid #FF9800;
+}
+
+
+.flex-conteúdo-box-three .flex-sobre-nos-two {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 10vw;
+justify-content: center;
+align-items: center;
+padding-bottom: 10vh;
+}
+
+
+
+.contato-box-one {
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+justify-content: center;
+gap: 5vh;
+padding-right: 2vw;
+}
+
+
+.contato-box-one p {
+font-size: 1.2rem;
+line-height: 1.5;
+color: white;
+font-family: "Montserrat", sans-serif;
+text-align: end;
+}
+
+
+
+.contato-box-one a:hover {
+background-color: #FFA500;
+}
+
+.invólucro-paralaxe {
+margin-top: 100%;
+margin-bottom: 300px;
+box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.contato-box-two {
+height: auto;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background-color: black;
+margin-top: -1vh;
+padding-left: 2vw;
+padding-right: 2vw;
+padding-top: 5vh;
+padding-bottom: 5vh;
+}
+
+.contato-box-two  .contato-body {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+justify-content: space-between;
+align-items: center;
+width:100%;
+gap: 2vw;
+    
+}
+.contato-box-two .contato-body  .contato-body-box-one{
+display:flex;
+flex-direction:column;
+gap: 2vh;
+}
+
+
+.contato-body p {
+font-size: 1.2rem;
+line-height: 1.5;
+color: white;
+font-family: "Montserrat", sans-serif;
+
+}
+
+
+
+iframe {
+width: 100%;
+height: 400px;
+border: none;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+width: 100%;
+height: auto;
+background: #FFA500;
+bottom: -300px;
+position: fixed;
+z-index: -1;
+overflow-y: auto;
+}
+
+
+
+footer .footer-box-one {
+display: flex;
+flex-direction: column;
+width: 100%;
+gap: 20px;
+height: auto;
+padding-top: 5vh;
+padding-bottom: 5vh;
+display:flex;
+justify-content:space-between;
+align-items:center
+}
+
+
+
+
+
+.footer-links {
+display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
+width: 100%;
+padding: 2vw 2vw;
+}
+
+.footer-column {
+flex: 1;
+min-width: 150px;
+}
+
+.footer-column h4 {
+font-weight: bold;
+margin-bottom: 10px;
+font-size: 1.8rem;
+color: white;
+font-family: "Bebas Neue", sans-serif;
+}
+
+.footer-column ul {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+.footer-column ul li a {
+text-decoration: none;
+color: #666;
+font-size: 0.9rem;
+line-height: 1.8;
+font-family: "Montserrat", sans-serif;
+font-weight: bold;
+}
+
+.footer-column ul li a:hover {
+color: black;
+}
+
+.footer-legal {
+display: flex;
+flex-direction: column;
+gap: 10px;
+font-size: 0.9rem;
+color: #666;
+}
+
+.footer-legal ul {
+display: flex;
+gap: 15px;
+list-style: none;
+padding: 0;
+}
+
+.footer-legal p {
+font-family: "Montserrat", sans-serif;
+font-weight: bold;
+}
+
+.footer-legal ul li a {
+text-decoration: none;
+color: #666;
+font-family: "Montserrat", sans-serif;
+font-weight: bold;
+}
+
+.footer-legal ul li a:hover {
+color: black;
+}
+
+.footer-social {
+display: flex;
+flex-direction: column;
+gap: 2.5vh;
+}
+
+.footer-social h4 {
+font-weight: bold;
+margin-bottom: 10px;
+font-size: 1.8rem;
+color: white;
+font-family: "Bebas Neue", sans-serif;
+}
+
+.social-icons {
+display: flex;
+gap: 10px;
+}
+
+.social-icons a img {
+width: 30px;
+height: 30px;
+}
+
+.animar-com-scroll {
+opacity: 0;
+transform: translateY(-10vh);
+transition: all 0.9s ease;
+}
+
+.animar-com-scroll.active {
+opacity: 1;
+transform: translateY(0);
+}
+
+
+header,
+footer,
+#principal-rolagem-animação {
+-webkit-transition-property: all;
+-moz-transition-property: all;
+transition-property: all;
+-webkit-transition-duration: 0.4s;
+-moz-transition-duration: 0.4s;
+transition-duration: 0.4s;
+-webkit-transition-timing-function: cubic-bezier(0, 0, 0, 1);
+-moz-transition-timing-function: cubic-bezier(0, 0, 0, 1);
+transition-timing-function: cubic-bezier(0, 0, 0, 1);
+}
+
+
+/* MEDIA QUERIES PARA RESPONSIVIDADE */
+@media (min-width: 769px) and (max-width: 1000px) {
+.cabecalho-box-one{
+width: 100%;
+}
+.cabecalho-box-one .menu-desktop {
+display: none;
+}
+
+.cabecalho-box-one .menu-hamburger {
+display: flex;
+justify-content: flex-start;
+align-items: center;
+width: 100%;
+}
+
+.cabecalho-box-one .menu-hamburger h2 {
+margin-left: 5vw;
+}
+.cabecalho-box-two {
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+}
+
+.flex-conteudo-box-two {
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.flex-conteudo-box-two h1 {
+font-size: 6rem;
+text-align:center;
+}
+.card-servicos .flex-title-card h4 {
+ text-align: right;
+
+}
+.conteúdo .flex-conteúdos .conteúdo-box-one .conteúdo-title-box-one h1 {
+font-size: 3rem;
+text-align:center;
+}
+
+.conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one h3 {
+font-size: 3rem;
+text-align:center;
+}
+
+.flex-imagem-box-two {
+display: none; /* Esconde a imagem abaixo de 1000px */
+}
+
+/* SESSÃO SERVIÇOS - CARDS BREVE */
+.conteúdo .conteúdo-box-one .flex-cards-servicos {
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.conteúdo .conteúdo-box-one .flex-cards-servicos .card-servicos {
+width: 90%;
+margin-bottom: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+
+/* SESSÃO SERVIÇOS - DETALHES */
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right,
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left {
+grid-template-columns: 1fr; /* Uma coluna para centralizar */
+flex-direction: column;
+align-items: center;
+text-align: center;
+}
+
+.box-card-servicos-detalhado-two,
+.box-card-servicos-detalhado-for,
+.box-card-servicos-detalhado-three-left {
+display: none; /* Esconde as imagens abaixo de 1000px */
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one,
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left .box-card-servicos-detalhado-one-left {
+width: 90%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one h3 {
+font-size: 3rem;
+}
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left .box-card-servicos-detalhado-one-left h3 {
+font-size: 3rem;
+}
+/* SESSÃO SOBRE NÓS */
+
+.conteúdo-box-three .flex-conteúdo-box-three {
+gap: 10vh;
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-one {
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+}
+
+.body-imagem-equipe {
+display: none; /* Esconde a imagem abaixo de 1000px */
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-one .body-sobre-nos {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 90%
+}
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-one .body-sobre-nos h1{
+font-size: 3rem;
+text-align:center;
+}
+/* SESSÃO CONTATO */
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two {
+display: flex; /* Uma coluna para centralizar */
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.carousel-container {
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.flex-sobre-nos-two .carousel-container .glide {
+width: 100%;
+max-width: 700px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column
+}
+.carousel-container .glide .glide__slide div {
+border-radius: 50%;
+background-color: white;
+width: 100%;
+max-width: 10vw;
+height: 10vw;
+display: flex;
+justify-content: center;
+align-items: center;
+overflow: hidden;
+}
+
+
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two .contato-box-one {
+width: 90%;
+align-items: center;
+justify-content:center;
+}
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two .contato-box-one h1{
+font-size: 3rem;
+text-align:center;
+}
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two .contato-box-one p {
+text-align: center;
+}
+.contato-box-two {
+width: 100%;
+
+}
+.contato-box-two .contato-body{
+align-items: center;
+justify-content:center;
+flex-direction:column;
+display:flex;
+}
+.contato-box-two .contato-body .contato-body-box-one{
+align-items: center;
+justify-content:center;
+flex-direction:column;
+display:flex;
+}
+.contato-box-two .contato-body .contato-body-box-one h1{
+font-size: 3rem;
+}
+.contato-box-two .contato-body .contato-body-box-one p{
+text-align: center;
+}
+.contato-box-two .contato-body div{
+width: 100%;
+}
+.contato-box-two .contato-body div iframe{
+width:100%;
+}
+
+/* SESSÃO FOOTER */
+
+footer {
+width: 100%;
+height: auto;
+background: #FFA500;
+bottom: -300px;
+position: fixed;
+z-index: -1;
+overflow-y: auto;
+        
+}
+footer .footer-box-one {
+display: flex;
+flex-direction: column;
+width: 100%;
+gap: 20px;
+height: auto;
+padding-top: 5vh;
+padding-bottom: 5vh;
+display: flex;
+justify-content: space-between;
+align-items: center
+}
+
+
+
+
+
+.footer-links {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+width: 100%;
+        
+}
+.footer-links h4 {
+text-align:center;
+}
+.footer-links .footer-social{
+display:flex;
+flex-direction: column;
+align-items: center;
+justify-content:center;
+}
+.footer-links .footer-social h4 {
+text-align:center;
+}
+.footer-links .footer-legal {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+.footer-links li {
+text-align:center;
+}
+}
+
+@media (min-width:501px)and (max-width: 768px) {
+.cabecalho-box-one {
+width: 100%;
+}
+
+.cabecalho-box-one .menu-desktop {
+display: none;
+}
+
+.cabecalho-box-one .menu-hamburger {
+display: flex;
+justify-content: flex-start;
+align-items: center;
+width: 100%;
+}
+.cabecalho-box-two {
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+}
+.cabecalho-box-one .menu-hamburger h2 {
+margin-left: 5vw;
+}
+.cabecalho-box-two {
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+}
+
+.flex-conteudo-box-two {
+width: 90%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.flex-conteudo-box-two h1 {
+font-size: 6rem;
+text-align:center;
+}
+.conteúdo .flex-conteúdos .conteúdo-box-one .conteúdo-title-box-one h1 {
+font-size: 3rem;
+text-align:center;
+}
+
+.conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one h3 {
+font-size: 3rem;
+text-align:center;
+}
+
+.flex-imagem-box-two {
+display: none; /* Esconde a imagem abaixo de 1000px */
+}
+
+/* SESSÃO SERVIÇOS - CARDS BREVE */
+.conteúdo .conteúdo-box-one{
+padding: 5vh;
+}
+.conteúdo .conteúdo-box-one .flex-cards-servicos {
+flex-wrap: wrap;
+justify-content: center;
+}
+.conteúdo .flex-conteúdos .conteúdo-box-one .conteúdo-title-box-one h1 {
+font-size: 3rem;
+text-align:center;
+}
+.conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one h3 {
+font-size: 3rem;
+text-align:center;
+}
+
+.conteúdo .conteúdo-box-one .flex-cards-servicos .card-servicos {
+width: 90%;
+margin-bottom: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.conteúdo .conteúdo-box-one .flex-cards-servicos .card-servicos .flex-title-card h4{
+text-align:end;
+}
+/* SESSÃO SERVIÇOS - DETALHES */
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right,
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left {
+grid-template-columns: 1fr; /* Uma coluna para centralizar */
+flex-direction: column;
+align-items: center;
+text-align: center;
+}
+
+.box-card-servicos-detalhado-two,
+.box-card-servicos-detalhado-for,
+.box-card-servicos-detalhado-three-left {
+display: none; /* Esconde as imagens abaixo de 1000px */
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one,
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left .box-card-servicos-detalhado-one-left {
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+padding: 4vw;
+}
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one h3 {
+font-size: 3rem;
+}
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left .box-card-servicos-detalhado-one-left h3 {
+font-size: 3rem;
+}
+/* SESSÃO SOBRE NÓS */
+
+.conteúdo-box-three .flex-conteúdo-box-three {
+gap: 10vh;
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-one {
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+}
+
+.body-imagem-equipe {
+display: none; /* Esconde a imagem abaixo de 1000px */
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-one .body-sobre-nos {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 90%;
+}
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-one .body-sobre-nos h1{
+font-size: 3rem;
+}
+
+/* SESSÃO CONTATO */
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two {
+display: flex; /* Uma coluna para centralizar */
+flex-direction: column;
+align-items: center;
+justify-content: center;
+width: 90%;
+}
+
+.carousel-container {
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.flex-sobre-nos-two .carousel-container .glide {
+width: 100%;
+max-width: 700px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column
+}
+.carousel-container .glide .glide__slide div {
+border-radius: 50%;
+background-color: white;
+width: 100%;
+max-width: 15vw;
+height: 15vw;
+display: flex;
+justify-content: center;
+align-items: center;
+overflow: hidden;
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two .contato-box-one {
+width: 90%;
+align-items: center;
+justify-content: center;
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two .contato-box-one p {
+text-align: center;
+}
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two .contato-box-one h1 {
+font-size: 3rem;
+text-align: center;
+}
+.contato-box-two {
+width: 100%;
+}
+
+.contato-box-two .contato-body {
+align-items: center;
+justify-content: center;
+flex-direction: column;
+display: flex;
+}
+
+.contato-box-two .contato-body .contato-body-box-one {
+align-items: center;
+justify-content: center;
+flex-direction: column;
+display: flex;
+}
+.contato-box-two .contato-body .contato-body-box-one h1 {
+font-size: 3rem;
+text-align:center;
+}
+.contato-box-two .contato-body .contato-body-box-one p {
+text-align: center;
+}
+
+.contato-box-two .contato-body div {
+width: 100%;
+}
+
+.contato-box-two .contato-body div iframe {
+width: 100%;
+}
+
+
+/* SESSÃO FOOTER */
+footer {
+height: auto;
+bottom: -300px;
+display: flex;
+justify-content: flex-end;
+align-items: flex-end;
+flex-direction: column
+}
+
+}
+
+
+
+@media (min-width: 320px) and (max-width: 500px) {
+.cabecalho-box-one {
+width: 100%;
+}
+
+.cabecalho-box-one .menu-desktop {
+display: none;
+}
+
+.cabecalho-box-one .menu-hamburger {
+display: flex;
+justify-content: flex-start;
+align-items: center;
+width: 100%;
+}
+
+.cabecalho-box-two {
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+}
+
+.flex-conteudo-box-two {
+width: 90%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.flex-conteudo-box-two h1 {
+font-size: 4rem;
+text-align:center;
+}
+.conteúdo .flex-conteúdos .conteúdo-box-one .conteúdo-title-box-one h1 {
+font-size: 3rem;
+text-align:center;
+}
+
+.conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one h3 {
+font-size: 3rem;
+text-align:center;
+}
+.flex-imagem-box-two {
+display: none; /* Esconde a imagem abaixo de 1000px */
+}
+
+/* SESSÃO SERVIÇOS - CARDS BREVE */
+.conteúdo .conteúdo-box-one {
+padding-top: 5vh;
+padding-bottom: 5vh;
+padding-left: 0vh;
+padding-right: 0vh;
+}
+
+.conteúdo .conteúdo-box-one .flex-cards-servicos {
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.conteúdo .flex-conteúdos .conteúdo-box-one .conteúdo-title-box-one h1 {
+font-size: 3rem;
+
+}
+
+.conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one h3 {
+font-size: 3rem;
+
+}
+
+.conteúdo .conteúdo-box-one .flex-cards-servicos .card-servicos {
+width: 90%;
+margin-bottom: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.conteúdo .conteúdo-box-one .flex-cards-servicos .card-servicos {
+width: 90%;
+margin-bottom: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+max-height: 100vh;
+}
+.conteúdo .conteúdo-box-one .flex-cards-servicos .card-servicos .flex-title-card h4{
+text-align:end;
+}
+
+/* SESSÃO SERVIÇOS - DETALHES */
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right,
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left {
+grid-template-columns: 1fr; /* Uma coluna para centralizar */
+flex-direction: column;
+align-items: center;
+text-align: center;
+}
+
+.box-card-servicos-detalhado-two,
+.box-card-servicos-detalhado-for,
+.box-card-servicos-detalhado-three-left {
+display: none; /* Esconde as imagens abaixo de 1000px */
+}
+
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-right .box-card-servicos-detalhado-one,
+.conteúdo .conteúdo-box-two .flex-card-servicos-detalhado-left .box-card-servicos-detalhado-one-left {
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+padding: 4vw;
+}
+
+/* SESSÃO SOBRE NÓS */
+
+.conteúdo-box-three .flex-conteúdo-box-three {
+gap: 10vh;
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-one {
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+}
+
+.body-imagem-equipe {
+display: none; /* Esconde a imagem abaixo de 1000px */
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-one .body-sobre-nos {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 90%;
+}
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-one .body-sobre-nos h1{
+font-size: 3rem;
+
+}
+/* SESSÃO CONTATO */
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two {
+display: flex; /* Uma coluna para centralizar */
+flex-direction: column;
+align-items: center;
+justify-content: center;
+width: 90%;
+}
+
+.carousel-container {
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.flex-sobre-nos-two .carousel-container .glide {
+width: 100%;
+max-width: 700px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column
+}
+.carousel-container .glide .glide__slide div {
+border-radius: 50%;
+background-color: white;
+width: 100%;
+max-width: 25vw;
+height: 25vw;
+display: flex;
+justify-content: center;
+align-items: center;
+overflow: hidden;
+}
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two .contato-box-one {
+width: 90%;
+align-items: center;
+justify-content: center;
+}
+
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two .contato-box-one p {
+text-align: center;
+}
+.conteúdo-box-three .flex-conteúdo-box-three .flex-sobre-nos-two .contato-box-one h1 {
+font-size: 3rem;
+text-align: center;
+}
+.contato-box-two {
+width: 100%;
+}
+
+.contato-box-two .contato-body {
+align-items: center;
+justify-content: center;
+flex-direction: column;
+display: flex;
+}
+
+.contato-box-two .contato-body .contato-body-box-one {
+align-items: center;
+justify-content: center;
+flex-direction: column;
+display: flex;
+}
+.contato-box-two .contato-body .contato-body-box-one h1 {
+font-size: 3rem;
+text-align: center;
+}
+.contato-box-two .contato-body .contato-body-box-one p {
+text-align: center;
+}
+
+.contato-box-two .contato-body div {
+width: 100%;
+}
+
+.contato-box-two .contato-body div iframe {
+width: 100%;
+}
+
+
+/* SESSÃO FOOTER */
+footer {
+height: auto;
+bottom: -300px;
+display: flex;
+justify-content: flex-end;
+align-items: flex-end;
+flex-direction: column
+}
+
+
+}
+
+
+

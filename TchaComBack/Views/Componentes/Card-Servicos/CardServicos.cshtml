@@ -1,0 +1,44 @@
+﻿<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" />
+<link rel="stylesheet" href="~/css/Componentes/Card-Servicos/cardservicos.css" />
+
+@{
+    var imagemUrl = ViewData["ImagemUrl"] as string;
+    var titulo = ViewData["Titulo"] as string;
+    var descricao = ViewData["Descricao"] as string;
+    var botaoTexto = ViewData["BotaoTexto"] as string;
+    var botaoUrl = ViewData["BotaoUrl"] as string;
+    var botaoClasseExtra = ViewData["BotaoClasseExtra"] as string ?? "";
+    var botaoId = ViewData["BotaoId"] as string ?? "";
+    var botaoElemento = ViewData["BotaoElemento"] as string ?? "a";
+}
+
+<div class="card-servicos">
+    <div class="flex-title-card">
+        <img src="@Url.Content(imagemUrl)" alt="@titulo" />
+        <h4>@titulo</h4>
+    </div>
+    <div class="flex-body-card">
+        <p>
+            @Html.Raw(descricao)
+        </p>
+    </div>
+    <div class="flex-botao-card">
+        @if (!string.IsNullOrEmpty(botaoTexto) && !string.IsNullOrEmpty(botaoUrl))
+        {
+            if (botaoElemento == "a")
+            {
+                <a href="@botaoUrl" class="botao-primario @botaoClasseExtra" id="@botaoId">@botaoTexto</a>
+            }
+            else if (botaoElemento == "button")
+            {
+                <button type="button" class="botao-primario @botaoClasseExtra" id="@botaoId">@botaoTexto</button>
+            }
+        }
+    </div>
+</div>

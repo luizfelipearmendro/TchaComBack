@@ -1,0 +1,33 @@
+﻿@{
+    var texto = ViewData["Texto"] as string;
+    var url = ViewData["Url"] as string;
+    var classeExtra = ViewData["ClasseExtra"] as string ?? "";
+    var id = ViewData["Id"] as string ?? "";
+    var type = ViewData["Type"] as string ?? "button";
+    var target = ViewData["Target"] as string ?? "";
+    var elemento = ViewData["Elemento"] as string ?? "a";
+    var atributosExtras = ViewData["Atributos"] as Dictionary<string, string> ?? new Dictionary<string, string>();
+
+    string atributosMontados = string.Join(" ", atributosExtras.Select(attr => $"{attr.Key}=\"{attr.Value}\""));
+}
+
+<div hidden>
+    <link rel="stylesheet" href="~/css/Componentes/Botao-Secundario/BotaoSecundario.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</div>
+
+@if (elemento == "a")
+{
+    <a href="@url" class="botao-secundario @classeExtra" id="@id" type="@type" target="@target" @Html.Raw(atributosMontados)>
+        @texto
+    </a>
+}
+else
+{
+    <button type="@type" class="botao-secundario @classeExtra" id="@id" @Html.Raw(atributosMontados)>
+        @texto
+    </button>
+}

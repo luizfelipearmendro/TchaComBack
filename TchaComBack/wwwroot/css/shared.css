@@ -1,0 +1,94 @@
+﻿body {
+}
+.offcanvas-start {
+    width: 28vw;
+}
+.offcanvas-header {
+    background: linear-gradient(90deg,#8A2BE2, #FFA500);
+    padding-left: 2vw;
+    padding-right: 2vw;
+    padding-bottom:1vh;
+    padding-top: 1vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar-brand h3 {
+    color: white;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 2rem;
+}
+.footer {
+    background:black; 
+    opacity:85%
+}
+.container{
+    color:white;
+}
+    .container a {
+        color: #FFA500;
+    }
+.bi {
+    background: linear-gradient(90deg, #8A2BE2, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+   
+}
+
+.botao-menu {
+    background: linear-gradient(90deg, #8A2BE2, #FFA500);
+    border:  #FFA500;
+}
+.nome-user {
+    background: linear-gradient(90deg,#8A2BE2, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+
+  
+}
+.bi-three-dots {
+    background: white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.dropdown{
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    padding-left: 1vw;
+    gap: 1vw;
+}
+.dropdown img{
+     width: 50px; 
+     height: 50px;
+     border: 1px solid black;
+}
+.dropdown-toggle {
+    background-color: transparent;
+    width: 10%;
+    height: 0;
+    text-align:center;
+    font-size: 1rem;
+}
+
+.bi-envelope {
+    background: white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.flex-user-body{
+    display:flex;
+    flex-direction:column;
+}
+.flex-user-body span{
+    cursor:pointer;
+}
+
+.offcanvas-body{
+    padding:1vw;
+}

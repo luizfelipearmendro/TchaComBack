@@ -1,0 +1,28 @@
+﻿body {
+}
+.cadastrar-setor-sessao{
+    padding-top: 20vh;
+}
+.modal-header h1 {
+    background: linear-gradient(90deg, #8A2BE2, #FFA500 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: 100%;
+    font-weight: bold;
+    font-family: "Bebas Neue", sans-serif;
+    text-transform: uppercase;
+    font-size: 2rem;
+    text-decoration: none;
+}
+.botao-proxima-etapa {
+    background: linear-gradient(90deg,#8A2BE2, #FFA500);
+    border-radius: .5vw;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+}
+.form-example{
+    color:gray
+}

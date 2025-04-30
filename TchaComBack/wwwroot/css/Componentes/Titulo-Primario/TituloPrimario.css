@@ -1,0 +1,17 @@
+﻿.titulo-primario {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 3rem;
+    width: fit-content;
+    background: linear-gradient(90deg, #8A2BE2, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "Bebas Neue", sans-serif;
+}
+.titulo-primario span {
+    background: linear-gradient(90deg, #8A2BE2, #FFA500 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: 100%;
+    font-weight: bold;
+}

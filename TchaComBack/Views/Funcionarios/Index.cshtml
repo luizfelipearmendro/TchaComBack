@@ -1,0 +1,72 @@
+﻿@model FuncionariosPorSetorViewModel
+@{
+    ViewData["Title"] = "Funcionários";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/css/setores.css">
+
+    <title>Funcionários</title>
+</head>
+<body>
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert success" role="alert">
+            <span class="closebtn">&times;</span>
+            <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert danger" role="alert">
+            <span class="closebtn">&times;</span>
+            <strong>Atenção!</strong> @TempData["MensagemErro"]
+        </div>
+    }
+
+    <section class="sessao-setores">
+        <h2 class="bg-dark">Funcionários do setor: @Model.NomeSetor e possui @Model.Quantidade funcionários</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var funcionario in Model.Funcionarios)
+                {
+                    @if (funcionario.Ativo == 'S')
+                    {
+                        <tr>
+                            <td>@funcionario.Nome</td>
+                            <td>@funcionario.Email</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </section>
+    
+</body>
+</html>

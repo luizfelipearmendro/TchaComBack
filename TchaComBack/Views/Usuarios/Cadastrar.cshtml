@@ -1,0 +1,95 @@
+﻿@model UsuariosModel
+@{
+    Layout = null;
+    <title>@ViewData["Title"]Login</title>
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/cadastrar.css">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex h-screen">
+
+    <!-- Mensagens de alerta -->
+    @if (TempData["MensagemSucesso"] != null)
+    {
+            <div class="alert success" role="alert">
+                <span class="closebtn">&times;</span>
+                <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+            </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+            <div class="alert danger" role="alert">
+                <span class="closebtn">&times;</span>
+                <strong>Atenção!</strong> @TempData["MensagemErro"]
+            </div>
+    }
+
+    <section class="login">
+        <div class="box-one-login"></div>
+        <div class="box-two-login">
+            <div class="flex-bem-vindo">
+                <h3>Seja bem-vindo(a)</h3>
+                <p class="text-gray-500">TCB Sistema de Controle de Funcionários</p>
+            </div>
+            <div class="w-1/2 flex items-center justify-center bg-white p-8" id="divForm">
+                <div class="w-96 flex-form">
+                    @Html.AntiForgeryToken()
+                    <form asp-controller="Usuarios" asp-action="Cadastrar" method="post">
+                        <div class="input-group">
+                            <input type="text" asp-for="NomeCompleto" class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-brown-400" placeholder=" " required>
+                            <label for="exampleInputNome">Nome Completo</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" asp-for="Email" class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-brown-400" placeholder=" " required>
+                            <label for="exampleInputEmail">E-mail</label>
+                        </div>
+                        <div class="input-group relative">
+                            <input type="password" asp-for="Senha" id="password" class="w-full border rounded-lg p-3 pr-10 outline-none focus:ring-2 focus:ring-brown-400" placeholder=" " required>
+                            <label for="exampleInputPassword">Senha</label>
+                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" onclick="togglePassword()">
+                                <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                </svg>
+                            </span>
+                        </div>
+                        <button type="submit" class="w-full text-white font-bold py-3 rounded-lg transition-all botao-entrar">Cadastrar</button>
+                    </form>
+                    <p class="text-center text-gray-500 text-sm mt-4">Já tenho cadastro. <a asp-area="" asp-controller="Login" asp-action="Index" class="hover:underline linkRecuperarSenha">Voltar ao Login</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const eyeIcon = document.getElementById("eye-icon");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                eyeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                    <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+                    <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+                </svg>`;
+            } else {
+                passwordInput.type = "password";
+                eyeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                </svg>`;
+            }
+        }
+    </script>
+</body>
+</html>

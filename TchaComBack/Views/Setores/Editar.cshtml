@@ -1,0 +1,86 @@
+﻿@model SetoresModel
+@{
+    <title>@ViewData["Title"] </title>
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
+
+    <link rel="stylesheet" href="~/css/cadastrar-setor.css">
+</head>
+<body>
+
+    <div class="modal fade" id="modalEditarSetor" aria-hidden="true" aria-labelledby="modalEditarSetorLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalEditarSetorLabel">Editar Setor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form asp-controller="Setores" asp-action="Editar" method="post" id="formEtapa1">
+                        <input type="hidden" asp-for="Id"/>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input asp-for="Nome" maxlength="100" type="text" class="form-control" placeholder="Nome" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-comment"></i></span>
+                            <input asp-for="Descricao" type="text" maxlength="150" class="form-control" placeholder="Descrição" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                            <input asp-for="ResponsavelSetor" type="text" maxlength="100" class="form-control" placeholder="Responsável" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input asp-for="EmailResponsavelSetor" type="email" maxlength="100" class="form-control" placeholder="E-mail Responsável" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="SexoResponsavel">Sexo do Responsável:</label>
+                            <select asp-for="SexoResponsavel" class="form-select">
+                                <option value="">Selecione</option>
+                                <option value="F">Feminino</option>
+                                <option value="M">Masculino</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            <input asp-for="Localizacao" class="form-control" placeholder="Localização" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="CategoriaId">Categoria do Setor:</label>
+                            <select asp-for="CategoriaId" class="form-select">
+                                <option value="">Selecione</option>
+                                <option value="1">Recursos Humanos</option>
+                                <option value="2">Financeiro</option>
+                                <option value="3">Tecnologia da Informação (TI)</option>
+                                <option value="4">Marketing</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-image"></i></span>
+                            <input asp-for="ImagemSetor" type="url" class="form-control" placeholder="https://exemplo.com/imagem.jpg" />
+                        </div>
+                        <div class="form-example">
+                            <label for="Confirmacao">Confirmação:</label>
+                            <p>Revise as informações inseridas nas etapas anteriores.</p>
+                        </div>
+                        <button type="submit" class="btn btn-secondary" asp-controller="Setores" asp-action="Index">Cancelar Alterações</button>
+                        <button type="submit" class="btn btn-success">Finalizar alterações</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

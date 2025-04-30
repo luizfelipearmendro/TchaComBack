@@ -1,0 +1,166 @@
+﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
+<link rel="stylesheet" href="~/css/Componentes/Carrossel-Setores/CarrosselSetores.css" />
+@model SetoresViewModel
+
+@if (Model.Categorias == null || !Model.Categorias.Any())
+{
+    <div class="alert alert-warning" role="alert">
+        Nenhuma categoria disponível para exibição.
+    </div>
+    return;
+}
+
+@{
+    var setores = Model.Setores;
+    var quantidadeFunc = Model.QuantidadePorSetor;
+}
+
+
+<section id="conteudo-setores">
+    @foreach (var categoria in Model.Categorias)
+    {
+        var setoresDaCategoria = setores.Where(s => s.CategoriaId == categoria.Id).ToList();
+        if (setoresDaCategoria.Any())
+        {
+            <div>
+                <h2 class="titulo-categoria">@categoria.Nome</h2><span style="color:gray; font-size:.8rem; font-style:italic;">@categoria.Descricao</span>
+            </div>
+            <div class="carousel-container" id="carousel-@categoria.Id">
+                <div class="glide">
+                    <div class="glide__arrows" data-glide-el="controls" style="width:100%;">
+                        <button style="background-color: rgba(0, 0, 0, 0.5); left: -5vw;" class="glide__arrow glide__arrow--left" data-glide-dir="<"><i class="fas fa-chevron-left"></i></button>
+                        <button style="background-color: rgba(0, 0, 0, 0.5);right: -5vw;" class="glide__arrow glide__arrow--right" data-glide-dir=">"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="glide__track" data-glide-el="track">
+                        <ul class="glide__slides">
+                            @foreach (var setor in setoresDaCategoria)
+                            {
+                               
+                                string reativarLink = "";
+                                if (setor.Ativo == 'N')
+                                {
+                                    reativarLink = $@"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalReativarSetor' setor-reativ-id='{setor.Id}' setor-reativ-nome='{setor.Nome}'>Reativar</a>";
+                                }
+                                var popoverHtml = $@"
+                                <div class='popover-body'>
+                                <a class='close-btn' aria-label='Close' style='margin-top: 15px;'>&times;</a>
+                                <a role='button' class='rota-btn editar-setor' data-bs-toggle='modal' data-bs-target='#modalEditarSetor' data-id='{setor.Id}'>Editar</a>
+                                <a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalDesativarSetor' setor-id='{setor.Id}' setor-nome='{setor.Nome}'>Desativar</a>
+                                        {reativarLink}
+                                </div>";
+                                <li class="glide__slide">
+                                    <div class="card-container" style="background-image: url('@setor.ImagemSetor');">
+                                        <main class="main-content">
+                                            <div class="flex-botao-edition">
+                                                <button type="button"
+                                                        class="btn-popover"
+                                                        data-bs-toggle="popover"
+                                                        data-bs-placement="right"
+                                                        data-bs-html="true"
+                                                        data-bs-content="@popoverHtml">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                                         class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <div class="flex-main">
+                                                <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
+                                                    <h1>@setor.Nome</h1>
+                                                </a>
+                                                <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
+                                                    <p>@setor.Descricao</p>
+                                                </a>
+                                                <div class="card-attribute">
+                                                    <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                                 { "Texto", "Acessar " },
+                                                 { "Url", "" },
+                                                 { "ClasseExtra", "botao-saibamais" },
+                                                 { "Id", "" },
+                                                 { "Type", "" },
+                                                 { "elemento", ""},
+                                                 { "AspAction", "Index" },
+                                                 { "AspController", "Funcionarios" },
+                                                 { "AspRouteId", @setor.Id}
+                                                 }) />
+                                                    <div class="time-left">
+                                                        @if (setor.SexoResponsavel == 'F')
+                                                        {
+                                                            <img src="https://i.ibb.co/WWT61zQb/image-removebg-preview.png" alt="Responsável" class="small-avatar" />
+                                                        }
+                                                        @if (setor.SexoResponsavel == 'M')
+                                                        {
+                                                            <img src="https://i.ibb.co/DPymZqqd/image-removebg-preview-1.png" alt="Responsável" class="small-avatar" />
+                                                        }
+                                                        <div>
+                                                            <p>
+                                                                <span><a href="#">@setor.ResponsavelSetor</a></span>
+                                                                <span class="me-3" style="color:gray; font-style:italic;font-size:10px;">
+                                                                    Criado em:
+                                                                    <span style="color:white;font-size:11px;">@setor.DataCriacao.ToShortDateString()</span>
+                                                                </span>
+                                                                <span class="me-3" style="color:gray; font-style:italic;font-size:10px;">
+                                                                    Funcionários:
+                                                                    <span style="color:white;font-size:11px;">
+                                                                        @(quantidadeFunc.FirstOrDefault(q => q.SetorId == setor.Id)?.Quantidade ?? 0)
+                                                                    </span>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </main>
+                                    </div>
+                                </li>
+                            }
+                            @{
+                                int totalSlidesBreve = Math.Max(setoresDaCategoria.Count, 3);
+                            }
+                            @for (int i = setoresDaCategoria.Count; i < totalSlidesBreve; i++)
+                            {
+                                <li class="glide__slide">
+                                    <div class="card-container">
+                                        <main class="main-content">
+                                            <h1>EM BREVE</h1>
+                                            <p>Novos setores serão adicionados nesta categoria.</p>
+                                        </main>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="glide__bullets" data-glide-el="controls[nav]">
+                        @for (int i = 0; i < Math.Max(setoresDaCategoria.Count, 3); i++)
+                        {
+                            <button class="glide__bullet" data-glide-dir="=@i"></button>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const carousels = document.querySelectorAll('.glide');
+        carousels.forEach((carousel) => {
+            new Glide(carousel, {
+                type: 'carousel',
+                perView: 3,
+                gap: 20,
+                autoplay: 3000,
+                focusAt: 'center',
+                hoverpause: true,
+                breakpoints: {
+                    1024: { perView: 2 },
+                    768: { perView: 2 },
+                    600: { perView: 1 }
+                }
+            }).mount();
+        });
+    });
+</script>

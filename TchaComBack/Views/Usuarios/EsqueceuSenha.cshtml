@@ -1,0 +1,71 @@
+﻿@model UsuariosModel
+@{
+    Layout = null;
+    <title>@ViewData["Title"]Esqueceu Senha</title>
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="~/css/recuperarsenha.css">
+    <title>Esqueceu Senha</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex h-screen">
+
+    <!-- Mensagens de alerta -->
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert success" role="alert">
+            <span class="closebtn">&times;</span>
+            <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert danger" role="alert">
+            <span class="closebtn">&times;</span>
+            <strong>Atenção!</strong> @TempData["MensagemErro"]
+        </div>
+    }
+
+    <div class="login">
+        <div id="divImgLogin"></div>
+        <div id="divForm">
+            <h2>
+                Informe seu e-mail para redefinição de senha.
+            </h2>
+            <p class="text-center">
+                <span>TCB </span>
+                <span style="font-size:15px">Sistema de Controle de Funcionários</span>
+            </p>
+            @Html.AntiForgeryToken()
+            <form asp-controller="Usuarios" asp-action="EnviarEsqueceuSenha" method="post">
+                <div class="input-group">
+                    <input type="email" asp-for="Email" placeholder=" " required>
+                    <label>E-mail</label>
+                </div>
+                <button type="submit" class="w-full text-white font-bold py-3 rounded-lg transition-all botao-entrar">Solicitar Redefinição de Senha</button>
+            </form>
+            <p class="text-center text-gray-500 text-sm mt-4">
+                Já tenho cadastro.
+                <a asp-area="" asp-controller="Login" asp-action="Index" class="linkRecuperarSenha">Voltar ao Login</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

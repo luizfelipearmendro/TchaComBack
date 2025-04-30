@@ -1,0 +1,24 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<section style="padding-top: 20vh;">
+    <!-- Mensagens de alerta -->
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert success" role="alert" style="z-index:1000000000">
+            <span class="closebtn">&times;</span>
+            <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert danger" role="alert" style="z-index:1000000000">
+            <span class="closebtn">&times;</span>
+            <strong>Atenção!</strong> @TempData["MensagemErro"]
+        </div>
+    }
+</section>

@@ -1,0 +1,64 @@
+﻿<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" />
+<link rel="stylesheet" href="~/css/Componentes/Carrossel-Equipe/CarrosselEquipe.css" />
+
+@{
+    var membros = ViewData["Membros"] as List<dynamic>;
+}
+
+<div class="carousel-container">
+    <div class="glide">
+        <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+                @foreach (var membro in membros)
+                {
+                    <li class="glide__slide">
+                        <div>
+                            <img src="@Url.Content(membro.Imagem)" alt="@membro.Nome" />
+                        </div>
+                        <h3>@membro.Nome</h3>
+                        <p>@membro.Cargo</p>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="glide__bullets" data-glide-el="controls[nav]">
+            @for (int i = 0; i < membros.Count; i++)
+            {
+                <button class="glide__bullet" data-glide-dir="=@i"></button>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js"></script>
+<script>
+    new Glide('.glide', {
+         type: 'carousel',
+         perView: 3, 
+         gap: 20, 
+         autoplay: 2000, 
+         hoverpause: true, 
+         breakpoints: {
+             1024: {
+                 perView: 2, 
+                 focusAt: 'center',
+                 gap: 50,
+             },
+             768: {
+                 perView: 2,
+                 focusAt: 'center',
+                 gap: 50,
+             },
+             600: {
+                 perView: 1, 
+                 focusAt: 'center',
+             }
+         },
+     }).mount();
+</script>

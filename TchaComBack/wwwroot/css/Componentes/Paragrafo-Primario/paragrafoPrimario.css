@@ -1,0 +1,15 @@
+﻿.paragrafo-primario {
+    color: white;
+    width: fit-content;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    padding: 0px;
+    margin: 0px;
+}
+.paragrafo-primario strong {
+    background: #FFA500;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: 100%;
+    font-weight: bold;
+}
