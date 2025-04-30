@@ -44,7 +44,9 @@
     }
 
     <section class="sessao-setores">
-        <h2 class="bg-dark">Funcionários do setor: @Model.NomeSetor e possui @Model.Quantidade funcionários</h2>
+        <h2 class="bg-dark">Funcionários do setor: @Model.NomeSetor</h2>
+        <span class="text-black">Funcionários ativos: @Model.Quantidade</span><br />
+        <a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalFuncionariosInativos'><span class="text-black">Funcionários Inativos: @ViewBag.FuncInativos</span></a>
 
         <table class="table">
             <thead>
@@ -66,7 +68,45 @@
                 }
             </tbody>
         </table>
+
+
+
+        <!-- modal reativar setor -->
+        <div class="modal fade" id="modalFuncionariosInativos" tabindex="-1" aria-labelledby="modalFuncionariosInativosLabel" aria-hidden="true" style="z-index:100000001;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-black" id="modalFuncionariosInativosLabel" style="font-weight:bold">Funcionários Inativos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-black">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var funcionario in Model.Funcionarios)
+                                {
+                                    @if (funcionario.Ativo == 'N')
+                                    {
+                                        <tr>
+                                            <td>@funcionario.Nome</td>
+                                            <td>@funcionario.Email</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-    
 </body>
 </html>

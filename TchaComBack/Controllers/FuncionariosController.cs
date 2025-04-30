@@ -50,21 +50,25 @@ namespace TchaComBack.Controllers
             }
 
             var funcionarios = db.Funcionarios
-                .Where(f => f.SetorId == id && f.Ativo == 'S')
+                .Where(f => f.SetorId == id)
                 .ToList();
 
+            var funcionariosInativos = db.Funcionarios
+                .Where(f => f.SetorId == id && f.Ativo == 'N')
+                .ToList();
 
             var viewModel = new FuncionariosPorSetorViewModel
             {
                 SetorId = setor.Id,
                 NomeSetor = setor.Nome,
                 Funcionarios = funcionarios,
-                Quantidade = funcionarios.Count()
+                Quantidade = funcionarios.Where(f => f.Ativo == 'S').Count()
             };
 
             ViewBag.NomeCompleto = dbconsult.NomeCompleto;
             ViewBag.Email = dbconsult.Email;
             ViewBag.TipoPerfil = dbconsult.TipoPerfil;
+            ViewBag.FuncInativos = funcionariosInativos.Count();
 
             return View(viewModel);
         }
