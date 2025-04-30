@@ -1,6 +1,6 @@
-﻿using TCBSistemaDeControle.Models;
+﻿using TchaComBack.Models;
 
-namespace TCBSistemaDeControle.Repositories
+namespace TchaComBack.Repositories
 {
     public interface ISetoresRepositorio
     {

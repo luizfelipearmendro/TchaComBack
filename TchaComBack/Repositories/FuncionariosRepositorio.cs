@@ -1,7 +1,7 @@
-﻿using TCBSistemaDeControle.Data;
-using TCBSistemaDeControle.Models;
+﻿using TchaComBack.Data;
+using TchaComBack.Models;
 
-namespace TCBSistemaDeControle.Repositories
+namespace TchaComBack.Repositories
 {
     public class FuncionariosRepositorio : IFuncionariosRepositorio
     {

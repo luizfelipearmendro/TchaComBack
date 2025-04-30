@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TCBSistemaDeControle.Models;
+using TchaComBack.Models;
 
-namespace TCBSistemaDeControle.Data
+namespace TchaComBack.Data
 {
     public class ApplicationDbContext : DbContext
     {

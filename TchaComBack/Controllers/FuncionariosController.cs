@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
-using TCBSistemaDeControle.Data;
-using TCBSistemaDeControle.Models;
-using TCBSistemaDeControle.Repositories;
+using TchaComBack.Data;
+using TchaComBack.Models;
+using TchaComBack.Repositories;
 
-namespace TCBSistemaDeControle.Controllers
+namespace TchaComBack.Controllers
 {
     public class FuncionariosController : Controller
     {

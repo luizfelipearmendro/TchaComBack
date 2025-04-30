@@ -1,8 +1,8 @@
-using TCBSistemaDeControle.Data;
+using TchaComBack.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
-using TCBSistemaDeControle.Repositories;
+using TchaComBack.Repositories;
 //using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

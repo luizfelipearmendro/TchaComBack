@@ -1,10 +1,10 @@
-﻿using TCBSistemaDeControle.Models;
-using TCBSistemaDeControle.Data;
-using TCBSistemaDeControle.Repositories;
+﻿using TchaComBack.Models;
+using TchaComBack.Data;
+using TchaComBack.Repositories;
 using Org.BouncyCastle.Asn1.X509;
 using Microsoft.EntityFrameworkCore;
 
-namespace TCBSistemaDeControle.Repositories
+namespace TchaComBack.Repositories
 {
     public class SetoresRepositorio : ISetoresRepositorio
     {

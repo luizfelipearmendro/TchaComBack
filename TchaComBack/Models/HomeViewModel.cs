@@ -1,4 +1,4 @@
-﻿namespace TCBSistemaDeControle.Models
+﻿namespace TchaComBack.Models
 {
     public class HomeViewModel
     {

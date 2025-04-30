@@ -1,9 +1,9 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using TCBSistemaDeControle.Data;
-using TCBSistemaDeControle.Models;
+using TchaComBack.Data;
+using TchaComBack.Models;
 
-namespace TCBSistemaDeControle.Controllers;
+namespace TchaComBack.Controllers;
 
 public class HomeController : Controller
 {

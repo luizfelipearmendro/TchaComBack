@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TCBSistemaDeControle.Models
+namespace TchaComBack.Models
 {
     public class UsuariosModel
     {

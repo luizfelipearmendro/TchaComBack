@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using TCBSistemaDeControle.Data;
-using TCBSistemaDeControle.Models;
-using TCBSistemaDeControle.Repositories;
+using TchaComBack.Data;
+using TchaComBack.Models;
+using TchaComBack.Repositories;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace TCBSistemaDeControle.Controllers
+namespace TchaComBack.Controllers
 {
     public class SetoresController : Controller
     {

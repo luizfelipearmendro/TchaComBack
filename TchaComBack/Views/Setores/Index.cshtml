@@ -113,11 +113,15 @@
                                     <ul class="glide__slides">
                                         @foreach (var setor in setoresDaCategoria)
                                         {
+                                            var acaoHtml = setor.Ativo == 'S'
+                                            ? $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalDesativarSetor' setor-id='{setor.Id}' setor-nome='{setor.Nome}'>Desativar</a>"
+                                            : $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalReativarSetor' data-id='{setor.Id}' data-nome='{setor.Nome}'>Reativar</a>";
+
                                             var popoverHtml = $@"
                                             <div class='popover-body'>
                                             <a class='close-btn' aria-label='Close' style='margin-top: 15px;'>&times;</a>
                                             <a role='button' class='rota-btn editar-setor' data-bs-toggle='modal' data-bs-target='#modalEditarSetor' data-id='{setor.Id}'>Editar</a>
-                                            <a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalDesativarSetor' setor-id='{setor.Id}' setor-nome='{setor.Nome}'>Desativar</a>
+                                                            {acaoHtml}
                                             </div>";
 
                                             <li class="glide__slide">
@@ -237,7 +241,26 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a id="confirmDeleteButton" role="button" class="btn btn-danger">Desativar</a>
+                    <a id="confirmDesativeButton" role="button" class="btn btn-danger">Desativar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal reativar setor -->
+    <div class="modal fade" id="modalReativarSetor" tabindex="-1" aria-labelledby="modalReativarSetorLabel" aria-hidden="true" style="z-index:100000001;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-black" id="modalReativarSetorLabel" style="font-weight:bold">Reativar Setor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-black">
+                    Tem certeza que deseja Reativar o setor <span id="modalUserNameReativo"></span>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a id="confirmReativeButton" role="button" class="btn btn-primary">Reativar</a>
                 </div>
             </div>
         </div>
@@ -271,13 +294,30 @@
                 var setorId = button.getAttribute('setor-id');
                 var setorName = button.getAttribute('setor-nome');
                 var modalUserName = document.getElementById('modalUserName');
-                var confirmDeleteButton = document.getElementById('confirmDeleteButton');
+                var confirmDesativeButton = document.getElementById('confirmDesativeButton');
 
                 if (modalUserName && setorName) {
                     modalUserName.textContent = setorName;
                 }
-                if (confirmDeleteButton && setorId) {
-                    confirmDeleteButton.href = '/Setores/Desativar/' + setorId;
+                if (confirmDesativeButton && setorId) {
+                    confirmDesativeButton.href = '/Setores/Desativar/' + setorId;
+                }
+            }
+        });
+
+        document.addEventListener("click", function (event) {
+            if (event.target.matches("[data-bs-target='#modalReativarSetor']")) {
+                var button = event.target;
+                var setorIdReativo = button.getAttribute('data-id');
+                var setorNome = button.getAttribute('data-nome');
+                var modalUserNameReativo = document.getElementById('modalUserNameReativo');
+                var confirmReativeButton = document.getElementById('confirmReativeButton');
+
+                if (modalUserNameReativo && setorNome) {
+                    modalUserNameReativo.textContent = setorNome;
+                }
+                if (confirmReativeButton && setorIdReativo) {
+                    confirmReativeButton.href = '/Setores/Reativar/' + setorIdReativo;
                 }
             }
         });

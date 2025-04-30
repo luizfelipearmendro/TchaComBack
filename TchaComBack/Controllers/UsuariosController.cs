@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
-using TCBSistemaDeControle.Data;
-using TCBSistemaDeControle.Helper;
-using TCBSistemaDeControle.Models;
+using TchaComBack.Data;
+using TchaComBack.Helper;
+using TchaComBack.Models;
 
-namespace TCBSistemaDeControle.Controllers
+namespace TchaComBack.Controllers
 {
     public class UsuariosController : Controller
     {
@@ -40,7 +40,7 @@ namespace TCBSistemaDeControle.Controllers
         public IActionResult Cadastrar(UsuariosModel usuario)
         {
             var validaEmailExistente = db.Usuarios.Any(u => u.Email == usuario.Email);
-            if(validaEmailExistente == true)
+            if (validaEmailExistente)
             {
                 TempData["MensagemErro"] = "Ops, o e-mail informado já existe!";
                 return RedirectToAction("Index", "Login");
@@ -48,6 +48,13 @@ namespace TCBSistemaDeControle.Controllers
 
             var salt = Utilitarios.GerarSalt();
             usuario.Salt = salt;
+
+            if (!Utilitarios.SenhaEhForte(usuario.Senha, out string mensagemErro))
+            {
+                TempData["MensagemErro"] = mensagemErro;
+                return RedirectToAction("Index", "Login");
+            }
+
             usuario.Senha = Utilitarios.GerarHashSenha(usuario.Senha, salt);
             usuario.Hash = Utilitarios.GeradorHash();
             usuario.Confirmado = 0;
@@ -61,13 +68,14 @@ namespace TCBSistemaDeControle.Controllers
                 TempData["MensagemSucesso"] = "Usuário cadastrado com sucesso!";
                 return RedirectToAction("Index", "Login");
             }
+
             return RedirectToAction("Index", "Login");
         }
 
         public void EnviarEmail(string para, string assunto, string mensagemCorpo)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("TCBSistemaDeControle", "tchacomback@gmail.com"));
+            message.From.Add(new MailboxAddress("TchaComBack", "tchacomback@gmail.com"));
             message.To.Add(new MailboxAddress("tchacomback@gmail.com", para));
             message.Subject = assunto;
 

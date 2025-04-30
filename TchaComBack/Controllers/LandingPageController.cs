@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TCBSistemaDeControle.Controllers
+namespace TchaComBack.Controllers
 {
     public class LandingPageController : Controller
     {

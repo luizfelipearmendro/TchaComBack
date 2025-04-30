@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TCBSistemaDeControle.Models
+namespace TchaComBack.Models
 {
     public class AtualizarSenhaViewModel
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TCBSistemaDeControle.Data;
-using TCBSistemaDeControle.Models;
-using TCBSistemaDeControle.Helper;
+using TchaComBack.Data;
+using TchaComBack.Models;
+using TchaComBack.Helper;
 
-namespace TCBSistemaDeControle.Controllers
+namespace TchaComBack.Controllers
 {
     public class LoginController : Controller
     {

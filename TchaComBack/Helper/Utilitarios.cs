@@ -2,7 +2,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TCBSistemaDeControle.Helper
+namespace TchaComBack.Helper
 {
     public class Utilitarios
     {
@@ -58,6 +58,39 @@ namespace TCBSistemaDeControle.Helper
                 }
             }
             return string.Join(" ", palavras);
+        }
+
+        public static bool SenhaEhForte(string senha, out string mensagemErro)
+        {
+            mensagemErro = "";
+
+            if (string.IsNullOrWhiteSpace(senha) || senha.Length < 8)
+            {
+                mensagemErro = "A senha deve ter no mínimo 8 caracteres.";
+                return false;
+            }
+            if (!senha.Any(char.IsUpper))
+            {
+                mensagemErro = "A senha deve conter ao menos uma letra maiúscula.";
+                return false;
+            }
+            if (!senha.Any(char.IsLower))
+            {
+                mensagemErro = "A senha deve conter ao menos uma letra minúscula.";
+                return false;
+            }
+            if (!senha.Any(char.IsDigit))
+            {
+                mensagemErro = "A senha deve conter ao menos um número.";
+                return false;
+            }
+            if (!senha.Any(ch => "!@#$%^&*()_+-=[]{}|;:',.<>?/`~".Contains(ch)))
+            {
+                mensagemErro = "A senha deve conter ao menos um caractere especial.";
+                return false;
+            }
+
+            return true;
         }
     }
 }
