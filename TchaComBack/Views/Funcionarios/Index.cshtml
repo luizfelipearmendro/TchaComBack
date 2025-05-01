@@ -84,6 +84,9 @@
             </div>
             <div class="flex-input-two filtro-content">
                 <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control mb-2 mr-sm-2" placeholder="Buscar por nome..." />
+                <a role="button" class="botao-adicionar mb-2" style="color:white;" data-bs-toggle="modal" data-bs-target="#modalCadastrarFuncionario">
+                    +
+                </a>
                 <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
                          view-data='@new ViewDataDictionary(ViewData) {
                          { "Texto", "Filtrar" },
@@ -98,6 +101,7 @@
         </div>
 
     </form>
+    <partial name="Cadastrar" model='new FuncionariosModel { SetorId = Model.SetorId }' />
 
     @if (Model.QuantidadeFuncAtivos == 0 && Model.QuantidadeFuncInativos == 0)
     {

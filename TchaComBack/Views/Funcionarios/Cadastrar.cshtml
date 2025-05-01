@@ -1,1 +1,212 @@
-﻿
+﻿@model FuncionariosModel
+@{
+    <title>@ViewData["Title"] </title>
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
+
+    <link rel="stylesheet" href="~/css/Setores/cadastrar-setor.css">
+</head>
+<body>
+
+    <form asp-controller="Funcionarios" asp-action="Cadastrar" method="post" id="formCompleto">
+        <div class="modal fade" id="modalCadastrarFuncionario" aria-hidden="true" aria-labelledby="modalCadastrarFuncionarioLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modalCadastrarFuncionarioLabel"><i class="fa fa-user-circle" aria-hidden="true"></i> Cadastro de Funcionários - Informações Pessoais</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input asp-for="Nome" maxlength="100" class="form-control" placeholder="Nome" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-regular fa-calendar"></i></span>
+                            <input type="date" asp-for="DataNascimento" maxlength="150" class="form-control" placeholder="Data de Nascimento" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="Sexo"><i class="fa-solid fa-venus-mars"></i></label>
+                            <select asp-for="Sexo" class="form-select">
+                                <option value="">Selecione o Sexo</option>
+                                <option value="F">Feminino</option>
+                                <option value="M">Masculino</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="Raca"><i class="fa-solid fa-users"></i></label>
+                            <select asp-for="Raca" class="form-select">
+                                <option value="">Selecione a Raça</option>
+                                <option value="1">Preto</option>
+                                <option value="2">Branco</option>
+                                <option value="3">Pardo</option>
+                                <option value="4">Amarelo</option>
+                                <option value="5">Indígena</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="EstadoCivil"><i class="fa-solid fa-heart"></i></label>
+                            <select asp-for="EstadoCivil" class="form-select">
+                                <option value="">Selecione o Estado Civil</option>
+                                <option value="1">Solteiro</option>
+                                <option value="2">Casado(a)</option>
+                                <option value="3">Viúvo(a)</option>
+                                <option value="4">Separado(a) Judicialmente</option>
+                                <option value="6">Divorciado(a)</option>
+                                <option value="7">União Estável</option>
+                                <option value="8">Separado de Fato</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input asp-for="NomeMae" maxlength="100" class="form-control" placeholder="Nome Mãe" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+                            <input asp-for="Naturalidade" maxlength="100" class="form-control" placeholder="Naturalidade" required />
+                        </div>
+                        <div class="form-example">
+                            <label for="Confirmacao">Atenção:</label>
+                            <p>Revise as informações inseridas antes de concluir.</p>
+                        </div><br />
+                        <button type="button" class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalCadastrarFuncionarioResidencia"
+                                onclick="document.getElementById('modalCadastrarFuncionario').querySelector('[data-bs-dismiss]').click();">
+                            Próxima Etapa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalCadastrarFuncionarioResidencia" aria-hidden="true" aria-labelledby="modalCadastrarFuncionarioResidenciaLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalCadastrarFuncionarioResidenciaLabel"><i class="fa fa-home" aria-hidden="true"></i> Cadastrar Funcionário - Endereço</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+                            <input asp-for="Endereco" maxlength="100" class="form-control" placeholder="Endereço" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+                            <input asp-for="CidadeResidencia" maxlength="100" class="form-control" placeholder="Cidade de Residência" required />
+                        </div>
+                        <div class="form-example">
+                            <label for="Confirmacao">Atenção:</label>
+                            <p>Revise as informações inseridas antes de concluir.</p>
+                        </div><br />
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalCadastrarFuncionario"
+                                onclick="document.getElementById('modalCadastrarFuncionarioResidencia').querySelector('[data-bs-dismiss]').click();">
+                            Retornar a Primeira Etapa
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalCadastrarFuncionarioContato"
+                                onclick="document.getElementById('modalCadastrarFuncionarioResidencia').querySelector('[data-bs-dismiss]').click();">
+                            Próxima Etapa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalCadastrarFuncionarioContato" aria-hidden="true" aria-labelledby="modalCadastrarFuncionarioContatoLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalCadastrarFuncionarioContatoLabel"><i class="fa fa-phone" aria-hidden="true"></i> Cadastrar Funcionário - Contato</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input type="email" asp-for="Email" maxlength="100" class="form-control" placeholder="E-mail" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                            <input type="tel" asp-for="Celular" maxlength="100" class="form-control" placeholder="Celular" required />
+                        </div>
+                        <div class="form-example">
+                            <label for="Confirmacao">Atenção:</label>
+                            <p>Revise as informações inseridas antes de concluir.</p>
+                        </div><br />
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalCadastrarFuncionarioResidencia"
+                                onclick="document.getElementById('modalCadastrarFuncionarioContato').querySelector('[data-bs-dismiss]').click();">
+                            Retornar Etapa
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalCadastrarFuncionarioDadosProfissionais"
+                                onclick="document.getElementById('modalCadastrarFuncionarioContato').querySelector('[data-bs-dismiss]').click();">
+                            Próxima Etapa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalCadastrarFuncionarioDadosProfissionais" aria-hidden="true" aria-labelledby="modalCadastrarFuncionarioDadosProfissionaisLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalCadastrarFuncionarioDadosProfissionaisLabel"><i class="fa fa-briefcase" aria-hidden="true"></i> Cadastrar Funcionário - Detalhes Profissionais</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" asp-for="SetorId" />
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                            <input asp-for="Cargo" maxlength="100" class="form-control" placeholder="Cargo" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-solid fa-brazilian-real-sign"></i></span>
+                            <input asp-for="Salario" maxlength="100" class="form-control" placeholder="Salário" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-regular fa-calendar"></i></span>
+                            <input type="date" asp-for="DataIngresso" maxlength="100" class="form-control" placeholder="Data de Ingresso" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-regular fa-calendar"></i></span>
+                            <input type="number" asp-for="DiasTrabalhados" maxlength="100" class="form-control" placeholder="Dias Trabalhados" required />
+                        </div>
+                        <div class="form-example">
+                            <label for="Confirmacao">Confirmação:</label>
+                            <p>Revise as informações inseridas antes de concluir.</p>
+                        </div><br />
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalCadastrarFuncionarioContato"
+                                onclick="document.getElementById('modalCadastrarFuncionarioDadosProfissionais').querySelector('[data-bs-dismiss]').click();">
+                            Retornar Etapa
+                        </button>
+                        <button type="submit" class="btn btn-success">Finalizar Cadastro</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>

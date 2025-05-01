@@ -138,17 +138,17 @@ color: white
 }
 
 .botao-adicionar {
-background-color: green;
-border-radius: .4vw;
-color: white;
-font-family: "Montserrat", sans-serif;
-cursor: pointer;
-text-decoration: none;
-text-align: center;
-border: none;
-width: 4%;
-padding: .2vh;
-font-size: 1.5rem
+    background-color: black;
+    border-radius: .4vw;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    width: 4%;
+    padding: .1vh;
+    font-size: 1.5rem
 }
 
 .filtro.filtro-scroll-active .btn-filtrar {
