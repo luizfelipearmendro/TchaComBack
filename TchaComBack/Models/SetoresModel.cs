@@ -43,6 +43,8 @@ namespace TchaComBack.Models
         [ValidateNever]
         public CategoriaModel Categoria { get; set; }
 
+        [ValidateNever]
+        public ICollection<FuncionariosModel> Funcionarios { get; set; }
 
 
         //public virtual ICollection<FuncionariosModel> Funcionarios { get; set; } // conecta o relacionamento com a Setores

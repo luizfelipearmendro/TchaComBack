@@ -39,6 +39,12 @@ namespace TchaComBack.Data
                 .HasForeignKey(f => f.EstadoCivil)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<FuncionariosModel>()
+                .HasOne(f => f.Setor)
+                .WithMany(s => s.Funcionarios)
+                .HasForeignKey(f => f.SetorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<SetoresModel>()
                 .HasOne(s => s.Categoria)
                 .WithMany(c => c.Setores)

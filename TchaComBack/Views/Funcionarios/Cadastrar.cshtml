@@ -28,12 +28,14 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
                     <div class="modal-body">
+                        <input type="hidden" asp-for="SetorId" />
+                        
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                             <input asp-for="Nome" maxlength="100" class="form-control" placeholder="Nome" required />
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fa-regular fa-calendar"></i></span>
+                            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Data de Nascimento"><i class="fa-regular fa-calendar"></i></span>
                             <input type="date" asp-for="DataNascimento" maxlength="150" class="form-control" placeholder="Data de Nascimento" required />
                         </div>
                         <div class="input-group mb-3">
@@ -142,7 +144,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
-                            <input type="tel" asp-for="Celular" maxlength="100" class="form-control" placeholder="Celular" required />
+                            <input type="tel" asp-for="Celular" id="telefone" maxlength="15" class="form-control" placeholder="(00) 00000-0000" required />
                         </div>
                         <div class="form-example">
                             <label for="Confirmacao">Atenção:</label>
@@ -173,22 +175,20 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" asp-for="SetorId" />
-
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
                             <input asp-for="Cargo" maxlength="100" class="form-control" placeholder="Cargo" required />
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fa-solid fa-brazilian-real-sign"></i></span>
+                            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Salário."><i class="fa-solid fa-brazilian-real-sign"></i></span>
                             <input asp-for="Salario" maxlength="100" class="form-control" placeholder="Salário" required />
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fa-regular fa-calendar"></i></span>
-                            <input type="date" asp-for="DataIngresso" maxlength="100" class="form-control" placeholder="Data de Ingresso" required />
+                            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Data Ingresso."><i class="fa-regular fa-calendar"></i></span>
+                            <input type="date" asp-for="DataIngresso" maxlength="100" class="form-control" placeholder="Data Ingresso" required />
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fa-regular fa-calendar"></i></span>
+                            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Dias Trabalhados."><i class="fa-regular fa-calendar"></i></span>
                             <input type="number" asp-for="DiasTrabalhados" maxlength="100" class="form-control" placeholder="Dias Trabalhados" required />
                         </div>
                         <div class="form-example">
@@ -208,5 +208,27 @@
         </div>
     </form>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        });
+
+        document.getElementById('telefone').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+
+            if (value.length > 11) value = value.slice(0, 11);
+
+            if (value.length <= 10) {
+                value = value.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3');
+            } else {
+                value = value.replace(/^(\d{2})(\d{5})(\d{0,4})$/, '($1) $2-$3');
+            }
+
+            e.target.value = value;
+        });
+    </script>
 </body>
 </html>

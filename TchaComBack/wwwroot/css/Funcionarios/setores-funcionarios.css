@@ -416,3 +416,10 @@ width: .8vw;
 height: 1.9vh;
 border-radius: 100%;
 }
+
+.container-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 2rem;
+}

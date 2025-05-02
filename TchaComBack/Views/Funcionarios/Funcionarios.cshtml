@@ -54,7 +54,112 @@
 }
 
 <section class="sessao-setores">
-    <div class="flex-body-funcionarios">
+    <h1>@Model.NomeSetor</h1>
+    <div class="flex-info-card-func">
+
+        @if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos == 0)
+        {
+            if (Model.QuantidadeFuncAtivos == 1)
+            {
+                <div class="flex-status">
+                    <p>
+                        <span class="status-green"></span>
+                        <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="flex-status">
+                    <p>
+                        <span class="status-green"></span>
+                        <span class="status">@Model.QuantidadeFuncAtivos Ativos</span>
+                    </p>
+                </div>
+            }            
+        }
+        else if (Model.QuantidadeFuncInativos > 0 && Model.QuantidadeFuncAtivos == 0)
+        {
+            if (Model.QuantidadeFuncInativos == 1)
+            {
+                <div class="flex-status">
+                    <p>
+                        <span class="status-red"></span>
+                        <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="flex-status">
+                    <p>
+                        <span class="status-red"></span>
+                        <span class="status">@Model.QuantidadeFuncInativos Inativos</span>
+                    </p>
+                </div>
+            }
+        }
+        else if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos > 0)
+        {
+            if (Model.QuantidadeFuncAtivos == 1 && Model.QuantidadeFuncInativos == 1)
+            {
+                <div class="flex-status">
+                    <p>
+                        <span class="status-green"></span>
+                        <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
+                    </p>
+                    <p>
+                        <span class="status-red"></span>
+                        <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
+                    </p>
+                </div>
+            }
+            else if (Model.QuantidadeFuncAtivos > 1 && Model.QuantidadeFuncInativos == 1)
+            {
+                <div class="flex-status">
+                    <p>
+                        <span class="status-green"></span>
+                        <span class="status">@Model.QuantidadeFuncAtivos Ativos</span>
+                    </p>
+                    <p>
+                        <span class="status-red"></span>
+                        <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
+                    </p>
+                </div>
+            }
+            else if (Model.QuantidadeFuncAtivos == 1 && Model.QuantidadeFuncInativos > 1)
+            {
+                <div class="flex-status">
+                    <p>
+                        <span class="status-green"></span>
+                        <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
+                    </p>
+                    <p>
+                        <span class="status-red"></span>
+                        <span class="status">@Model.QuantidadeFuncInativos Inativos</span>
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="flex-status">
+                    <p>
+                        <span class="status-green"></span>
+                        <span class="status">@Model.QuantidadeFuncAtivos Ativos</span>
+                    </p>
+                    <p>
+                        <span class="status-red"></span>
+                        <span class="status">@Model.QuantidadeFuncInativos Inativos</span>
+                    </p>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="p-func">Nenhum funcionário encontrado</p>
+        }
+    </div>
+    <div class="container-cards" style="margin-top: 50px;">
         @foreach (var funcionario in Model.Funcionarios)
         {
             <div class="card-funcionario @(funcionario.Ativo != 'S' ? "inativo" : "ativo")">
@@ -75,6 +180,7 @@
                         <p><span>Cargo</span> <span class="card-dado">@funcionario.Cargo</span></p>
                         <p><span>Email</span> <span class="card-dado">@funcionario.Email</span></p>
                         <p><span>Telefone</span> <span class="card-dado">@funcionario.Celular</span></p>
+                        <p><span>Setor</span> <span class="card-dado">@funcionario.Setor?.Nome</span></p>
                         <p><span>Ativo</span> <span class="card-dado">@(funcionario.Ativo == 'S' ? "Sim" : "Não")</span></p>
                         <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
                                  view-data='@new ViewDataDictionary(ViewData) {
@@ -104,7 +210,7 @@
     
                             <div class="container-fluid">
                                 <div class="row g-4">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="categoria">
                                             <h5><i class="fa fa-user-circle" aria-hidden="true"></i> Informações Pessoais</h5>
                                             <p><strong>Data de Nascimento:</strong> @funcionario.DataNascimento.ToString("dd/MM/yyyy")</p>

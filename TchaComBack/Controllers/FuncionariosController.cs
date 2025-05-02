@@ -112,8 +112,8 @@ namespace TchaComBack.Controllers
             if (idUsuario == null) return RedirectToAction("Index", "Login");
 
             var dbconsult = db.Usuarios
-                .AsNoTracking()
-                .FirstOrDefault(u => u.Id == idUsuario && u.Hash == HttpContext.Session.GetString("hash"));
+                              .AsNoTracking()
+                              .FirstOrDefault(u => u.Id == idUsuario && u.Hash == HttpContext.Session.GetString("hash"));
 
             if (dbconsult == null) return RedirectToAction("Index", "Login");
 
@@ -121,14 +121,14 @@ namespace TchaComBack.Controllers
                                       .AsNoTracking()
                                       .Include(f => f.RacaNav)
                                       .Include(f => f.EstadoCivilNav)
+                                      .Include(f => f.Setor)
                                       .Where(f => f.UsuarioId == idUsuario);
-
 
             var funcionarios = funcionariosRepositorio.BuscarTodosFuncionarios((int)idUsuario);
 
             var viewModel = new FuncionariosViewModel
             {
-                NomeSetor = "Todos os Funcionários",
+                NomeSetor = "Todos Funcionários",
                 Funcionarios = funcionarios,
                 QuantidadeFuncAtivos = funcionarios.Count(f => f.Ativo == 'S'),
                 QuantidadeFuncInativos = funcionarios.Count(f => f.Ativo == 'N')
@@ -177,14 +177,14 @@ namespace TchaComBack.Controllers
                 if (!ModelState.IsValid)
                 {
                     TempData["MensagemErro"] = "Dados inválidos!";
-                    return RedirectToAction("Index", "Funcionarios");
+                    return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
                 }
 
                 func.UsuarioId = sessionIdUsuario;
                 func = funcionariosRepositorio.Cadastrar(func);
 
                 TempData["MensagemSucesso"] = "Funcionário cadastrado com sucesso!";
-                return RedirectToAction("Index", "Funcionarios");
+                return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
             }
             catch (System.Exception erro)
             {
