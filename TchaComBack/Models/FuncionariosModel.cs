@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace TchaComBack.Models
@@ -51,12 +52,16 @@ namespace TchaComBack.Models
 
 
 
-
+        [ValidateNever]
         public SetoresModel Setor { get; set; }
 
+        [ValidateNever]
         public RacaModel RacaNav { get; set; }
 
+        [ValidateNever]
         public EstadoCivilModel EstadoCivilNav { get; set; }
+
+
         public void Desativar()
         {
             this.Ativo = 'N';

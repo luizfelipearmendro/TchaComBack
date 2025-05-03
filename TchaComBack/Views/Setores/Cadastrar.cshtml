@@ -76,13 +76,16 @@
                             <input asp-for="Localizacao" class="form-control" placeholder="Localização" required />
                         </div>
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="CategoriaId">Categoria do Setor:</label>
-                            <select asp-for="CategoriaId" class="form-select">
+                            @* <label class="input-group-text" for="CategoriaId">Categoria do Setor:</label> *@
+                            <button class="btn btn-secondary" type="button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalCriarCategoriaForm">
+                                Cadastrar Categoria
+                            </button>
+                            <select asp-for="CategoriaId" class="form-select" asp-items="ViewBag.Categorias">
                                 <option value="">Selecione</option>
-                                <option value="1">Financeiro</option>
-                                <option value="2">Tecnologia da Informação (TI)</option>
-                                <option value="3">Marketing</option>
                             </select>
+                            <span asp-validation-for="CategoriaId" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fas fa-image"></i></span>
@@ -92,6 +95,48 @@
                             <label for="Confirmacao">Confirmação:</label>
                             <p>Revise as informações inseridas nas etapas anteriores.</p>
                         </div>
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalCadastrarSetor"
+                                onclick="document.getElementById('modalCadastrarSetorConfirmar').querySelector('[data-bs-dismiss]').click();">
+                            Retornar a Primeira Etapa
+                        </button>
+                        <button type="submit" class="btn btn-success">Finalizar Cadastro</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <!-- modal criar categoria -->
+    <form asp-controller="Categorias" asp-action="Cadastrar" method="post" id="formCategorias">
+        <div class="modal fade" id="modalCriarCategoriaForm" aria-hidden="true" aria-labelledby="modalCriarCategoriaLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 id="modalCriarCategoriaLabel">Criar Categoria</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input asp-for="Nome" maxlength="100" class="form-control" placeholder="Nome" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-comment"></i></span>
+                            <input asp-for="Descricao" maxlength="150" class="form-control" placeholder="Descrição" required />
+                        </div>
+                        <div class="form-example">
+                            <label for="Confirmacao">Confirmação:</label>
+                            <p>Revise as informações inseridas nas etapas anteriores.</p>
+                        </div>
+                        <button class="btn btn-secondary" type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalCadastrarSetorConfirmar">
+                            Cancelar
+                        </button>
                         <button type="submit" class="btn btn-success">Finalizar Cadastro</button>
                     </div>
                 </div>

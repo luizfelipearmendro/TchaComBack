@@ -5,5 +5,7 @@
         public int Id { get; set; }
 
         public string EstadoCivil { get; set; }
+
+        public ICollection<FuncionariosModel> Funcionarios { get; set; }
     }
 }

@@ -84,6 +84,9 @@
             </div>
             <div class="flex-input-two filtro-content">
                 <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control mb-2 mr-sm-2" placeholder="Buscar por nome..." />
+                <a role="button" class="botao-adicionar mb-2" style="color:white;" data-bs-toggle="modal" data-bs-target="#modalCadastrarFuncionario">
+                    +
+                </a>
                 <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
                          view-data='@new ViewDataDictionary(ViewData) {
                          { "Texto", "Filtrar" },
@@ -98,6 +101,7 @@
         </div>
 
     </form>
+    <partial name="Cadastrar" model='new FuncionariosModel { SetorId = Model.SetorId }' />
 
     @if (Model.QuantidadeFuncAtivos == 0 && Model.QuantidadeFuncInativos == 0)
     {
@@ -122,28 +126,39 @@
             <div class="flex-titulo-card-funcionarios">
                 <h2 class="titulo-categoria">@Model.NomeSetor</h2>
                 <div class="flex-info-card-func">
-                    <div class="flex-status">
-                        <p>
-                            <span class="status-green"></span>
-                            <span class="status">Ativo</span>
-                        </p>
-                        <p>
-                            <span class="status-red"></span>
-                            <span class="status">Inativo</span>
-                        </p>
-                    </div>
 
                     @if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos == 0)
                     {
-                        <p class="p-func">@Model.QuantidadeFuncAtivos funcionário(s) ativo(s)</p>
+                        @* <p class="p-func">@Model.QuantidadeFuncAtivos funcionário(s) ativo(s)</p> *@
+                        <div class="flex-status">
+                            <p>
+                                <span class="status-green"></span>
+                                <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
+                            </p>
+                        </div>
                     }
                     else if (Model.QuantidadeFuncInativos > 0 && Model.QuantidadeFuncAtivos == 0)
                     {
-                        <p class="p-func">@Model.QuantidadeFuncInativos funcionário(s) inativo(s)</p>
+                        @* <p class="p-func">@Model.QuantidadeFuncInativos funcionário(s) inativo(s)</p> *@
+                        <div class="flex-status">
+                            <p>
+                                <span class="status-red"></span>
+                                <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
+                            </p>
+                        </div>
                     }
                     else if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos > 0)
                     {
-                        <p class="p-func">@(Model.QuantidadeFuncAtivos + @Model.QuantidadeFuncInativos) funcionário(s)</p>
+                        <div class="flex-status">
+                            <p>
+                                <span class="status-green"></span>
+                                <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
+                            </p>
+                            <p>
+                                <span class="status-red"></span>
+                                <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
+                            </p>
+                        </div>
                     }
                     else
                     {

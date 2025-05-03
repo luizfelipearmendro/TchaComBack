@@ -1,4 +1,5 @@
-﻿using TchaComBack.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using TchaComBack.Data;
 using TchaComBack.Models;
 
 namespace TchaComBack.Repositories
@@ -19,7 +20,11 @@ namespace TchaComBack.Repositories
 
         public List<FuncionariosModel> BuscarTodosFuncionarios(int usuarioId)
         {
-            return db.Funcionarios.Where(f => f.UsuarioId == usuarioId).ToList();
+            return db.Funcionarios
+                     .AsNoTracking()
+                     .Include(f => f.Setor)
+                     .Where(f => f.UsuarioId == usuarioId)
+                     .ToList();
         }
 
         public FuncionariosModel Cadastrar(FuncionariosModel func)

@@ -1,85 +1,4 @@
-﻿//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.EntityFrameworkCore;
-//using Microsoft.Identity.Client;
-//using TchaComBack.Data;
-//using TchaComBack.Models;
-//using TchaComBack.Repositories;
-
-//namespace TchaComBack.Controllers
-//{
-//    public class FuncionariosController : Controller
-//    {
-//        private readonly ApplicationDbContext db;
-//        private readonly IFuncionariosRepositorio funcionariosRepositorio;
-
-//        public FuncionariosController(ApplicationDbContext db, IFuncionariosRepositorio _funcionariosRepositorio)
-//        {
-//            this.db = db;
-//            this.funcionariosRepositorio = _funcionariosRepositorio;
-//        }
-
-//        public int sessionIdUsuario
-//        {
-//            get
-//            {
-//                int sessionIdUsuario = 0;
-//                if (HttpContext.Session.GetInt32("Id") != null)
-//                    sessionIdUsuario = (int)HttpContext.Session.GetInt32("Id");
-//                return sessionIdUsuario;
-//            }
-//        }
-
-//        public IActionResult Index(int id)
-//        {
-//            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
-//            if (idUsuario == null) return RedirectToAction("Index", "Login");
-
-//            var dbconsult = db.Usuarios
-//                .AsNoTracking()
-//                .FirstOrDefault(u => u.Id == idUsuario && u.Hash == HttpContext.Session.GetString("hash"));
-
-//            if (dbconsult == null) return RedirectToAction("Index", "Login");
-
-//            var sessionIdUsuario = dbconsult.Id;
-
-//            var setor = db.Setores.FirstOrDefault(s => s.Id == id);
-//            if (setor == null)
-//            {
-//                TempData["MensagemErro"] = $"{dbconsult.NomeCompleto}, o setor selecionado não foi encontrado";
-//                return RedirectToAction("Setores","Index");
-//            }
-
-//            var funcionarios = db.Funcionarios
-//                .Where(f => f.SetorId == id)
-//                .ToList();
-
-//            var funcionariosInativos = db.Funcionarios
-//                .Where(f => f.SetorId == id && f.Ativo == 'N')
-//                .ToList();
-
-//            var viewModel = new FuncionariosPorSetorViewModel
-//            {
-//                SetorId = setor.Id,
-//                NomeSetor = setor.Nome,
-//                Funcionarios = funcionarios,
-//                Quantidade = funcionarios.Where(f => f.Ativo == 'S').Count()
-//            };
-
-//            ViewBag.NomeCompleto = dbconsult.NomeCompleto;
-//            ViewBag.Email = dbconsult.Email;
-//            ViewBag.TipoPerfil = dbconsult.TipoPerfil;
-//            ViewBag.FuncInativos = funcionariosInativos.Count();
-
-//            return View(viewModel);
-//        }
-//    }
-//}
-
-
-
-
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
@@ -185,6 +104,93 @@ namespace TchaComBack.Controllers
             }, "Value", "Text", ativo);
 
             return View(viewModel);
+        }
+
+        public IActionResult Funcionarios()
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios
+                              .AsNoTracking()
+                              .FirstOrDefault(u => u.Id == idUsuario && u.Hash == HttpContext.Session.GetString("hash"));
+
+            if (dbconsult == null) return RedirectToAction("Index", "Login");
+
+            var funcionariosQuery = db.Funcionarios
+                                      .AsNoTracking()
+                                      .Include(f => f.RacaNav)
+                                      .Include(f => f.EstadoCivilNav)
+                                      .Include(f => f.Setor)
+                                      .Where(f => f.UsuarioId == idUsuario);
+
+            var funcionarios = funcionariosRepositorio.BuscarTodosFuncionarios((int)idUsuario);
+
+            var viewModel = new FuncionariosViewModel
+            {
+                NomeSetor = "Todos Funcionários",
+                Funcionarios = funcionarios,
+                QuantidadeFuncAtivos = funcionarios.Count(f => f.Ativo == 'S'),
+                QuantidadeFuncInativos = funcionarios.Count(f => f.Ativo == 'N')
+            };
+
+            ViewBag.NomeCompleto = dbconsult.NomeCompleto;
+            ViewBag.Email = dbconsult.Email;
+            ViewBag.TipoPerfil = dbconsult.TipoPerfil;
+
+            return View(viewModel);
+        }
+
+        public IActionResult Cadastrar()
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios.Find(idUsuario);
+            if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
+                return RedirectToAction("Index", "Login");
+
+            var sessionIdUsuario = dbconsult.Id;
+
+            ViewBag.NomeCompleto = dbconsult.NomeCompleto;
+            ViewBag.Email = dbconsult.Email;
+            ViewBag.TipoPerfil = dbconsult.TipoPerfil;
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult Cadastrar(FuncionariosModel func)
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios.Find(idUsuario);
+            if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
+                return RedirectToAction("Index", "Login");
+
+            var sessionIdUsuario = dbconsult.Id;
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    TempData["MensagemErro"] = "Dados inválidos!";
+                    return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
+                }
+
+                func.UsuarioId = sessionIdUsuario;
+                func = funcionariosRepositorio.Cadastrar(func);
+
+                TempData["MensagemSucesso"] = "Funcionário cadastrado com sucesso!";
+                return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
+            }
+            catch (System.Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não foi possível cadastrar o funcionário. Detalhes do erro: {erro.Message}";
+                return RedirectToAction("Index", "Funcionarios");
+            }
         }
     }
 }
