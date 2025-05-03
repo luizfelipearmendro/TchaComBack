@@ -18,6 +18,32 @@
     var quantidadeFunc = Model.QuantidadePorSetor;
 }
 
+@functions {
+    public static string QuantidadeCaracter(string texto, int maxcaracter)
+    {
+        if (string.IsNullOrEmpty(texto))
+            return texto;
+
+        if (texto.Length <= maxcaracter)
+            return texto;
+
+        return texto.Substring(0, maxcaracter) + "...";
+    }
+}
+@functions {
+    public string GetPrimeiroEUltimoNome(string nomeCompleto)
+    {
+        if (string.IsNullOrWhiteSpace(nomeCompleto))
+            return "";
+
+        var partes = nomeCompleto.Trim().Split(' ');
+
+        if (partes.Length == 1)
+            return partes[0];
+
+        return $"{partes[0]} {partes[^1]}";
+    }
+}
 
 <section id="conteudo-setores">
     @foreach (var categoria in Model.Categorias)
@@ -46,34 +72,36 @@
                                 <div class='popover-body'>
                                 <a class='close-btn' aria-label='Close' style='margin-top: 15px;'>&times;</a>
                                 <a role='button' class='rota-btn editar-setor' data-bs-toggle='modal' data-bs-target='#modalEditarSetor' data-id='{setor.Id}'>Editar</a>
-                                        {acaoHtml}
+                                                        {acaoHtml}
                                 </div>";
 
                                 <li class="glide__slide">
-                                    <div class="card-container" style="background-image: url('@setor.ImagemSetor');">
-                                        <main class="main-content">
-                                            <div class="flex-botao-edition">
-                                                <button type="button"
-                                                        class="btn-popover"
-                                                        data-bs-toggle="popover"
-                                                        data-bs-placement="right"
-                                                        data-bs-html="true"
-                                                        data-bs-content="@popoverHtml">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                                         class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div class="flex-main">
-                                                <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
-                                                    <h1>@setor.Nome</h1>
-                                                </a>
-                                                <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
-                                                    <p>@setor.Descricao</p>
-                                                </a>
-                                                <div class="card-attribute">
-                                                    <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                    @if (string.IsNullOrEmpty(setor.ImagemSetor))
+                                    {
+                                        <div class="card-container sem-imagem">
+                                            <main class="main-content sem-imagem-content">
+                                                <div class="flex-botao-edition">
+                                                    <button type="button"
+                                                            class="btn-popover"
+                                                            data-bs-toggle="popover"
+                                                            data-bs-placement="right"
+                                                            data-bs-html="true"
+                                                            data-bs-content="@popoverHtml">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                                             class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div class="flex-main">
+                                                    <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
+                                                        <h1>@setor.Nome</h1>
+                                                    </a>
+                                                    <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
+                                                        <p> @QuantidadeCaracter(@setor.Descricao, 250)</p>
+                                                    </a>
+                                                    <div class="card-attribute">
+                                                        <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
                                                  { "Texto", "Acessar " },
                                                  { "Url", "" },
                                                  { "ClasseExtra", "botao-saibamais" },
@@ -84,35 +112,103 @@
                                                  { "AspController", "Funcionarios" },
                                                  { "AspRouteId", @setor.Id}
                                                  }) />
-                                                    <div class="time-left">
-                                                        @if (setor.SexoResponsavel == 'F')
-                                                        {
-                                                            <img src="https://i.ibb.co/WWT61zQb/image-removebg-preview.png" alt="Responsável" class="small-avatar" />
-                                                        }
-                                                        @if (setor.SexoResponsavel == 'M')
-                                                        {
-                                                            <img src="https://i.ibb.co/DPymZqqd/image-removebg-preview-1.png" alt="Responsável" class="small-avatar" />
-                                                        }
-                                                        <div>
-                                                            <p>
-                                                                <span><a href="#">@setor.ResponsavelSetor</a></span>
-                                                                <span class="me-3" style="color:gray; font-style:italic;font-size:10px;">
-                                                                    Criado em:
-                                                                    <span style="color:white;font-size:11px;">@setor.DataCriacao.ToShortDateString()</span>
-                                                                </span>
-                                                                <span class="me-3" style="color:gray; font-style:italic;font-size:10px;">
-                                                                    Funcionários:
-                                                                    <span style="color:white;font-size:11px;">
-                                                                        @(quantidadeFunc.FirstOrDefault(q => q.SetorId == setor.Id)?.Quantidade ?? 0)
+                                                        <div class="time-left">
+                                                            @if (setor.SexoResponsavel == 'F')
+                                                            {
+                                                                <img src="https://i.ibb.co/WWT61zQb/image-removebg-preview.png" alt="Responsável" class="small-avatar" />
+                                                            }
+                                                            @if (setor.SexoResponsavel == 'M')
+                                                            {
+                                                                <img src="https://i.ibb.co/DPymZqqd/image-removebg-preview-1.png" alt="Responsável" class="small-avatar" />
+                                                            }
+                                                            <div>
+                                                                <p>
+                                                                    <span><a href="#">@GetPrimeiroEUltimoNome(@setor.ResponsavelSetor)</a></span>
+                                                                    <span class="me-3" style="color:gray; font-style:italic;font-size:10px;">
+                                                                        Criado em:
+                                                                        <span style="color:white;font-size:11px;">@setor.DataCriacao.ToShortDateString()</span>
                                                                     </span>
-                                                                </span>
-                                                            </p>
+                                                                    <span class="me-3" style="color:gray; font-style:italic;font-size:10px;">
+                                                                        Funcionários:
+                                                                        <span style="color:white;font-size:11px;">
+                                                                            @(quantidadeFunc.FirstOrDefault(q => q.SetorId == setor.Id)?.Quantidade ?? 0)
+                                                                        </span>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </main>
-                                    </div>
+                                            </main>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="card-container" style="background-image: url('@setor.ImagemSetor');">
+                                            <main class="main-content">
+                                                <div class="flex-botao-edition">
+                                                    <button type="button"
+                                                            class="btn-popover"
+                                                            data-bs-toggle="popover"
+                                                            data-bs-placement="right"
+                                                            data-bs-html="true"
+                                                            data-bs-content="@popoverHtml">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                                             class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div class="flex-main">
+                                                    <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
+                                                        <h1>@GetPrimeiroEUltimoNome(@setor.Nome)</h1>
+                                                    </a>
+                                                    <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
+                                                        <p> @QuantidadeCaracter(@setor.Descricao, 250)</p>
+                                                    </a>
+                                                    <div class="card-attribute">
+                                                        <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                                                 { "Texto", "Acessar " },
+                                                 { "Url", "" },
+                                                 { "ClasseExtra", "botao-saibamais" },
+                                                 { "Id", "" },
+                                                 { "Type", "" },
+                                                 { "elemento", ""},
+                                                 { "AspAction", "Index" },
+                                                 { "AspController", "Funcionarios" },
+                                                 { "AspRouteId", @setor.Id}
+                                                 }) />
+                                                        <div class="time-left">
+                                                            @if (setor.SexoResponsavel == 'F')
+                                                            {
+                                                                <img src="https://i.ibb.co/WWT61zQb/image-removebg-preview.png" alt="Responsável" class="small-avatar" />
+                                                            }
+                                                            @if (setor.SexoResponsavel == 'M')
+                                                            {
+                                                                <img src="https://i.ibb.co/DPymZqqd/image-removebg-preview-1.png" alt="Responsável" class="small-avatar" />
+                                                            }
+                                                            <div>
+                                                                <p>
+                                                                    <span><a href="#">@GetPrimeiroEUltimoNome(@setor.ResponsavelSetor)</a></span>
+                                                                    <span class="me-3" style="color:gray; font-style:italic;font-size:10px;">
+                                                                        Criado em:
+                                                                        <span style="color:white;font-size:11px;">@setor.DataCriacao.ToShortDateString()</span>
+                                                                    </span>
+                                                                    <span class="me-3" style="color:gray; font-style:italic;font-size:10px;">
+                                                                        Funcionários:
+                                                                        <span style="color:white;font-size:11px;">
+                                                                            @(quantidadeFunc.FirstOrDefault(q => q.SetorId == setor.Id)?.Quantidade ?? 0)
+                                                                        </span>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </main>
+                                        </div>
+                                    }
+                                    
                                 </li>
                             }
                             @{
@@ -121,9 +217,9 @@
                             @for (int i = setoresDaCategoria.Count; i < totalSlidesBreve; i++)
                             {
                                 <li class="glide__slide">
-                                    <div class="card-container">
+                                    <div class="card-container" style="background-image: url('https://i.postimg.cc/rwY7GtrP/card-embreve.png');">
                                         <main class="main-content">
-                                            <h1>EM BREVE</h1>
+                                            <h1 class="title-breve">Em Breve</h1>
                                             <p>Novos setores serão adicionados nesta categoria.</p>
                                         </main>
                                     </div>

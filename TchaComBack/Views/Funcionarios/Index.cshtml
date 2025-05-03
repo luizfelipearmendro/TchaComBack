@@ -3,19 +3,19 @@
     ViewData["Title"] = "Funcionários";
 }
 @functions {
-    public string GetPrimeiroESegundoNome(string nomeCompleto)
+    public string GetPrimeiroEUltimoNome(string nomeCompleto)
     {
         if (string.IsNullOrWhiteSpace(nomeCompleto))
             return "";
 
         var partes = nomeCompleto.Trim().Split(' ');
+
         if (partes.Length == 1)
             return partes[0];
 
-        return $"{partes[0]} {partes[1]}";
+        return $"{partes[0]} {partes[^1]}";
     }
 }
-
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
@@ -55,7 +55,7 @@
 
 <section class="sessao-setores">
     <form asp-controller="Funcionarios" asp-action="Index" method="get" class="form-inline mb-4 text-center filtro p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700" id="id-filtro-func">
-        <h1>Funcionarios</h1>
+        <h1>Funcionários</h1>
         <div class="flex-form">
             <input type="hidden" name="id" value="@Model.SetorId" />
             <div class="flex-input-group filtro-content">
@@ -169,7 +169,7 @@
                         <div class="flex-body-card">
                             <div class="flex-onda"></div>
                             <div class="body-card ">
-                                <p><span>Nome</span> <span class="card-dado">@GetPrimeiroESegundoNome(funcionario.Nome)</span></p>
+                                <p><span>Nome</span> <span class="card-dado">@GetPrimeiroEUltimoNome(funcionario.Nome)</span></p>
                                 <p><span>Cargo</span> <span class="card-dado">@funcionario.Cargo</span></p>
                                 <p><span>Email</span> <span class="card-dado">@funcionario.Email</span></p>
                                 <p><span>Telefone</span> <span class="card-dado">@funcionario.Celular</span></p>

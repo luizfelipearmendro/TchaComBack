@@ -57,6 +57,9 @@ overflow: hidden;
 transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
+.card-container.sem-imagem {
+background-color: black; /* Fundo preto para cards sem imagem */
+}
 
 .card-container::after {
 content: "";
@@ -71,15 +74,22 @@ transform-origin: bottom center;
 z-index: 1;
 }
 
+.card-container.sem-imagem::after {
+display: none; /* Remove o efeito de ::after para cards sem imagem */
+}
 
 .card-container:hover::after {
 height: 100%;
 transform: scale(1.1);
 }
 
-
 .card-container:hover {
 transform: scale(1.05);
+z-index: 10;
+}
+
+.card-container.sem-imagem:hover {
+transform: none;
 z-index: 10;
 }
 
@@ -99,6 +109,10 @@ transform: translateY(100%);
 transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
+.main-content.sem-imagem-content {
+opacity: 1; /* Mantém o conteúdo visível para cards sem imagem */
+transform: translateY(0); /* Remove o efeito de transição inicial */
+}
 
 .card-container:hover .main-content {
 opacity: 1;
@@ -110,7 +124,7 @@ text-decoration: none;
 }
 
 .main-content a h1 {
-background: linear-gradient(90deg, #8A2BE2, #FFA500 );
+background: linear-gradient(90deg, #8A2BE2, #FFA500);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 width: 100%;
@@ -131,6 +145,10 @@ font-size: 1rem;
 color: #ddd;
 margin-bottom: 15px;
 }
+.main-content p:hover{
+    color:white;
+    cursor:pointer;
+} 
 
 .flex-botao-edition {
 display: flex;

@@ -98,6 +98,7 @@
                 }
             }
         });
+
 });
 function closeAlert(alertId) {
     const alertElement = document.getElementById(alertId);
