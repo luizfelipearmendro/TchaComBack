@@ -37,3 +37,34 @@
 .form-example{
     color:gray
 }
+
+.btn-step-primary {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    background: linear-gradient(90deg,#8A2BE2, #FFA500);
+    border-radius: .5vw;
+    width: fit-content;
+    border: none;
+}
+.btn-step-primary:hover{
+    color:white;
+}
+.btn-step-secundario {
+    background: black;
+    border-radius: .5vw;
+    border: 1px solid black;
+    color: white;
+    text-decoration: none;
+    width: fit-content
+}
+.btn-step-secundario:hover{
+    border: 1px solid black;
+}
+.form-example label {
+    color: #FFA500;
+}
+
+.form-example p {
+    color: rgba(33,37,41,0.75);
+}

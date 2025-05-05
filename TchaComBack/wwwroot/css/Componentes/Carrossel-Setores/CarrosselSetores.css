@@ -146,8 +146,8 @@ color: #ddd;
 margin-bottom: 15px;
 }
 .main-content p:hover{
-    color:white;
-    cursor:pointer;
+color:white;
+cursor:pointer;
 } 
 
 .flex-botao-edition {
@@ -328,4 +328,58 @@ padding: .1vw;
 
 .title-breve {
 color: white;
+}
+
+.card-container.inativo {
+border-top: 5px solid red;
+}
+.card-container.ativo {
+border-top: 5px solid green;
+}
+
+.card-container.inativo .flex-botao-edition,
+.card-container.inativo .flex-botao-edition * {
+pointer-events: all !important;
+z-index: 2;
+position: relative;
+}
+.botao-saibamais-in {
+color: white;
+text-decoration: none;
+font-family: "Roboto", sans-serif;
+font-weight: bold;
+cursor: pointer;
+background: linear-gradient(90deg,#8A2BE2, #FFA500);
+border-radius: .5vw;
+padding: 1vh;
+width: fit-content;
+height:auto;
+border: none;
+text-align:center;
+}
+.corpo-modal-inativo{
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+.corpo-modal-inativo i{
+font-size:4rem;
+color: red;
+}
+.corpo-modal-inativo h2{
+font-size: 1.5rem;
+font-family: "Montserrat";
+}
+.btn-secundario {
+background: black;
+border-radius: .5vw;
+border: 1px solid black;
+color: white;
+text-decoration: none;
+width: fit-content
+}
+
+.btn-secundario:hover {
+border: 1px solid black;
 }

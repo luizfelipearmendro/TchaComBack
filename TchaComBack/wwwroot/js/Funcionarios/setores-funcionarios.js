@@ -1,45 +1,55 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
-    const conteudo = document.getElementById('conteudo-funcionarios');
-    const filtro = document.getElementById('id-filtro-func');
-    const toggleButton = document.getElementById('toggle-filtro-func');
-    const form = document.getElementById('id-filtro-func');
+﻿//document.addEventListener("DOMContentLoaded", function () {
+//    const conteudo = document.getElementById('conteudo-funcionarios');
+//    const filtro = document.getElementById('id-filtro-func');
+//    const toggleButton = document.getElementById('toggle-filtro-func');
+//    const form = document.getElementById('id-filtro-func');
 
-    function rolagemAoRodape(posicaoRolagem) {
-        if (!conteudo || !filtro) {
-            console.error("Elemento '#conteudo-funcionarios' ou '#id-filtro' não encontrado!");
-            return;
-        }
+//    function rolagemAoRodape(posicaoRolagem) {
+//        if (!conteudo || !filtro) {
+//            console.error("Elemento '#conteudo-funcionarios' ou '#id-filtro' não encontrado!");
+//            return;
+//        }
 
-        const topoConteudo = conteudo.offsetTop;
-        const alturaConteudo = conteudo.offsetHeight;
-        const baseConteudo = topoConteudo + alturaConteudo;
-        if (posicaoRolagem >= topoConteudo && posicaoRolagem < baseConteudo) {
-            filtro.classList.add('filtro-scroll-active');
-        } else {
-            filtro.classList.remove('filtro-scroll-active');
+//        const topoConteudo = conteudo.offsetTop;
+//        const alturaConteudo = conteudo.offsetHeight;
+//        const baseConteudo = topoConteudo + alturaConteudo;
+//        if (posicaoRolagem >= topoConteudo && posicaoRolagem < baseConteudo) {
+//            filtro.classList.add('filtro-scroll-active');
+//        } else {
+//            filtro.classList.remove('filtro-scroll-active');
 
-            if (form.classList.contains('collapsed')) {
-                form.style.display = 'block';
-                form.classList.remove('collapsed');
-            }
-        }
+//            if (form.classList.contains('collapsed')) {
+//                form.style.display = 'block';
+//                form.classList.remove('collapsed');
+//            }
+//        }
+//    }
+//    rolagemAoRodape(window.scrollY);
+
+//    window.addEventListener('scroll', () => {
+//        rolagemAoRodape(window.scrollY);
+//    });
+
+//    toggleButton.addEventListener('click', function () {
+//        form.classList.toggle('collapsed');
+
+//        if (form.classList.contains('collapsed')) {
+//            toggleButton.textContent = '˅';
+//        } else {
+//            toggleButton.textContent = '˄';
+//        }
+//    });
+
+
+
+//});
+
+function closeAlert(alertId) {
+    const alertElement = document.getElementById(alertId);
+    if (alertElement) {
+        alertElement.style.animation = 'fadeOut 0.5s ease-in-out';
+        setTimeout(() => {
+            alertElement.style.display = 'none';
+        }, 500);
     }
-    rolagemAoRodape(window.scrollY);
-
-    window.addEventListener('scroll', () => {
-        rolagemAoRodape(window.scrollY);
-    });
-
-    toggleButton.addEventListener('click', function () {
-        form.classList.toggle('collapsed');
-
-        if (form.classList.contains('collapsed')) {
-            toggleButton.textContent = '˅';
-        } else {
-            toggleButton.textContent = '˄';
-        }
-    });
-
-
-
-});
+}

@@ -3,19 +3,19 @@
     ViewData["Title"] = "Funcionários";
 }
 @functions {
-    public string GetPrimeiroESegundoNome(string nomeCompleto)
+    public string GetPrimeiroEUltimoNome(string nomeCompleto)
     {
         if (string.IsNullOrWhiteSpace(nomeCompleto))
             return "";
 
         var partes = nomeCompleto.Trim().Split(' ');
+
         if (partes.Length == 1)
             return partes[0];
 
-        return $"{partes[0]} {partes[1]}";
+        return $"{partes[0]} {partes[^1]}";
     }
 }
-
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
@@ -54,12 +54,53 @@
 }
 
 <section class="sessao-setores">
-    <h1>@Model.NomeSetor</h1>
-    <div class="flex-info-card-func">
+    <form asp-controller="Funcionarios" asp-action="Funcionarios" method="get" class="form-inline mb-4 text-center filtro p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700" id="id-filtro-func">
+        <h1>Funcionários</h1>
+        <div class="flex-form">
+            <div class="flex-input-group filtro-content">
+                <div class="input-group">
+                    <p>Setor</p>
+                    <div class="mb-2 mr-sm-2 text-left selected">
+                        @Html.DropDownList(
+                                                   "setor",
+                                                   ViewBag.SetoresOpcoes as SelectList,
+                                                   "Todos os Setores",
+                                                   new { @class = "form-select selected" }
+                                                   )
+                    </div>
+                </div>
+                <div class="input-group">
+                    <p>Status</p>
+                    <div class="mb-2 mr-sm-2 text-left selected">
+                        @Html.DropDownList(
+                                                   "ativo",
+                                                   ViewBag.StatusOpcoes as SelectList,
+                                                   "Todos",
+                                                   new { @class = "form-select selected" }
+                                                   )
+                    </div>
+                </div>
+            </div>
+            <div class="flex-input-two filtro-content">
+                <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control mb-2 mr-sm-2" placeholder="Buscar por nome..." />
+                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
+                view-data='@new ViewDataDictionary(ViewData) {
+                         { "Texto", "Filtrar" },
+                         { "Url", "" },
+                         { "ClasseExtra", "btn-filtrar" },
+                         { "Id", "" },
+                         { "Type", "submit" },
+                         { "Elemento", "button" }
+                     }' />
+            </div>
+        </div>
+    </form>
 
-        @if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos == 0)
-        {
-            if (Model.QuantidadeFuncAtivos == 1)
+    <div class="flex-titulo-card-funcionarios">
+        <h2 class="titulo-categoria">@Model.NomeSetor</h2>
+        <div class="flex-info-card-func">
+
+            @if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos == 0)
             {
                 <div class="flex-status">
                     <p>
@@ -68,19 +109,7 @@
                     </p>
                 </div>
             }
-            else
-            {
-                <div class="flex-status">
-                    <p>
-                        <span class="status-green"></span>
-                        <span class="status">@Model.QuantidadeFuncAtivos Ativos</span>
-                    </p>
-                </div>
-            }            
-        }
-        else if (Model.QuantidadeFuncInativos > 0 && Model.QuantidadeFuncAtivos == 0)
-        {
-            if (Model.QuantidadeFuncInativos == 1)
+            else if (Model.QuantidadeFuncInativos > 0 && Model.QuantidadeFuncAtivos == 0)
             {
                 <div class="flex-status">
                     <p>
@@ -89,19 +118,7 @@
                     </p>
                 </div>
             }
-            else
-            {
-                <div class="flex-status">
-                    <p>
-                        <span class="status-red"></span>
-                        <span class="status">@Model.QuantidadeFuncInativos Inativos</span>
-                    </p>
-                </div>
-            }
-        }
-        else if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos > 0)
-        {
-            if (Model.QuantidadeFuncAtivos == 1 && Model.QuantidadeFuncInativos == 1)
+            else if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos > 0)
             {
                 <div class="flex-status">
                     <p>
@@ -114,52 +131,35 @@
                     </p>
                 </div>
             }
-            else if (Model.QuantidadeFuncAtivos > 1 && Model.QuantidadeFuncInativos == 1)
-            {
-                <div class="flex-status">
-                    <p>
-                        <span class="status-green"></span>
-                        <span class="status">@Model.QuantidadeFuncAtivos Ativos</span>
-                    </p>
-                    <p>
-                        <span class="status-red"></span>
-                        <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
-                    </p>
-                </div>
-            }
-            else if (Model.QuantidadeFuncAtivos == 1 && Model.QuantidadeFuncInativos > 1)
-            {
-                <div class="flex-status">
-                    <p>
-                        <span class="status-green"></span>
-                        <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
-                    </p>
-                    <p>
-                        <span class="status-red"></span>
-                        <span class="status">@Model.QuantidadeFuncInativos Inativos</span>
-                    </p>
-                </div>
-            }
             else
             {
-                <div class="flex-status">
-                    <p>
-                        <span class="status-green"></span>
-                        <span class="status">@Model.QuantidadeFuncAtivos Ativos</span>
-                    </p>
-                    <p>
-                        <span class="status-red"></span>
-                        <span class="status">@Model.QuantidadeFuncInativos Inativos</span>
-                    </p>
-                </div>
+                <p class="p-func">Nenhum funcionário encontrado</p>
             }
-        }
-        else
-        {
-            <p class="p-func">Nenhum funcionário encontrado</p>
-        }
+        </div>
+
     </div>
-    <div class="container-cards" style="margin-top: 50px;">
+    @if (Model.QuantidadeFuncAtivos == 0 && Model.QuantidadeFuncInativos == 0)
+    {
+        <div class="flex-mensagem-inativo">
+            <div class="box-mensegem-inativo">
+                <h1>Funcionário Não Encontrado</h1>
+                <p>Infelizmente, não foi encontrado o funcionário na busca. Por favor, volte em outro momento ou entre em contato com o administrador para obter mais informações.</p>
+                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                     { "Texto", "Voltar a Sessão" },
+                     { "Url", "/Setores" },
+                     { "ClasseExtra", "" },
+                     { "Id", "" },
+                     { "Type", "" },
+                     { "elemento", "a"}
+                     }) />
+            </div>
+        </div>
+    }
+    else
+    {
+        
+    
+    <div class="container-cards" style="margin-top: 10vh;">
         @foreach (var funcionario in Model.Funcionarios)
         {
             <div class="card-funcionario @(funcionario.Ativo != 'S' ? "inativo" : "ativo")">
@@ -176,11 +176,10 @@
                 <div class="flex-body-card">
                     <div class="flex-onda"></div>
                     <div class="body-card ">
-                        <p><span>Nome</span> <span class="card-dado">@GetPrimeiroESegundoNome(funcionario.Nome)</span></p>
+                        <p><span>Nome</span> <span class="card-dado">@GetPrimeiroEUltimoNome(funcionario.Nome)</span></p>
                         <p><span>Cargo</span> <span class="card-dado">@funcionario.Cargo</span></p>
                         <p><span>Email</span> <span class="card-dado">@funcionario.Email</span></p>
-                        <p><span>Telefone</span> <span class="card-dado">@funcionario.Celular</span></p>
-                        <p><span>Setor</span> <span class="card-dado">@funcionario.Setor?.Nome</span></p>
+                        <p><span>Setor</span> <span class="card-dado"> @GetPrimeiroEUltimoNome(@funcionario.Setor?.Nome)</span></p>
                         <p><span>Ativo</span> <span class="card-dado">@(funcionario.Ativo == 'S' ? "Sim" : "Não")</span></p>
                         <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
                                  view-data='@new ViewDataDictionary(ViewData) {
@@ -213,6 +212,7 @@
                                     <div class="col-md-4">
                                         <div class="categoria">
                                             <h5><i class="fa fa-user-circle" aria-hidden="true"></i> Informações Pessoais</h5>
+                                            <p><strong>Nome</strong> @funcionario.Nome</p>
                                             <p><strong>Data de Nascimento:</strong> @funcionario.DataNascimento.ToString("dd/MM/yyyy")</p>
                                             <p><strong>Sexo:</strong> @funcionario.Sexo</p>
                                             <p><strong>Raça:</strong> @funcionario.RacaNav?.Raca</p>
@@ -238,6 +238,7 @@
                                     <div class="col-md-6">
                                         <div class="categoria">
                                             <h5><i class="fa fa-briefcase" aria-hidden="true"></i> Detalhes Profissionais</h5>
+                                            <p><strong>Setor</strong> @funcionario.Setor?.Nome</p>
                                             <p><strong>Cargo:</strong> @funcionario.Cargo</p>
                                             <p><strong>Salário:</strong> R$ @funcionario.Salario.ToString("N2")</p>
                                             <p><strong>Data de Ingresso:</strong> @funcionario.DataIngresso.ToString("dd/MM/yyyy")</p>
@@ -264,4 +265,5 @@
             </div>
         }
     </div>
+    }
 </section>

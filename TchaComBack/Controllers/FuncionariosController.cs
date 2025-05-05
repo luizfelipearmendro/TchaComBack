@@ -106,7 +106,7 @@ namespace TchaComBack.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Funcionarios()
+        public IActionResult Funcionarios(string searchString, string setor, char? ativo)
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");
             if (idUsuario == null) return RedirectToAction("Index", "Login");
@@ -124,7 +124,25 @@ namespace TchaComBack.Controllers
                                       .Include(f => f.Setor)
                                       .Where(f => f.UsuarioId == idUsuario);
 
-            var funcionarios = funcionariosRepositorio.BuscarTodosFuncionarios((int)idUsuario);
+            // Filtro por nome
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                funcionariosQuery = funcionariosQuery.Where(f => EF.Functions.Like(f.Nome, $"%{searchString}%"));
+            }
+
+            // Filtro por setor
+            if (!string.IsNullOrEmpty(setor))
+            {
+                funcionariosQuery = funcionariosQuery.Where(f => f.Setor.Nome == setor);
+            }
+
+            // Filtro por status
+            if (ativo.HasValue)
+            {
+                funcionariosQuery = funcionariosQuery.Where(f => f.Ativo == ativo.Value);
+            }
+
+            var funcionarios = funcionariosQuery.ToList();
 
             var viewModel = new FuncionariosViewModel
             {
@@ -137,9 +155,27 @@ namespace TchaComBack.Controllers
             ViewBag.NomeCompleto = dbconsult.NomeCompleto;
             ViewBag.Email = dbconsult.Email;
             ViewBag.TipoPerfil = dbconsult.TipoPerfil;
+            ViewBag.SearchString = searchString;
+            ViewBag.Setor = setor;
+            ViewBag.Ativo = ativo;
+
+            // Lista distinta de setores dos funcionários desse usuário
+            ViewBag.SetoresOpcoes = new SelectList(db.Funcionarios
+                .Where(f => f.UsuarioId == idUsuario)
+                .Include(f => f.Setor)
+                .Select(f => f.Setor.Nome)
+                .Distinct()
+                .ToList());
+
+            ViewBag.StatusOpcoes = new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Value = "S", Text = "Ativos" },
+                new SelectListItem { Value = "N", Text = "Inativos" }
+            }, "Value", "Text", ativo);
 
             return View(viewModel);
         }
+
 
         public IActionResult Cadastrar()
         {

@@ -75,10 +75,15 @@
                                                         {acaoHtml}
                                 </div>";
 
+                                var isInativo = setor.Ativo != 'S';
+                                var cardClass = isInativo ? "card-container inativo" : "card-container ativo";
+                                var bloqueiaLinks = isInativo;
+
+
                                 <li class="glide__slide">
                                     @if (string.IsNullOrEmpty(setor.ImagemSetor))
                                     {
-                                        <div class="card-container sem-imagem">
+                                        <div class="@cardClass sem-imagem">
                                             <main class="main-content sem-imagem-content">
                                                 <div class="flex-botao-edition">
                                                     <button type="button"
@@ -94,24 +99,65 @@
                                                     </button>
                                                 </div>
                                                 <div class="flex-main">
-                                                    <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
-                                                        <h1>@setor.Nome</h1>
-                                                    </a>
-                                                    <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
-                                                        <p> @QuantidadeCaracter(@setor.Descricao, 250)</p>
-                                                    </a>
-                                                    <div class="card-attribute">
+                                                    @if (isInativo)
+                                                    {
+                                                        <a role="button"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#inativoModal"
+                                                            setor-id="@setor.Id"
+                                                            setor-nome="@setor.Nome">
+                                                            <h1>@GetPrimeiroEUltimoNome(@setor.Nome)</h1>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
+                                                            <h1>@GetPrimeiroEUltimoNome(@setor.Nome)</h1>
+                                                        </a>
+                                                    }
+                                                    @if (isInativo)
+                                                    {
+                                                        <a role="button"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#inativoModal"
+                                                            setor-id="@setor.Id"
+                                                            setor-nome="@setor.Nome">
+                                                            <p>@QuantidadeCaracter(@setor.Descricao, 250)</p>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
+                                                            <p>@QuantidadeCaracter(@setor.Descricao, 250)</p>
+                                                        </a>
+                                                    }
+
+                                                     <div class="card-attribute">
+                                                     @if (isInativo)
+                                                    {
+                                                        <a role="button"
+                                                            class="botao-saibamais-in"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#inativoModal"
+                                                            setor-id="@setor.Id"
+                                                            setor-nome="@setor.Nome">
+                                                            Acessar
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
                                                         <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
-                                                 { "Texto", "Acessar " },
-                                                 { "Url", "" },
-                                                 { "ClasseExtra", "botao-saibamais" },
-                                                 { "Id", "" },
-                                                 { "Type", "" },
-                                                 { "elemento", ""},
-                                                 { "AspAction", "Index" },
-                                                 { "AspController", "Funcionarios" },
-                                                 { "AspRouteId", @setor.Id}
-                                                 }) />
+                                                            { "Texto", "Acessar " },
+                                                            { "Url", "" },
+                                                            { "ClasseExtra", "botao-saibamais" },
+                                                            { "Id", "" },
+                                                            { "Type", "" },
+                                                            { "elemento", ""},
+                                                            { "AspAction", "Index" },
+                                                            { "AspController", "Funcionarios" },
+                                                            { "AspRouteId", @setor.Id}
+                                                            }) />
+                                                    }
                                                         <div class="time-left">
                                                             @if (setor.SexoResponsavel == 'F')
                                                             {
@@ -144,7 +190,7 @@
                                     }
                                     else
                                     {
-                                        <div class="card-container" style="background-image: url('@setor.ImagemSetor');">
+                                        <div class="@cardClass" style="background-image: url('@setor.ImagemSetor');">
                                             <main class="main-content">
                                                 <div class="flex-botao-edition">
                                                     <button type="button"
@@ -160,24 +206,65 @@
                                                     </button>
                                                 </div>
                                                 <div class="flex-main">
-                                                    <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
-                                                        <h1>@GetPrimeiroEUltimoNome(@setor.Nome)</h1>
-                                                    </a>
-                                                    <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
-                                                        <p> @QuantidadeCaracter(@setor.Descricao, 250)</p>
-                                                    </a>
+                                                 @if (isInativo)
+                                                    {
+                                                        <a role="button"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#inativoModal"
+                                                            setor-id="@setor.Id"
+                                                            setor-nome="@setor.Nome">
+                                                            <h1>@GetPrimeiroEUltimoNome(@setor.Nome)</h1>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
+                                                            <h1>@GetPrimeiroEUltimoNome(@setor.Nome)</h1>
+                                                        </a>
+                                                    }
+                                                    @if (isInativo)
+                                                    {
+                                                        <a role="button"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#inativoModal"
+                                                            setor-id="@setor.Id"
+                                                            setor-nome="@setor.Nome">
+                                                            <p>@QuantidadeCaracter(@setor.Descricao, 250)</p>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-action="Index" asp-controller="Funcionarios" asp-route-id="@setor.Id">
+                                                            <p>@QuantidadeCaracter(@setor.Descricao, 250)</p>
+                                                        </a>
+                                                    }
                                                     <div class="card-attribute">
+                                                     @if (isInativo)
+                                                    {
+                                                        <a role="button"
+                                                            class="botao-saibamais-in"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#inativoModal"
+                                                            setor-id="@setor.Id"
+                                                            setor-nome="@setor.Nome">
+                                                            Acessar
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
                                                         <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
-                                                 { "Texto", "Acessar " },
-                                                 { "Url", "" },
-                                                 { "ClasseExtra", "botao-saibamais" },
-                                                 { "Id", "" },
-                                                 { "Type", "" },
-                                                 { "elemento", ""},
-                                                 { "AspAction", "Index" },
-                                                 { "AspController", "Funcionarios" },
-                                                 { "AspRouteId", @setor.Id}
-                                                 }) />
+                                                            { "Texto", "Acessar " },
+                                                            { "Url", "" },
+                                                            { "ClasseExtra", "botao-saibamais" },
+                                                            { "Id", "" },
+                                                            { "Type", "" },
+                                                            { "elemento", ""},
+                                                            { "AspAction", "Index" },
+                                                            { "AspController", "Funcionarios" },
+                                                            { "AspRouteId", @setor.Id}
+                                                            }) />
+                                                    }
+                                                    
                                                         <div class="time-left">
                                                             @if (setor.SexoResponsavel == 'F')
                                                             {
@@ -238,5 +325,27 @@
         }
     }
 </section>
+
+
+
+<div class="modal fade" id="inativoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="" id="exampleModalLabel">Indisponível Setor</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body ">
+           <span class="corpo-modal-inativo">
+               <i class="bi bi-x-circle-fill"></i>
+               <h2>Setor inativo. Acesso indisponível.</h2>
+           </span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secundario" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js"></script>

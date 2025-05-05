@@ -36,7 +36,7 @@
         var setores = Model.Setores;
         var possuiCategorias = Model.Categorias != null && Model.Categorias.Any();
         var possuiSetores = Model.Setores != null && Model.Setores.Any();
-        var setoresDisponiveis = Model.Setores != null && Model.Setores.Any(s => s.Ativo == 'S');
+        var setoresIndisponiveis = Model.Setores == null && Model.Categorias == null;
 
 
     }
@@ -57,7 +57,7 @@
     {
         <section class="sessao-setores">
 
-            @if (!setoresDisponiveis)
+            @if (setoresIndisponiveis)
             {
                 <div class="flex-mensagem-inativo">
                     <div class="box-mensegem-inativo">
