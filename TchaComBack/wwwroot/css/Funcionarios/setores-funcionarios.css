@@ -35,12 +35,15 @@ gap: 1vh;
 }
 
 .filtro h1 {
-color: black;
+
 text-align: start;
-font-size: 1.5rem;
-font-family: 'Montserrat';
+font-size: 2.2rem;
 font-weight: 400;
 position: relative;
+background: linear-gradient(90deg, #8A2BE2, #FFA500);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+font-family: "Bebas Neue", sans-serif;
 }
 
 .filtro h1:before {
