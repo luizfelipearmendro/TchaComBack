@@ -165,39 +165,26 @@ color: white;
 background-color: transparent;
 }
 
-.custom-popover .flex-popover {
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-align-items: center;
-}
 
-.custom-popover .popover-body {
-display: flex;
-flex-direction: column;
-gap: 0.5rem;
-position: relative;
-top: 1vh;
-}
 
-.custom-popover .popover-body .rota-btn {
-text-decoration: none;
-color: #333;
-padding: 0.2rem;
-border-radius: 4px;
-transition: background-color 0.3s ease;
+.mt-3 .rota-btn {
+    text-decoration: none;
+    color: #333;
+    padding: 0.2rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    width: 100%;
 }
-
-.custom-popover .popover-body .rota-btn:hover {
-color: #FFA500;
+.rota-btn:hover {
+ background-color: #FFA500;
 }
 
 
-.custom-popover .close-btn {
+.close-btn {
 position: absolute;
-top: -6vh;
-right: 0vw;
-font-size: 2rem;
+top: 0vh;
+right: .2vw;
+font-size: 1rem;
 color: #888;
 cursor: pointer;
 text-decoration: none;
