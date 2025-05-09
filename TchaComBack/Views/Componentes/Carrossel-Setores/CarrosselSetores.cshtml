@@ -351,5 +351,35 @@
     </div>
   </div>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js"></script>
+<script>
+       const carousels = document.querySelectorAll('.glide');
+
+    carousels.forEach((carousel) => {
+        new Glide(carousel, {
+            type: 'carousel',
+            perView: 3,
+            gap: 20,
+            autoplay: 3000,
+            focusAt: 'center',
+            hoverpause: true,
+            breakpoints: {
+                1024: {
+                    perView: 2,
+                    focusAt: 'center',
+                    gap: 10
+                },
+                768: {
+                    perView: 2,
+                    focusAt: 'center',
+                    gap: 10
+                },
+                600: {
+                    perView: 1,
+                    focusAt: 'center',
+                    gap: 10
+                }
+            }
+        }).mount();
+    });
+</script>

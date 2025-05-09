@@ -42,6 +42,11 @@
         <span><strong>Sucesso!</strong> @TempData["MensagemSucesso"]</span>
         <span class="closebtn" onclick="closeAlert('successAlert')">&times;</span>
     </div>
+    <script>
+        setTimeout(() => {
+            document.getElementById("successAlert").style.display = 'none';
+        }, 5000);
+    </script>
 }
 
 @if (TempData["MensagemErro"] != null)
@@ -50,6 +55,11 @@
         <span><strong>Atenção!</strong> @TempData["MensagemErro"]</span>
         <span class="closebtn" onclick="closeAlert('errorAlert')">&times;</span>
     </div>
+    <script>
+        setTimeout(() => {
+            document.getElementById("errorAlert").style.display = 'none';
+        }, 5000);
+    </script>
 }
 
 <section class="sessao-setores">
@@ -127,7 +137,6 @@
 
                     @if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos == 0)
                     {
-                        @* <p class="p-func">@Model.QuantidadeFuncAtivos funcionário(s) ativo(s)</p> *@
                         <div class="flex-status">
                             <p>
                                 <span class="status-green"></span>
@@ -137,7 +146,6 @@
                     }
                     else if (Model.QuantidadeFuncInativos > 0 && Model.QuantidadeFuncAtivos == 0)
                     {
-                        @* <p class="p-func">@Model.QuantidadeFuncInativos funcionário(s) inativo(s)</p> *@
                         <div class="flex-status">
                             <p>
                                 <span class="status-red"></span>
@@ -204,8 +212,8 @@
                             </div>
                         </div>
                     </div>
-                    <div style="padding-top:15vh;" class="modal fade" id="modal-@funcionario.Id" tabindex="-1" aria-labelledby="modalLabel-@funcionario.Id" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg-custom">
+                    <div  class="modal fade" id="modal-@funcionario.Id" tabindex="-1" aria-labelledby="modalLabel-@funcionario.Id" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg-custom modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="modalLabel-@funcionario.Id">@funcionario.Nome</h1>

@@ -39,23 +39,7 @@
     //        toggleButton.textContent = '˄';
     //    }
     //});
-    const carousels = document.querySelectorAll('.glide');
-    carousels.forEach((carousel) => {
-        new Glide(carousel, {
-            type: 'carousel',
-            perView: 3,
-            gap: 20,
-            autoplay: 3000,
-            focusAt: 'center',
-            hoverpause: true,
-            breakpoints: {
-                1024: { perView: 2 },
-                768: { perView: 2 },
-                600: { perView: 1 }
-            }
-        }).mount();
-    });
-
+   
 
 
     let activePopover = null;

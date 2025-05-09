@@ -2,6 +2,7 @@
 background-color: black;
 }
 
+
 a {
 text-decoration: none;
 }
@@ -34,6 +35,10 @@ width: 100%;
 .flex-container {
 background: white;
 padding: 0vw;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-wrap:wrap;
 }
 
 .menu-top {
@@ -182,3 +187,42 @@ justify-content: center;
 z-index: 9999;
 transition: opacity .5s ease;
 }
+#menu-hamburguer {
+    display: none;
+}
+@media (max-width: 999px) {
+    .menu-left {
+        display: none !important;
+        width: 0 !important;
+    }
+
+    .layout {
+        margin: 0 !important;
+        width: 100vw !important;
+    }
+    .menu-top #toggle-btn {
+        display:none;
+    }
+    #menu-hamburguer {
+        display: block !important;
+    }
+    #menu-hamburguer > .toggler,.hamburger{
+        right: 85vw !important;
+        top: 6vh !important;
+    }
+    .menu-top{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+     
+
+    }
+    #menu-hamburguer {
+        position: static !important;
+        padding-left: 1vw !important;
+    }
+   
+ 
+  
+}
+

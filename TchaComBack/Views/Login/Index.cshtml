@@ -29,6 +29,9 @@
             <span><strong>Sucesso!</strong> @TempData["MensagemSucesso"]</span>
             <span class="closebtn" onclick="closeAlert('successAlert')">&times;</span>
         </div>
+        <script>
+            setTimeout(() => closeAlert('errorAlert'), 1000);
+        </script>
     }
 
     @if (TempData["MensagemErro"] != null)
@@ -37,6 +40,9 @@
             <span><strong>Atenção!</strong> @TempData["MensagemErro"]</span>
             <span class="closebtn" onclick="closeAlert('errorAlert')">&times;</span>
         </div>
+        <script>
+            setTimeout(() => closeAlert('errorAlert'), 1000);
+        </script>
     }
 
     <section class="login">

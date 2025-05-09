@@ -121,8 +121,8 @@ justify-content: center;
 .menu-wrap .menu > div {
 background: #FFA500;
 border-radius: 50%;
-width: 400vw;
-height: 400vw;
+width: 300vw;
+height: 300vw;
 display: flex;
 flex: none;
 align-items: center;
@@ -138,16 +138,32 @@ max-width: 90vw;
 max-height: 100vh;
 opacity: 0;
 transition: opacity 0.4s ease;
+margin-top: 7vh;
+}
+.ul-hamburger{
+    display:flex;
+    flex-direction:column;
+    justify-content: space-around;
+    align-items:flex-start;
+    gap: 4vh;
+    padding:0;
 }
 
-.menu-wrap .menu > div > div > ul > li {
-list-style: none;
-color: black;
-font-size: 2rem;
-padding: 1rem;
-font-family: "Roboto", sans-serif;
+.menu-wrap .menu > div > div > ul > li, .button-hamburguer {
+    list-style: none;
+    color: black;
+    font-size: 1.5rem;
+    padding: .3rem;
+    font-family: "Montserrat", sans-serif;
+    text-align: start;
+    width: 100%;
+    background-color: white;
+    border-radius: 2vw
 }
-
+.menu-wrap .menu > div > div > ul > li > .button-hamburguer{
+    display:flex;
+    justify-content:space-around;
+} 
 .menu-wrap .menu > div > div > ul > li > a {
 color: inherit;
 text-decoration: none;
@@ -168,3 +184,18 @@ padding: 2vh;
 font-size: 1.5rem;
 border-radius: 2vw;
 }
+.flex-links-items {
+    color: black !important;
+    padding-left: .7vw;
+    padding: 2vh;
+    width: 100% !important;
+    border-radius: .5vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1vw;
+    text-decoration: none;
+}
+    .flex-links-items:hover {
+        color: #FFA500;
+    }
