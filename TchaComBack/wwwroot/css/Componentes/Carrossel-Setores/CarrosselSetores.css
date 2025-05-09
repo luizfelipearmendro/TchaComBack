@@ -39,7 +39,6 @@ gap: 20px;
 
 .glide__slide {
 width: 100%;
-max-width: 400px;
 margin: 0 auto;
 }
 
@@ -165,39 +164,26 @@ color: white;
 background-color: transparent;
 }
 
-.custom-popover .flex-popover {
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-align-items: center;
-}
 
-.custom-popover .popover-body {
-display: flex;
-flex-direction: column;
-gap: 0.5rem;
-position: relative;
-top: 1vh;
-}
 
-.custom-popover .popover-body .rota-btn {
-text-decoration: none;
-color: #333;
-padding: 0.2rem;
-border-radius: 4px;
-transition: background-color 0.3s ease;
+.mt-3 .rota-btn {
+    text-decoration: none;
+    color: #333;
+    padding: 0.2rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    width: 100%;
 }
-
-.custom-popover .popover-body .rota-btn:hover {
-color: #FFA500;
+.rota-btn:hover {
+ background-color: #FFA500;
 }
 
 
-.custom-popover .close-btn {
+.close-btn {
 position: absolute;
-top: -6vh;
-right: 0vw;
-font-size: 2rem;
+top: 0vh;
+right: .2vw;
+font-size: 1rem;
 color: #888;
 cursor: pointer;
 text-decoration: none;
@@ -302,20 +288,6 @@ background-color: rgba(0, 0, 0, 0.8);
 }
 
 
-.glide__bullet {
-background-color: #ccc;
-border: none;
-width: 10px;
-height: 10px;
-border-radius: 50%;
-margin: 0 5px;
-cursor: pointer;
-transition: background-color 0.3s ease;
-}
-
-.glide__bullet.active {
-background-color: #000;
-}
 
 .flex-input-group {
 display: grid;
@@ -382,4 +354,45 @@ width: fit-content
 
 .btn-secundario:hover {
 border: 1px solid black;
+}
+
+@media (max-width: 800px){
+    .glide__slides {
+        display: flex;
+        gap: 0px;
+    }
+
+    .glide__bullets {
+        position: relative;
+        top: 84vh;
+    }
+
+    .glide__bullet {
+        background-color: rgba(0,0,0,.5) !important;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .glide__bullet--active {
+        background-color: #FFA500 !important;
+    }
+
+    .glide__bullet:hover {
+        background-color: #999;
+    }
+    .card-container {
+     
+        height: 80vh;
+
+    }
+    .titulo-categoria::after {
+       
+        width: 15%;
+    
+    }
+
 }

@@ -39,65 +39,51 @@
     //        toggleButton.textContent = '˄';
     //    }
     //});
-    const carousels = document.querySelectorAll('.glide');
-    carousels.forEach((carousel) => {
-        new Glide(carousel, {
-            type: 'carousel',
-            perView: 3,
-            gap: 20,
-            autoplay: 3000,
-            focusAt: 'center',
-            hoverpause: true,
-            breakpoints: {
-                1024: { perView: 2 },
-                768: { perView: 2 },
-                600: { perView: 1 }
-            }
-        }).mount();
-    });
+   
 
 
-    // Variável global para manter controle do popover ativo
     let activePopover = null;
+    let activeTrigger = null;
 
-    // Inicializa popovers
-        const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-        popoverTriggerList.map(function (popoverTriggerEl) {
-            const popover = new bootstrap.Popover(popoverTriggerEl, {
-                customClass: 'custom-popover',
-                html: true,
-                sanitize: false // Permite que HTML seja renderizado (necessário para o botão fechar funcionar)
-            });
-
-            popoverTriggerEl.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                // Se o botão clicado já é o ativo, fecha e remove referência
-                if (activePopover === popover) {
-                    popover.hide();
-                    activePopover = null;
-                } else {
-                    // Fecha o anterior (se houver)
-                    if (activePopover) {
-                        activePopover.hide();
-                    }
-
-                    // Mostra o novo
-                    popover.show();
-                    activePopover = popover;
-                }
-            });
+    document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
+        const popover = new bootstrap.Popover(popoverTriggerEl, {
+            customClass: 'custom-popover',
+            html: true,
+            sanitize: false,
+            trigger: 'manual'
         });
 
-        // Fecha ao clicar no "X"
-        document.body.addEventListener('click', function (event) {
-            if (event.target.classList.contains('close-btn')) {
+        popoverTriggerEl.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Se clicar no mesmo botão, fecha
+            if (activePopover && activeTrigger === popoverTriggerEl) {
+                activePopover.hide();
+                activePopover = null;
+                activeTrigger = null;
+            } else {
+                // Fecha anterior
                 if (activePopover) {
                     activePopover.hide();
-                    activePopover = null;
                 }
+
+                popover.show();
+                activePopover = popover;
+                activeTrigger = popoverTriggerEl;
             }
         });
+    });
+
+    // Fecha ao clicar no "X" dentro do popover
+    document.body.addEventListener('click', function (event) {
+        if (event.target.closest('.close-btn')) {
+            if (activePopover) {
+                activePopover.hide();
+                activePopover = null;
+                activeTrigger = null;
+            }
+        }
+    });
 
 });
 function closeAlert(alertId) {

@@ -19,21 +19,30 @@
 </head>
 <body class="flex h-screen">
 
-    <!-- Mensagens de alerta -->
     @if (TempData["MensagemSucesso"] != null)
     {
-        <div class="alert success" role="alert">
+        <div id="successAlert" class="alert success" role="alert">
             <span class="closebtn">&times;</span>
             <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
         </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById("successAlert").style.display = 'none';
+            }, 5000);
+        </script>
     }
 
     @if (TempData["MensagemErro"] != null)
     {
-        <div class="alert danger" role="alert">
+        <div id="errorAlert" class="alert danger" role="alert">
             <span class="closebtn">&times;</span>
             <strong>Atenção!</strong> @TempData["MensagemErro"]
         </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById("errorAlert").style.display = 'none';
+            }, 5000);
+        </script>
     }
 
     <section class="login">

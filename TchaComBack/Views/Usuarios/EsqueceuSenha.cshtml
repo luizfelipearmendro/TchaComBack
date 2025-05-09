@@ -27,21 +27,30 @@
 </head>
 <body class="flex h-screen">
 
-    <!-- Mensagens de alerta -->
     @if (TempData["MensagemSucesso"] != null)
     {
-        <div id="successAlertca" class="custom-alert success">
+        <div id="successAlert" class="custom-alert success">
             <span><strong>Sucesso!</strong> @TempData["MensagemSucesso"]</span>
             <span class="closebtn" onclick="closeAlert('successAlertca')">&times;</span>
         </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById("successAlert").style.display = 'none';
+            }, 5000);
+        </script>
     }
 
     @if (TempData["MensagemErro"] != null)
     {
-        <div id="errorAlertca" class="custom-alert error">
+        <div id="errorAlert" class="custom-alert error">
             <span><strong>Atenção!</strong> @TempData["MensagemErro"]</span>
             <span class="closebtn" onclick="closeAlert('errorAlertca')">&times;</span>
         </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById("errorAlert").style.display = 'none';
+            }, 2000);
+        </script>
     }
 
     <div class="login">

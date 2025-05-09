@@ -7,13 +7,17 @@
 <script src="~/js/Home/home.js" defer></script>
 
 <section style="padding-top: 20vh;">
-    <!-- Mensagens de alerta -->
     @if (TempData["MensagemSucesso"] != null)
     {
         <div id="successAlert" class="custom-alert success">
             <span><strong>Sucesso!</strong> @TempData["MensagemSucesso"]</span>
             <span class="closebtn" onclick="closeAlert('successAlert')">&times;</span>
         </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById("successAlert").style.display = 'none';
+            }, 5000);
+        </script>
     }
 
     @if (TempData["MensagemErro"] != null)
@@ -22,5 +26,11 @@
             <span><strong>Atenção!</strong> @TempData["MensagemErro"]</span>
             <span class="closebtn" onclick="closeAlert('errorAlert')">&times;</span>
         </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById("errorAlert").style.display = 'none';
+            }, 5000);
+        </script>
     }
+
 </section>

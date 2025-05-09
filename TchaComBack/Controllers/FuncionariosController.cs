@@ -48,6 +48,12 @@ namespace TchaComBack.Controllers
                 return RedirectToAction("Index", "Setores");
             }
 
+            if (setor.Ativo != 'S')
+            {
+                TempData["MensagemErro"] = $"{dbconsult.NomeCompleto}, o setor selecionado está inativo e não pode ser acessado.";
+                return RedirectToAction("Index", "Setores");
+            }
+
             var funcionariosQuery = db.Funcionarios
                 .AsNoTracking()
                 .Include(f => f.RacaNav)
