@@ -53,3 +53,35 @@ function closeAlert(alertId) {
         }, 500);
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.btn-popover-toggle').forEach(button => {
+        button.addEventListener('click', function (e) {
+            const id = button.getAttribute('data-id');
+            const popover = document.getElementById(`popover-${id}`);
+
+            // Esconde todos os outros popovers
+            document.querySelectorAll('.popover-content').forEach(p => {
+                if (p !== popover) p.style.display = 'none';
+            });
+
+            // Toggle no atual
+            popover.style.display = popover.style.display === 'block' ? 'none' : 'block';
+
+            // Fecha se clicar fora
+            document.addEventListener('click', function closePopover(e) {
+                if (!popover.contains(e.target) && !button.contains(e.target)) {
+                    popover.style.display = 'none';
+                    document.removeEventListener('click', closePopover);
+                }
+            });
+        });
+    });
+
+    // Fecha ao clicar no botão X
+    document.querySelectorAll('.close-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+        btn.closest('.popover-content').style.display = 'none';
+    });
+    });
+});

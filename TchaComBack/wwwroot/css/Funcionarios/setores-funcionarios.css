@@ -496,3 +496,31 @@ opacity: 0;
 transform: translateY(-20px);
 }
 }
+
+
+.mt-3 .rota-btn {
+    text-decoration: none;
+    color: #333;
+    padding: 0.2rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.rota-btn:hover {
+    background-color: #FFA500;
+}
+
+.flex-popover{
+    padding: 1rem;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0vh;
+    right: .2vw;
+    font-size: 1rem;
+    color: #888;
+    cursor: pointer;
+    text-decoration: none;
+}

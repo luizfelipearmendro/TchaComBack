@@ -228,5 +228,89 @@ namespace TchaComBack.Controllers
                 return RedirectToAction("Index", "Funcionarios");
             }
         }
+
+        public IActionResult Desativar(int id, int setorId)
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios.Find(idUsuario);
+            if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
+                return RedirectToAction("Index", "Login");
+
+            try
+            {
+                bool desativado = funcionariosRepositorio.Desativar(id);
+
+                if (desativado)
+                {
+                    TempData["MensagemSucesso"] = "Funcionário desativado com sucesso!";
+                }
+                else
+                {
+                    TempData["MensagemErro"] = "Erro ao desativar o funcionário!";
+                }
+
+                if (setorId == 0)
+                {
+                    return RedirectToAction("Funcionarios", "Funcionarios");
+                }
+
+                return Redirect($"/Funcionarios/Index/{setorId}");
+            }
+            catch (System.Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não foi possível desativar o funcionário. Detalhes do erro: {erro.Message}";
+
+                if (setorId == 0)
+                {
+                    return RedirectToAction("Funcionarios", "Funcionarios");
+                }
+
+                return Redirect($"/Funcionarios/Index/{setorId}");
+            }
+        }
+
+        public IActionResult Reativar(int id, int setorId)
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios.Find(idUsuario);
+            if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
+                return RedirectToAction("Index", "Login");
+
+            try
+            {
+                bool reativado = funcionariosRepositorio.Reativar(id);
+
+                if (reativado)
+                {
+                    TempData["MensagemSucesso"] = "Funcionário reativado com sucesso!";
+                }
+                else
+                {
+                    TempData["MensagemErro"] = "Erro ao reativar o funcionário!";
+                }
+
+                if(setorId == 0)
+                {
+                    return RedirectToAction("Funcionarios", "Funcionarios");
+                }
+
+                return Redirect($"/Funcionarios/Index/{setorId}");
+            }
+            catch (System.Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não foi possível reativar o funcionário. Detalhes do erro: {erro.Message}";
+
+                if (setorId == 0)
+                {
+                    return RedirectToAction("Funcionarios", "Funcionarios");
+                }
+
+                return Redirect($"/Funcionarios/Index/{setorId}");
+            }
+        }
     }
 }

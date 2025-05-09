@@ -37,19 +37,19 @@
 
 
 
-    @if (TempData["MensagemSucesso"] != null)
+@if (TempData["MensagemSucesso"] != null)
 {
-    <div class="alert success" role="alert">
-        <span class="closebtn">&times;</span>
-        <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+    <div id="successAlert" class="custom-alert success">
+        <span><strong>Sucesso!</strong> @TempData["MensagemSucesso"]</span>
+        <span class="closebtn" onclick="closeAlert('successAlert')">&times;</span>
     </div>
 }
 
 @if (TempData["MensagemErro"] != null)
 {
-    <div class="alert danger" role="alert">
-        <span class="closebtn">&times;</span>
-        <strong>Atenção!</strong> @TempData["MensagemErro"]
+    <div id="errorAlert" class="custom-alert error">
+        <span><strong>Atenção!</strong> @TempData["MensagemErro"]</span>
+        <span class="closebtn" onclick="closeAlert('errorAlert')">&times;</span>
     </div>
 }
 
@@ -61,23 +61,21 @@
                 <div class="input-group">
                     <p>Setor</p>
                     <div class="mb-2 mr-sm-2 text-left selected">
-                        @Html.DropDownList(
-                                                   "setor",
-                                                   ViewBag.SetoresOpcoes as SelectList,
-                                                   "Todos os Setores",
-                                                   new { @class = "form-select selected" }
-                                                   )
+                        @Html.DropDownList("setor",
+                                           ViewBag.SetoresOpcoes as SelectList,
+                                           "Todos os Setores",
+                                           new { @class = "form-select selected" }
+                                           )
                     </div>
                 </div>
                 <div class="input-group">
                     <p>Status</p>
                     <div class="mb-2 mr-sm-2 text-left selected">
-                        @Html.DropDownList(
-                                                   "ativo",
-                                                   ViewBag.StatusOpcoes as SelectList,
-                                                   "Todos",
-                                                   new { @class = "form-select selected" }
-                                                   )
+                        @Html.DropDownList("ativo",
+                                           ViewBag.StatusOpcoes as SelectList,
+                                           "Todos",
+                                           new { @class = "form-select selected" }
+                                           )
                     </div>
                 </div>
             </div>
@@ -102,34 +100,100 @@
 
             @if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos == 0)
             {
-                <div class="flex-status">
-                    <p>
-                        <span class="status-green"></span>
-                        <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
-                    </p>
-                </div>
+                @if (Model.QuantidadeFuncAtivos > 1)
+                {
+                    <div class="flex-status">
+                        <p>
+                            <span class="status-green"></span>
+                            <span class="status">@Model.QuantidadeFuncAtivos Ativos</span>
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <div class="flex-status">
+                        <p>
+                            <span class="status-green"></span>
+                            <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
+                        </p>
+                    </div>
+                }
             }
             else if (Model.QuantidadeFuncInativos > 0 && Model.QuantidadeFuncAtivos == 0)
             {
-                <div class="flex-status">
-                    <p>
-                        <span class="status-red"></span>
-                        <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
-                    </p>
-                </div>
+                @if (Model.QuantidadeFuncInativos > 1)
+                {
+                    <div class="flex-status">
+                        <p>
+                            <span class="status-green"></span>
+                            <span class="status">@Model.QuantidadeFuncInativos Inativos</span>
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <div class="flex-status">
+                        <p>
+                            <span class="status-red"></span>
+                            <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
+                        </p>
+                    </div>
+                }
             }
             else if (Model.QuantidadeFuncAtivos > 0 && Model.QuantidadeFuncInativos > 0)
             {
-                <div class="flex-status">
-                    <p>
-                        <span class="status-green"></span>
-                        <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
-                    </p>
-                    <p>
-                        <span class="status-red"></span>
-                        <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
-                    </p>
-                </div>
+                @if (Model.QuantidadeFuncAtivos > 1 && Model.QuantidadeFuncInativos == 1)
+                {
+                    <div class="flex-status">
+                        <p>
+                            <span class="status-green"></span>
+                            <span class="status">@Model.QuantidadeFuncAtivos Ativos</span>
+                        </p>
+                        <p>
+                            <span class="status-red"></span>
+                            <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
+                        </p>
+                    </div>
+                }
+                else if (Model.QuantidadeFuncAtivos == 1 && Model.QuantidadeFuncInativos > 1)
+                {
+                    <div class="flex-status">
+                        <p>
+                            <span class="status-green"></span>
+                            <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
+                        </p>
+                        <p>
+                            <span class="status-red"></span>
+                            <span class="status">@Model.QuantidadeFuncInativos Inativos</span>
+                        </p>
+                    </div>
+                }
+                else if (Model.QuantidadeFuncAtivos > 1 && Model.QuantidadeFuncInativos > 1)
+                {
+                    <div class="flex-status">
+                        <p>
+                            <span class="status-green"></span>
+                            <span class="status">@Model.QuantidadeFuncAtivos Ativos</span>
+                        </p>
+                        <p>
+                            <span class="status-red"></span>
+                            <span class="status">@Model.QuantidadeFuncInativos Inativos</span>
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <div class="flex-status">
+                        <p>
+                            <span class="status-green"></span>
+                            <span class="status">@Model.QuantidadeFuncAtivos Ativo</span>
+                        </p>
+                        <p>
+                            <span class="status-red"></span>
+                            <span class="status">@Model.QuantidadeFuncInativos Inativo</span>
+                        </p>
+                    </div>
+                }
             }
             else
             {
@@ -162,7 +226,28 @@
     <div class="container-cards" style="margin-top: 10vh;">
         @foreach (var funcionario in Model.Funcionarios)
         {
+            var acaoHtml = funcionario.Ativo == 'S'
+            ? $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalDesativarFuncionario' func-id='{funcionario.Id}' func-nome='{funcionario.Nome}'>Desativar</a>"
+            : $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalReativarFuncionario' data-id='{funcionario.Id}' data-nome='{funcionario.Nome}'>Reativar</a>";
+
+            var popoverHtml = $@"
+            <div class='flex-popover'>
+            <button type='button' class='close-btn btn btn-sm btn-light' style='float:right;'>&times;</button>
+            <div class='mt-3'>
+            <a role='button' class='rota-btn editar-setor' data-bs-toggle='modal' data-bs-target='#modalEditarFuncionario' data-id='{funcionario.Id}'>Editar</a><br/>
+            {acaoHtml}
+            </div>
+            </div>";
+
             <div class="card-funcionario @(funcionario.Ativo != 'S' ? "inativo" : "ativo")">
+                    <div class="card-menu-wrapper" style="position: absolute; top: 10px; right: 10px;">
+                        <button class="btn btn-light btn-sm btn-popover-toggle" data-id="@funcionario.Id" title="Mais ações">
+                            &#8942;
+                        </button>
+                        <div class="popover-content" id="popover-@funcionario.Id" style="display:none; position: absolute; right: 0; z-index: 999;">
+                            @Html.Raw(popoverHtml)
+                        </div>
+                    </div>
                 <div class="flex-imagem-funcionario">
                     @if (funcionario.Sexo == 'F')
                     {
@@ -267,3 +352,80 @@
     </div>
     }
 </section>
+
+<!-- modal desativar setor -->
+<div class="modal fade" id="modalDesativarFuncionario" tabindex="-1" aria-labelledby="modalDesativarFuncionarioLabel" aria-hidden="true" style="z-index:100000001;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-black" id="modalDesativarFuncionarioLabel" style="font-weight:bold">Desativar Funcionário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-black">
+                Tem certeza que deseja desativar o funcionário <span id="modalUserName"></span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a id="confirmDesativeButton" role="button" class="btn btn-danger">Desativar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal reativar setor -->
+<div class="modal fade" id="modalReativarFuncionario" tabindex="-1" aria-labelledby="modalReativarFuncionarioLabel" aria-hidden="true" style="z-index:100000001;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-black" id="modalReativarFuncionarioLabel" style="font-weight:bold">Reativar Funcionário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-black">
+                Tem certeza que deseja Reativar o funcionário <span id="modalUserNameReativo"></span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a id="confirmReativeButton" role="button" class="btn btn-primary">Reativar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", function (event) {
+            if (event.target.matches("[data-bs-target='#modalDesativarFuncionario']")) {
+                var button = event.target;
+                var funcId = button.getAttribute('func-id');
+                var funciNome = button.getAttribute('func-nome');
+                var modalUserName = document.getElementById('modalUserName');
+                var confirmDesativeButton = document.getElementById('confirmDesativeButton');
+
+                if (modalUserName && funciNome) {
+                    modalUserName.textContent = funciNome;
+                }
+                if (confirmDesativeButton && funcId) {
+                    confirmDesativeButton.href = '/Funcionarios/Desativar/' + funcId;
+                }
+            }
+        });
+    });
+
+    document.addEventListener("click", function (event) {
+        if (event.target.matches("[data-bs-target='#modalReativarFuncionario']")) {
+            var button = event.target;
+            var funcIdReativo = button.getAttribute('data-id');
+            var funcNomeReativo = button.getAttribute('data-nome');
+            var modalUserNameReativo = document.getElementById('modalUserNameReativo');
+            var confirmReativeButton = document.getElementById('confirmReativeButton');
+
+            if (modalUserNameReativo && funcNomeReativo) {
+                modalUserNameReativo.textContent = funcNomeReativo;
+            }
+            if (confirmReativeButton && funcIdReativo) {
+                confirmReativeButton.href = '/Funcionarios/Reativar/' + funcIdReativo;
+            }
+        }
+    });
+</script>
