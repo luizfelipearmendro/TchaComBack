@@ -476,6 +476,56 @@ transition: color 0.3s ease;
 color: #000;
 }
 
+.flex-botao-edition {
+display: flex;
+justify-content: flex-end;
+width:90%;
+padding-top:2vh;
+padding-right: .2vw;
+}
+
+.flex-botao-edition button {
+border: none;
+background-color: transparent;
+color: white;
+}
+
+.flex-botao-edition button:hover {
+background-color: transparent;
+}
+
+
+
+.mt-3 .rota-btn {
+    text-decoration: none;
+    color: #333;
+    padding: 0.2rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.rota-btn:hover {
+    background-color: #FFA500;
+}
+
+
+.close-btn {
+    position: absolute;
+    top: 0vh;
+    right: .2vw;
+    font-size: 1rem;
+    color: #888;
+    cursor: pointer;
+    text-decoration: none;
+}
+.btn-popover svg{
+    color: black;
+}
+
+.custom-popover .close-btn:hover {
+    color: black;
+}
 @keyframes fadeIn {
 from {
 opacity: 0;
