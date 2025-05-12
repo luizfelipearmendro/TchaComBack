@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
+using System;
 using TchaComBack.Data;
 using TchaComBack.Models;
 using TchaComBack.Repositories;
@@ -103,6 +104,10 @@ namespace TchaComBack.Controllers
                 .Distinct()
                 .ToList());
 
+            ViewBag.Setores = db.Setores
+                                .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Nome })
+                                .ToList();
+
             ViewBag.StatusOpcoes = new SelectList(new List<SelectListItem>
             {
                 new SelectListItem { Value = "S", Text = "Ativos" },
@@ -201,6 +206,27 @@ namespace TchaComBack.Controllers
             return View();
         }
 
+        public IActionResult CadastrarSemSetorEspec()
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios.Find(idUsuario);
+            if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
+                return RedirectToAction("Index", "Login");
+
+            var sessionIdUsuario = dbconsult.Id;
+
+            ViewBag.NomeCompleto = dbconsult.NomeCompleto;
+            ViewBag.Email = dbconsult.Email;
+            ViewBag.TipoPerfil = dbconsult.TipoPerfil;
+
+            ViewBag.Setores = db.Setores
+                                .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Nome })
+                                .ToList();
+
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Cadastrar(FuncionariosModel func)
@@ -310,6 +336,120 @@ namespace TchaComBack.Controllers
             {
                 TempData["MensagemErro"] = $"Ops, não foi possível reativar o funcionário. Detalhes do erro: {erro.Message}";
 
+                if (setorId == 0)
+                {
+                    return RedirectToAction("Funcionarios", "Funcionarios");
+                }
+
+                return Redirect($"/Funcionarios/Index/{setorId}");
+            }
+        }
+
+        public IActionResult Editar(int id)
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios.Find(idUsuario);
+            if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
+                return RedirectToAction("Index", "Login");
+
+            var sessionIdUsuario = dbconsult.Id;
+
+            ViewBag.NomeCompleto = dbconsult.NomeCompleto;
+            ViewBag.Email = dbconsult.Email;
+            ViewBag.TipoPerfil = dbconsult.TipoPerfil;
+
+            FuncionariosModel func = funcionariosRepositorio.ListarPorId(id);
+            return View(func);
+        }
+
+        [HttpPost]
+        public IActionResult Editar(FuncionariosModel func, int setorId, string setorNome)
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios.Find(idUsuario);
+            if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
+                return RedirectToAction("Index", "Login");
+
+            var sessionIdUsuario = dbconsult.Id;
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    TempData["MensagemErro"] = "Dados inválidos!";
+
+                    if (setorId == 0)
+                    {
+                        return RedirectToAction("Funcionarios", "Funcionarios");
+                    }
+
+                    return Redirect($"/Funcionarios/Index/{setorId}");
+                }
+
+                func.UsuarioId = sessionIdUsuario;
+                func = funcionariosRepositorio.Editar(func);
+
+                TempData["MensagemSucesso"] = "Funcionário(a) atualizado(a) com sucesso!";
+
+                if (setorId == 0)
+                {
+                    return RedirectToAction("Funcionarios", "Funcionarios");
+                }
+
+                return Redirect($"/Funcionarios/Index/{setorId}");
+            }
+            catch (System.Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não foi possível atualizar o(a) funcionário(a). Detalhes do erro: {erro.Message}";
+                return RedirectToAction("Index", "Funcionarios");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Mover(int id, int setorId)
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios.Find(idUsuario);
+            if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
+                return RedirectToAction("Index", "Login");
+
+            try
+            {
+                var funcExistente = db.Funcionarios.AsNoTracking().FirstOrDefault(f => f.Id == id);
+
+                if (funcExistente == null) throw new Exception("Houve um erro na atualização do funcionário!");
+
+                if (funcExistente.Ativo == 'N')
+                {
+                    TempData["MensagemErro"] = "Não é possivel mover um funcionário inativo.";
+ 
+                    if (setorId == 0)
+                        return RedirectToAction("Funcionarios", "Funcionarios");
+
+                    return Redirect($"/Funcionarios/Index/{setorId}");
+                }
+                funcExistente.SetorId = setorId;
+
+                db.Funcionarios.Update(funcExistente);
+                db.SaveChanges();
+
+                TempData["MensagemSucesso"] = $"Funcionário(a) movido(a) com sucesso!";
+                if (setorId == 0)
+                {
+                    return RedirectToAction("Funcionarios", "Funcionarios");
+                }
+
+                return Redirect($"/Funcionarios/Index/{setorId}");
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Erro ao mover funcionário: {erro.Message}";
                 if (setorId == 0)
                 {
                     return RedirectToAction("Funcionarios", "Funcionarios");

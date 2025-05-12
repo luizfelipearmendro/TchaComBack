@@ -151,7 +151,8 @@ cursor:pointer;
 
 .flex-botao-edition {
 display: flex;
-justify-content: flex-end
+justify-content: flex-end;
+
 }
 
 .flex-botao-edition button {

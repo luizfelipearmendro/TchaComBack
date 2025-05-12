@@ -9,28 +9,40 @@
 <section style="padding-top: 20vh;">
     @if (TempData["MensagemSucesso"] != null)
     {
-        <div id="successAlert" class="custom-alert success">
-            <span><strong>Sucesso!</strong> @TempData["MensagemSucesso"]</span>
-            <span class="closebtn" onclick="closeAlert('successAlert')">&times;</span>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+            <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
         </div>
-        <script>
-            setTimeout(() => {
-                document.getElementById("successAlert").style.display = 'none';
-            }, 5000);
-        </script>
     }
 
     @if (TempData["MensagemErro"] != null)
     {
-        <div id="errorAlert" class="custom-alert error">
-            <span><strong>Atenção!</strong> @TempData["MensagemErro"]</span>
-            <span class="closebtn" onclick="closeAlert('errorAlert')">&times;</span>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+            <div class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <strong>Atenção!</strong> @TempData["MensagemErro"]
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
         </div>
-        <script>
-            setTimeout(() => {
-                document.getElementById("errorAlert").style.display = 'none';
-            }, 5000);
-        </script>
     }
 
+
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+        toastElList.forEach(function (toastEl) {
+            const bsToast = new bootstrap.Toast(toastEl, { delay: 5000 });
+            bsToast.show();
+        });
+    });
+</script>

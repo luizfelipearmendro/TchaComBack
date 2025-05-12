@@ -55,33 +55,94 @@ function closeAlert(alertId) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.btn-popover-toggle').forEach(button => {
-        button.addEventListener('click', function (e) {
-            const id = button.getAttribute('data-id');
-            const popover = document.getElementById(`popover-${id}`);
+    let activePopover = null;
+    let activeTrigger = null;
 
-            // Esconde todos os outros popovers
-            document.querySelectorAll('.popover-content').forEach(p => {
-                if (p !== popover) p.style.display = 'none';
-            });
+    document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
+        const popover = new bootstrap.Popover(popoverTriggerEl, {
+            customClass: 'custom-popover',
+            html: true,
+            sanitize: false,
+            trigger: 'manual'
+        });
 
-            // Toggle no atual
-            popover.style.display = popover.style.display === 'block' ? 'none' : 'block';
+        popoverTriggerEl.addEventListener('click', function (e) {
+            e.preventDefault();
 
-            // Fecha se clicar fora
-            document.addEventListener('click', function closePopover(e) {
-                if (!popover.contains(e.target) && !button.contains(e.target)) {
-                    popover.style.display = 'none';
-                    document.removeEventListener('click', closePopover);
+            // Se clicar no mesmo botão, fecha
+            if (activePopover && activeTrigger === popoverTriggerEl) {
+                activePopover.hide();
+                activePopover = null;
+                activeTrigger = null;
+            } else {
+                // Fecha anterior
+                if (activePopover) {
+                    activePopover.hide();
                 }
-            });
+
+                popover.show();
+                activePopover = popover;
+                activeTrigger = popoverTriggerEl;
+            }
         });
     });
 
-    // Fecha ao clicar no botão X
-    document.querySelectorAll('.close-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-        btn.closest('.popover-content').style.display = 'none';
+    // Fecha ao clicar no "X" dentro do popover
+    document.body.addEventListener('click', function (event) {
+        if (event.target.closest('.close-btn')) {
+            if (activePopover) {
+                activePopover.hide();
+                activePopover = null;
+                activeTrigger = null;
+            }
+        }
     });
+
+    document.getElementById('telefone').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+
+        if (value.length > 11) value = value.slice(0, 11);
+
+        if (value.length <= 10) {
+            // Fixo: (00) 0000-0000
+            value = value.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3');
+        } else {
+            // Celular: (00) 00000-0000
+            value = value.replace(/^(\d{2})(\d{5})(\d{0,4})$/, '($1) $2-$3');
+        }
+
+        e.target.value = value;
     });
+
+
+    document.querySelectorAll('.dataIngresso').forEach(function (input) {
+        input.addEventListener('change', function () {
+            const grupo = this.closest('.grupo-ingresso');
+            const dataIngresso = new Date(this.value);
+            const hoje = new Date();
+
+            const diasTrabalhadosInput = grupo.parentElement.querySelector('.diasTrabalhados');
+
+            if (isNaN(dataIngresso)) {
+                diasTrabalhadosInput.value = '';
+                return;
+            }
+
+            let diasUteis = 0;
+            let data = new Date(dataIngresso);
+
+            while (data <= hoje) {
+                const diaSemana = data.getDay();
+                if (diaSemana !== 0 && diaSemana !== 6) {
+                    diasUteis++;
+                }
+                data.setDate(data.getDate() + 1);
+            }
+
+            diasTrabalhadosInput.value = diasUteis;
+        });
+    });
+
+
 });
+
