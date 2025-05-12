@@ -73,6 +73,7 @@ justify-content: flex-start;
 align-items: center;
 gap: 1vw;
 text-decoration: none;
+font-size: 1rem;
 }
 
 .accordion-botao {
@@ -90,12 +91,10 @@ gap: 1vw;
 
 .links-items:hover {
 background-color: rgba(255, 165, 0, 0.8) !important;
+color: black !important;
 }
 
-.links-items:hover {
-color: black !important;
-background-color: #4B5563;
-}
+
 
 .flex-menu-left {
 display: flex;
@@ -117,7 +116,7 @@ text-decoration: none;
 }
 
 .flex-menu-logo img {
-height: 12vh
+height: 10vh
 }
 
 .flex-menu-logo h2 {

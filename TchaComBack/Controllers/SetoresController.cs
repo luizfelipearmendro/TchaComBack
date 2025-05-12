@@ -202,7 +202,7 @@ namespace TchaComBack.Controllers
         }
 
         [HttpPost]
-        public IActionResult Atualizar(SetoresModel setor)
+        public IActionResult Editar(SetoresModel setor)
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");
             if (idUsuario == null) return RedirectToAction("Index", "Login");

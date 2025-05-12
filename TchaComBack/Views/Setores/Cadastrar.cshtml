@@ -30,19 +30,46 @@
                     </div>
                     <div class="modal-body">
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            <input asp-for="Nome" maxlength="100" class="form-control" placeholder="Nome" required />
+                            <span class="input-group-text"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-custom-class="custom-tooltip"
+                                  data-bs-title="Nome do Setor">
+
+                                <i class="bi bi-building-fill"></i>
+                            </span>
+
+                            <input asp-for="Nome" maxlength="100" class="form-control" placeholder="Nome do setor" required />
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-comment"></i></span>
+                            <span class="input-group-text"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-custom-class="custom-tooltip"
+                                  data-bs-title="Descrição">
+
+                                <i class="fas fa-comment"></i>
+                            </span>
                             <input asp-for="Descricao" maxlength="150" class="form-control" placeholder="Descrição" required />
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                            <span class="input-group-text"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-custom-class="custom-tooltip"
+                                  data-bs-title="Responsável">
+                                <i class="fas fa-user-tie"></i>
+                            </span>
                             <input asp-for="ResponsavelSetor" maxlength="100" class="form-control" placeholder="Responsável" required />
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <span class="input-group-text"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-custom-class="custom-tooltip"
+                                  data-bs-title="E-mail Responsável">
+                                <i class="fas fa-envelope"></i>
+                             </span>
                             <input asp-for="EmailResponsavelSetor" maxlength="100" class="form-control" placeholder="E-mail Responsável" required />
                         </div>
                         <div class="input-group mb-3">
@@ -72,7 +99,13 @@
                     </div>
                     <div class="modal-body">
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            <span class="input-group-text"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-custom-class="custom-tooltip"
+                                  data-bs-title="Localização">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </span>
                             <input asp-for="Localizacao" class="form-control" placeholder="Localização" required />
                         </div>
                         <div class="input-group mb-3">
@@ -87,7 +120,13 @@
                             <span asp-validation-for="CategoriaId" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-image"></i></span>
+                            <span class="input-group-text"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-custom-class="custom-tooltip"
+                                  data-bs-title="Imagem do Setor">
+                                <i class="fas fa-image"></i>
+                             </span>
                             <input asp-for="ImagemSetor" type="url" class="form-control" placeholder="https://exemplo.com/imagem.jpg" />
                         </div>
                         <div class="form-example">
@@ -140,6 +179,14 @@
             </div>
         </div>
     </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        });
+    </script>
 
 </body>
 </html>

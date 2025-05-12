@@ -107,8 +107,12 @@ align-items: center;
 gap: 1vw;
 }
 
+.form-floating{
+    width:100%;
+}
+
 .flex-input-two button {
-width: 20%;
+    width: 20%;
 }
 
 .filtro.filtro-scroll-active {
@@ -129,7 +133,7 @@ box-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
 
 .btn-filtrar {
 padding: 1.2vh !important;
-font-weight: bold !important;
+font-weight: normal !important;
 }
 
 .btn-filtrar:hover {
@@ -145,11 +149,17 @@ cursor: pointer;
 text-decoration: none;
 text-align: center;
 border: none;
-width: 4%;
-padding: .1vh;
-font-size: 1.5rem
-}
+width: fit-content;
+padding: 1.2vh;
+font-size: 1.5rem;
 
+}
+.botao-adicionar span{
+    display:flex;
+    justify-content:center;
+    gap: .5vw;
+    font-size: 1rem;
+}
 .filtro.filtro-scroll-active .btn-filtrar {
 background: linear-gradient(90deg, #8A2BE2, #FFA500);
 }

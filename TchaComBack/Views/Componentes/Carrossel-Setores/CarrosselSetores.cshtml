@@ -85,8 +85,13 @@
                                 <li class="glide__slide">
                                     @if (string.IsNullOrEmpty(setor.ImagemSetor))
                                     {
-                                        <div class="@cardClass sem-imagem">
-                                            <main class="main-content sem-imagem-content">
+                                        
+                                        <div class="@cardClass sem-imagem"  >
+                                            <main class="main-content sem-imagem-content" onclick="window.location.href='@(
+                                                  isInativo
+                                                  ? "#"
+                                                  : Url.Action("Index", "Funcionarios", new { id = setor.Id })
+                                              )'">
                                                 <div class="flex-botao-edition">
                                                     <button type="button"
                                                             class="btn-popover"
@@ -193,7 +198,11 @@
                                     }
                                     else
                                     {
-                                        <div class="@cardClass" style="background-image: url('@setor.ImagemSetor');">
+                                        <div class="@cardClass" style="background-image: url('@setor.ImagemSetor');" onclick="window.location.href='@(
+                                                  isInativo
+                                                  ? "#"
+                                                  : Url.Action("Index", "Funcionarios", new { id = setor.Id })
+                                              )'">
                                             <main class="main-content">
                                                 <div class="flex-botao-edition">
                                                     <button type="button"
@@ -303,7 +312,7 @@
                                 </li>
                             }
                             @{
-                                int totalSlidesBreve = Math.Max(setoresDaCategoria.Count, 3);
+                                int totalSlidesBreve = Math.Max(setoresDaCategoria.Count, 2);
                             }
                             @for (int i = setoresDaCategoria.Count; i < totalSlidesBreve; i++)
                             {
