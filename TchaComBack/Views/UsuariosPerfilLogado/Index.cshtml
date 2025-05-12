@@ -1,0 +1,177 @@
+﻿@model UsuariosViewModel
+@{
+    ViewData["Title"] = "Perfil do Usuário";
+}
+
+<link href="~/css/Funcionarios/setores-funcionarios.css" rel="stylesheet" />
+<style>
+    .card{
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.9rem;
+    }
+</style>
+
+@functions {
+    public string GetPrimeiroEUltimoNome(string nomeCompleto)
+    {
+        if (string.IsNullOrWhiteSpace(nomeCompleto))
+            return "";
+
+        var partes = nomeCompleto.Trim().Split(' ');
+
+        if (partes.Length == 1)
+            return partes[0];
+
+        return $"{partes[0]} {partes[^1]}";
+    }
+}
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div id="successAlert" class="custom-alert success">
+        <span><strong>Sucesso!</strong> @TempData["MensagemSucesso"]</span>
+        <span class="closebtn" onclick="closeAlert('successAlert')">&times;</span>
+    </div>
+    <script>
+        setTimeout(() => {
+        document.getElementById("successAlert").style.display = 'none';
+        }, 5000);
+    </script>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div id="errorAlert" class="custom-alert error">
+        <span><strong>Atenção!</strong> @TempData["MensagemErro"]</span>
+        <span class="closebtn" onclick="closeAlert('errorAlert')">&times;</span>
+    </div>
+    <script>
+        setTimeout(() => {
+        document.getElementById("errorAlert").style.display = 'none';
+        }, 5000);
+    </script>
+}
+
+<div class="flex-info-card-func">
+    @if (Model.QtdUsuariosAtivos > 0 && Model.QtdUsuariosInativos == 0)
+    {
+        @if (Model.QtdUsuariosAtivos > 1)
+        {
+            <div class="flex-status">
+                <p>
+                    <span class="status-green"></span>
+                    <span class="status">@Model.QtdUsuariosAtivos Ativos</span>
+                </p>
+            </div>
+        }
+        else
+        {
+            <div class="flex-status">
+                <p>
+                    <span class="status-green"></span>
+                    <span class="status">@Model.QtdUsuariosAtivos Ativo</span>
+                </p>
+            </div>
+        }
+    }
+    else if (Model.QtdUsuariosInativos > 0 && Model.QtdUsuariosAtivos == 0)
+    {
+        @if (Model.QtdUsuariosInativos > 1)
+        {
+            <div class="flex-status">
+                <p>
+                    <span class="status-green"></span>
+                    <span class="status">@Model.QtdUsuariosInativos Inativos</span>
+                </p>
+            </div>
+        }
+        else
+        {
+            <div class="flex-status">
+                <p>
+                    <span class="status-red"></span>
+                    <span class="status">@Model.QtdUsuariosInativos Inativo</span>
+                </p>
+            </div>
+        }
+    }
+    else if (Model.QtdUsuariosAtivos > 0 && Model.QtdUsuariosInativos > 0)
+    {
+        @if (Model.QtdUsuariosAtivos > 1 && Model.QtdUsuariosInativos == 1)
+        {
+            <div class="flex-status">
+                <p>
+                    <span class="status-green"></span>
+                    <span class="status">@Model.QtdUsuariosAtivos Ativos</span>
+                </p>
+                <p>
+                    <span class="status-red"></span>
+                    <span class="status">@Model.QtdUsuariosInativos Inativo</span>
+                </p>
+            </div>
+        }
+        else if (Model.QtdUsuariosAtivos == 1 && Model.QtdUsuariosInativos > 1)
+        {
+            <div class="flex-status">
+                <p>
+                    <span class="status-green"></span>
+                    <span class="status">@Model.QtdUsuariosAtivos Ativo</span>
+                </p>
+                <p>
+                    <span class="status-red"></span>
+                    <span class="status">@Model.QtdUsuariosInativos Inativos</span>
+                </p>
+            </div>
+        }
+        else if (Model.QtdUsuariosAtivos > 1 && Model.QtdUsuariosInativos > 1)
+        {
+            <div class="flex-status">
+                <p>
+                    <span class="status-green"></span>
+                    <span class="status">@Model.QtdUsuariosAtivos Ativos</span>
+                </p>
+                <p>
+                    <span class="status-red"></span>
+                    <span class="status">@Model.QtdUsuariosInativos Inativos</span>
+                </p>
+            </div>
+        }
+        else
+        {
+            <div class="flex-status">
+                <p>
+                    <span class="status-green"></span>
+                    <span class="status">@Model.QtdUsuariosAtivos Ativo</span>
+                </p>
+                <p>
+                    <span class="status-red"></span>
+                    <span class="status">@Model.QtdUsuariosInativos Inativo</span>
+                </p>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="p-func">Nenhum funcionário encontrado</p>
+    }
+</div>
+
+<div class="flex-body-card" style="display: flex; gap: 2rem; margin-top: 6rem;">
+    @foreach (var usuario in Model.Usuarios)
+    {
+        <div class="card" style="width: 22rem">
+            <img src="~/img/logo2TCB.jpeg" class="card-img-top" alt="TchaComBack" style="height: 20rem;">
+            <div class="card-body">
+                <h1 class="text-center" style="font-size: 1.2rem; font-weight: bold;">@GetPrimeiroEUltimoNome(usuario.NomeCompleto)</h1><br />
+                <p><span><strong>E-mail:</strong></span> <span>@usuario.Email</span></p>
+                <p><span><strong>Tipo Perfil:</strong></span> <span>@(usuario.TipoPerfil == 1 ? "Administrador" : "Coordenador")</span></p>
+                @if(usuario.TipoPerfil == 2)
+                {
+                    <p><span><strong>Responsável pelo setor:</strong> </span><span>@usuario.Setor?.Nome</span></p>
+                }
+                <p><span><strong>Usuário Ativo?</strong></span> <span>@(usuario.Ativo == 'S' ? "Sim" : "Não")</span></p>
+                <p><span><strong>Último Acesso:</strong></span> <span>@usuario.UltimoAcesso</span></p>
+            </div>
+        </div>
+    }
+</div>
