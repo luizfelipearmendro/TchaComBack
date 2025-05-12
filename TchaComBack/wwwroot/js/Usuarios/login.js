@@ -35,6 +35,6 @@ function closeAlert(alertId) {
         alertElement.style.animation = 'fadeOut 0.5s ease-in-out';
         setTimeout(() => {
             alertElement.remove();
-        }, 500);
+        }, 2000);
     }
 }

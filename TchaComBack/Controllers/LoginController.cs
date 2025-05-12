@@ -30,11 +30,18 @@ namespace TchaComBack.Controllers
                 {
                     var senhaHash = Utilitarios.GerarHashSenha(senha, usuario.Salt);
 
+                    if(usuario.Ativo != 'S')
+                    {
+                        TempData["MensagemErro"] = $"Desculpe! O seu perfil se encontra inativo no nosso sistema.";
+                        return View("Index");
+                    }
+
                     if (senhaHash == usuario.Senha)
                     {
                         string hash = Utilitarios.GeradorHash();
 
                         usuario.Hash = hash;
+                        usuario.UltimoAcesso = DateTime.Now;
                         db.SaveChanges();
 
                         HttpContext.Session.SetInt32("idUsuario", usuario.Id);

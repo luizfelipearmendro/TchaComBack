@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace TchaComBack.Models
 {
@@ -24,5 +25,30 @@ namespace TchaComBack.Models
         public DateTime DataCadastro { get; set; }
 
         public DateTime DataHoraEsqueceuSenha { get; set; }
+
+        public int? SetorId { get; set; }
+
+        public char Ativo { get; set; } = 'S';
+
+        public DateTime UltimoAcesso { get; set; }
+
+
+        [ValidateNever]
+        public SetoresModel Setor { get; set; }
+
+        public void Desativar()
+        {
+            this.Ativo = 'N';
+        }
+
+        public void Reativar()
+        {
+            this.Ativo = 'S';
+        }
+
+        public bool EstaAtivo()
+        {
+            return this.Ativo == 'S';
+        }
     }
 }
