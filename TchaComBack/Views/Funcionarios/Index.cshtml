@@ -46,7 +46,7 @@
     </div>
     <script>
         setTimeout(() => {
-            document.getElementById("successAlert").style.display = 'none';
+        document.getElementById("successAlert").style.display = 'none';
         }, 5000);
     </script>
 }
@@ -59,7 +59,7 @@
     </div>
     <script>
         setTimeout(() => {
-            document.getElementById("errorAlert").style.display = 'none';
+        document.getElementById("errorAlert").style.display = 'none';
         }, 5000);
     </script>
 }
@@ -70,36 +70,39 @@
         <div class="flex-form">
             <input type="hidden" name="id" value="@Model.SetorId" />
             <div class="flex-input-group filtro-content">
-                <div class="input-group">
-                    <p>Cargo</p>
-                    <div class="mb-2 mr-sm-2 text-left selected">
-                        @Html.DropDownList(
-                                 "cargo",
-                                 ViewBag.CargosOpcoes as SelectList,
-                                 "Todos os Cargos",
-                                 new { @class = "form-select selected" }
-                                 )
-                    </div>
+                <div class="form-floating mb-3">
+                    @Html.DropDownList(
+                                               "cargo",
+                                               ViewBag.CargosOpcoes as SelectList,
+                                               "Todos os Cargos",
+                                               new { @class = "form-select", id = "floatingCategoria" }
+                                               )
+                    <label for="floatingCategoria">Categorias</label>
                 </div>
-                <div class="input-group">
-                    <p>Status</p>
-                    <div class="mb-2 mr-sm-2 text-left selected">
-                        @Html.DropDownList(
-                                 "ativo",
-                                 ViewBag.StatusOpcoes as SelectList,
-                                 "Todos",
-                                 new { @class = "form-select selected" }
-                                 )
-                    </div>
+
+                <div class="form-floating mb-3">
+                    @Html.DropDownList(
+                                               "ativo",
+                                               ViewBag.StatusOpcoes as SelectList,
+                                               "Todos",
+                                               new { @class = "form-select", id = "floatingCategoria" }
+                                               )
+                    <label for="floatingAtivo">Status</label>
                 </div>
             </div>
             <div class="flex-input-two filtro-content">
-                <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control mb-2 mr-sm-2" placeholder="Buscar por nome..." />
+                <div class="form-floating mb-3">
+                    <input name="searchString" value="@ViewBag.SearchString" type="text" class="form-control" id="floatingInput" placeholder="Buscar setor...">
+                    <label for="floatingInput">Buscar setor...</label>
+                </div>                
                 <a href="@Url.Action("Cadastrar", "Funcionarios", new { setorId = Model.SetorId, setorNome = Model.NomeSetor})" class="botao-adicionar mb-2" style="color:white;">
-                    +
+                    <span>
+                        <i class="bi bi-person-fill-add"></i>
+                        Cadastrar
+                    </span>
                 </a>
                 <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                         view-data='@new ViewDataDictionary(ViewData) {
+                view-data='@new ViewDataDictionary(ViewData) {
                          { "Texto", "Filtrar" },
                          { "Url", "" },
                          { "ClasseExtra", "btn-filtrar" },
@@ -236,21 +239,22 @@
                     </div>";
 
                     <div class="card-funcionario @(funcionario.Ativo != 'S' ? "inativo" : "ativo")">
+
+                        <div class="flex-imagem-funcionario">
                             <div class="flex-botao-edition">
                                 <button type="button"
-                                        class="btn-popover"
-                                        data-bs-toggle="popover"
-                                        data-bs-placement="right"
-                                        data-bs-html="true"
-                                        data-id="@funcionario.Id"
-                                        data-bs-content="@popoverHtml">
+                                class="btn-popover"
+                                data-bs-toggle="popover"
+                                data-bs-placement="right"
+                                data-bs-html="true"
+                                data-id="@funcionario.Id"
+                                data-bs-content="@popoverHtml">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                         class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                    class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                                         <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
                                     </svg>
                                 </button>
-                             </div>
-                        <div class="flex-imagem-funcionario">
+                            </div>
                             @if (funcionario.Sexo == 'F')
                             {
                                 <img src="https://i.ibb.co/WWT61zQb/image-removebg-preview.png" alt="Responsável" class="small-avatar" />
@@ -261,15 +265,19 @@
                             }
                         </div>
                         <div class="flex-body-card">
+                            @if (funcionario.Ativo == 'S')
+                            {
                             <div class="flex-onda"></div>
-                            <div class="body-card ">
-                                <p><span>Nome</span> <span class="card-dado">@GetPrimeiroEUltimoNome(funcionario.Nome)</span></p>
-                                <p><span>Cargo</span> <span class="card-dado">@funcionario.Cargo</span></p>
-                                <p><span>Email</span> <span class="card-dado">@funcionario.Email</span></p>
-                                <p><span>Telefone</span> <span class="card-dado">@funcionario.Celular</span></p>
-                                <p><span>Ativo</span> <span class="card-dado">@(funcionario.Ativo == 'S' ? "Sim" : "Não")</span></p>
-                                <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
-                                         view-data='@new ViewDataDictionary(ViewData) {
+
+                           
+                                <div class="body-card ">
+                                    <p><span>Nome</span> <span class="card-dado">@GetPrimeiroEUltimoNome(funcionario.Nome)</span></p>
+                                    <p><span>Cargo</span> <span class="card-dado">@funcionario.Cargo</span></p>
+                                    <p><span>Email</span> <span class="card-dado">@funcionario.Email</span></p>
+                                    <p><span>Telefone</span> <span class="card-dado">@funcionario.Celular</span></p>
+                                    <p><span>Ativo</span> <span class="card-dado">@(funcionario.Ativo == 'S' ? "Sim" : "Não")</span></p>
+                                    <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                                    view-data='@new ViewDataDictionary(ViewData) {
                                          { "Texto", "Detalhar" },
                                          { "Url", "/Funcionarios" },
                                          { "ClasseExtra", "btn-detalhar" },
@@ -282,7 +290,29 @@
                                              { "aria-expanded", "false" }
                                          }}
                                      }' />
-                            </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="flex-onda-inativo"></div>
+                                <div class="body-card-inativo placeholder-glow" >
+                                    <p aria-hidden="true"><span class="placeholder " style="width: auto;">Nome</span> <span class="placeholder" style="width: auto;">@GetPrimeiroEUltimoNome(funcionario.Nome)</span></p>
+                                    <p aria-hidden="true"><span class="placeholder " style="width: auto;">Cargo</span> <span class="placeholder " style="width: auto;">@funcionario.Cargo</span></p>
+                                    <p aria-hidden="true"><span class="placeholder " style="width: auto;">Email</span> <span class="placeholder " style="width: auto;">@funcionario.Email</span></p>
+                                    <p aria-hidden="true"><span class="placeholder " style="width: auto;">Telefone</span> <span class="placeholder " style="width: auto;">@funcionario.Celular</span></p>
+                                    <p aria-hidden="true"><span class="placeholder " style="width: auto;">Ativo</span> <span class="placeholder " style="width: auto;">@(funcionario.Ativo == 'S' ? "Sim" : "Não")</span></p>
+                                    <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                                             view-data='@new ViewDataDictionary(ViewData) {
+                                         { "Texto", "Funcionário Inativo" },
+                                         { "Url", "#" },
+                                         { "ClasseExtra", "btn-detalhar-inativo" },
+                                         { "Id", "botaoDetalhar" },
+                                         { "Type", "button" },
+                                         { "Elemento", "button" }
+                                     }' />
+                                </div>
+                            }
+
                         </div>
                     </div>
                     <div  class="modal fade" id="modal-@funcionario.Id" tabindex="-1" aria-labelledby="modalLabel-@funcionario.Id" aria-hidden="true">

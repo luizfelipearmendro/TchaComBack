@@ -90,33 +90,36 @@
                     <h1>Setores</h1>
                     <div class="flex-filtro">
                         <div class="flex-input-group filtro-content">
-                            <div class="input-group">
-                                <p>Categorias</p>
-                                <div class="mb-2 mr-sm-2 text-left selected">
-                                    @Html.DropDownList(
-                                             "categoriaId",
-                                             ViewBag.CategoriasOpcoes as SelectList,
-                                             "Todas as Categorias",
-                                             new { @class = "form-select selected" }
-                                             )
-                                </div>
+                            <div class="form-floating mb-3">
+                                @Html.DropDownList(
+                                         "categoriaId",
+                                         ViewBag.CategoriasOpcoes as SelectList,
+                                         "Todas as Categorias",
+                                         new { @class = "form-select", id = "floatingCategoria" }
+                                         )
+                                <label for="floatingCategoria">Categorias</label>
                             </div>
-                            <div class="input-group">
-                                <p>Status</p>
-                                <div class="mb-2 mr-sm-2 text-left selected">
+
+                            <div class="form-floating mb-3">
                                     @Html.DropDownList(
                                              "ativo",
                                              ViewBag.StatusOpcoes as SelectList,
                                              "Todos",
-                                             new { @class = "form-select selected" }
+                                             new { @class = "form-select", id = "floatingCategoria" }
                                              )
-                                </div>
+                                <label for="floatingAtivo">Status</label>
                             </div>
                         </div>
                         <div class="flex-input-two filtro-content">
-                            <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control mb-2 mr-sm-2" placeholder="Buscar setor..." />
-                            <a role="button" class="botao-adicionar mb-2" style="color:white;" data-bs-toggle="modal" data-bs-target="#modalCadastrarSetor">
-                                +
+                            <div class="form-floating mb-3">
+                                <input name="searchString" value="@ViewBag.SearchString"  type="text" class="form-control" id="floatingInput" placeholder="Buscar setor...">
+                                <label for="floatingInput">Buscar setor...</label>
+                            </div>
+                            <a role="button" class="botao-adicionar mb-2 " style="color:white;" data-bs-toggle="modal" data-bs-target="#modalCadastrarSetor">
+                                <span>
+                                    <i class="bi bi-building-fill-add"></i>
+                                    Cadastrar
+                                </span>
                             </a>
                             <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@( new ViewDataDictionary(ViewData){
                              { "Texto", "Filtrar" },
@@ -188,39 +191,39 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("click", function (event) {
-            if (event.target.matches("[data-bs-target='#modalDesativarSetor']")) {
-                var button = event.target;
-                var setorId = button.getAttribute('setor-id');
-                var setorName = button.getAttribute('setor-nome');
-                var modalUserName = document.getElementById('modalUserName');
-                var confirmDesativeButton = document.getElementById('confirmDesativeButton');
+            document.addEventListener("click", function (event) {
+                if (event.target.matches("[data-bs-target='#modalDesativarSetor']")) {
+                    var button = event.target;
+                    var setorId = button.getAttribute('setor-id');
+                    var setorName = button.getAttribute('setor-nome');
+                    var modalUserName = document.getElementById('modalUserName');
+                    var confirmDesativeButton = document.getElementById('confirmDesativeButton');
 
-                if (modalUserName && setorName) {
-                    modalUserName.textContent = setorName;
+                    if (modalUserName && setorName) {
+                        modalUserName.textContent = setorName;
+                    }
+                    if (confirmDesativeButton && setorId) {
+                        confirmDesativeButton.href = '/Setores/Desativar/' + setorId;
+                    }
                 }
-                if (confirmDesativeButton && setorId) {
-                    confirmDesativeButton.href = '/Setores/Desativar/' + setorId;
-                }
-            }
-        });
+            });
 
-        document.addEventListener("click", function (event) {
-            if (event.target.matches("[data-bs-target='#modalReativarSetor']")) {
-                var button = event.target;
-                var setorIdReativo = button.getAttribute('data-id');
-                var setorNome = button.getAttribute('data-nome');
-                var modalUserNameReativo = document.getElementById('modalUserNameReativo');
-                var confirmReativeButton = document.getElementById('confirmReativeButton');
+            document.addEventListener("click", function (event) {
+                if (event.target.matches("[data-bs-target='#modalReativarSetor']")) {
+                    var button = event.target;
+                    var setorIdReativo = button.getAttribute('data-id');
+                    var setorNome = button.getAttribute('data-nome');
+                    var modalUserNameReativo = document.getElementById('modalUserNameReativo');
+                    var confirmReativeButton = document.getElementById('confirmReativeButton');
 
-                if (modalUserNameReativo && setorNome) {
-                    modalUserNameReativo.textContent = setorNome;
+                    if (modalUserNameReativo && setorNome) {
+                        modalUserNameReativo.textContent = setorNome;
+                    }
+                    if (confirmReativeButton && setorIdReativo) {
+                        confirmReativeButton.href = '/Setores/Reativar/' + setorIdReativo;
+                    }
                 }
-                if (confirmReativeButton && setorIdReativo) {
-                    confirmReativeButton.href = '/Setores/Reativar/' + setorIdReativo;
-                }
-            }
-        });
+            });
         });
     </script>
 
