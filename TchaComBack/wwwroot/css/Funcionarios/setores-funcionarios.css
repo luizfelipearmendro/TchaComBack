@@ -598,7 +598,17 @@ background-color: transparent;
 .form-floating{
     width:100%;
 }
-
+.modal-header h5 {
+    background: linear-gradient(90deg, #8A2BE2, #FFA500 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: 100%;
+    font-weight: bold;
+    font-family: "Bebas Neue", sans-serif;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    text-decoration: none;
+}
 @keyframes fadeIn {
     from {
 opacity: 0;

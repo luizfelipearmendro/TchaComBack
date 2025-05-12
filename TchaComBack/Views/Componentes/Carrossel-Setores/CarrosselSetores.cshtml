@@ -87,11 +87,7 @@
                                     {
                                         
                                         <div class="@cardClass sem-imagem"  >
-                                            <main class="main-content sem-imagem-content" onclick="window.location.href='@(
-                                                  isInativo
-                                                  ? "#"
-                                                  : Url.Action("Index", "Funcionarios", new { id = setor.Id })
-                                              )'">
+                                            <main class="main-content sem-imagem-content">
                                                 <div class="flex-botao-edition">
                                                     <button type="button"
                                                             class="btn-popover"
@@ -198,11 +194,7 @@
                                     }
                                     else
                                     {
-                                        <div class="@cardClass" style="background-image: url('@setor.ImagemSetor');" onclick="window.location.href='@(
-                                                  isInativo
-                                                  ? "#"
-                                                  : Url.Action("Index", "Funcionarios", new { id = setor.Id })
-                                              )'">
+                                        <div class="@cardClass" style="background-image: url('@setor.ImagemSetor');">
                                             <main class="main-content">
                                                 <div class="flex-botao-edition">
                                                     <button type="button"

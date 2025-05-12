@@ -19,7 +19,6 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
-<script src="~/js/Setores/setores.js" defer></script>
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -251,7 +250,7 @@
                     ? $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalDesativarFuncionario' func-id='{funcionario.Id}' func-nome='{funcionario.Nome}' data-setor='{funcionario.SetorId}'>Desativar</a>"
                     : $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalReativarFuncionario' data-id='{funcionario.Id}' data-nome='{funcionario.Nome}' data-setor='{funcionario.SetorId}'>Reativar</a>";
 
-                    var popoverHtmlTransf = $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalMoverFuncionario' funcId-movido='{funcionario.Id}' funcNome-movido='{funcionario.Nome}' data-setor='{funcionario.SetorId}'>Mover Funcionário</a>";
+                    var popoverHtmlTransf = funcionario.Ativo == 'S' ? $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalMoverFuncionario' funcId-movido='{funcionario.Id}' funcNome-movido='{funcionario.Nome}' data-setor='{funcionario.SetorId}'>Mover Funcionário</a>" : "";
 
                     var popoverHtml = $@"
                     <div class='flex-popover'>

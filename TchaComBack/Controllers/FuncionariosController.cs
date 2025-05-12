@@ -425,6 +425,15 @@ namespace TchaComBack.Controllers
 
                 if (funcExistente == null) throw new Exception("Houve um erro na atualização do funcionário!");
 
+                if (funcExistente.Ativo == 'N')
+                {
+                    TempData["MensagemErro"] = "Não é possivel mover um funcionário inativo.";
+ 
+                    if (setorId == 0)
+                        return RedirectToAction("Funcionarios", "Funcionarios");
+
+                    return Redirect($"/Funcionarios/Index/{setorId}");
+                }
                 funcExistente.SetorId = setorId;
 
                 db.Funcionarios.Update(funcExistente);
