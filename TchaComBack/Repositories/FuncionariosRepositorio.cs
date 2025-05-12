@@ -39,34 +39,34 @@ namespace TchaComBack.Repositories
 
         public FuncionariosModel Editar(FuncionariosModel func)
         {
-            FuncionariosModel funcEditado = ListarPorId(func.Id);
+            var funcExistente = db.Funcionarios.AsNoTracking().FirstOrDefault(f => f.Id == func.Id);
 
-            if (func == null) throw new System.Exception("Houve um erro na atualização do funcionário!");
-            func.Nome = funcEditado.Nome;
-            func.DataNascimento = funcEditado.DataNascimento;
-            func.Sexo = funcEditado.Sexo;
-            func.Raca = funcEditado.Raca;
-            func.EstadoCivil = funcEditado.EstadoCivil;
-            func.NomeMae = funcEditado.NomeMae;
-            func.Naturalidade = funcEditado.Naturalidade;
-            func.Endereco = funcEditado.Endereco;
-            func.CidadeResidencia = funcEditado.CidadeResidencia;
-            func.Email = funcEditado.Email;
-            func.Celular = funcEditado.Celular;
-            func.SetorId = funcEditado.SetorId;
-            func.Cargo = funcEditado.Cargo;
-            func.Salario = funcEditado.Salario;
-            func.DataIngresso = funcEditado.DataIngresso;
-            func.DiasTrabalhados = funcEditado.DiasTrabalhados;
-            func.DataCadastro = funcEditado.DataCadastro;
-            func.DataAtualizacao = funcEditado.DataAtualizacao;
-            func.Ativo = funcEditado.Ativo;
-            func.DataAtualizacao = DateTime.Now;
+            if (funcExistente == null) throw new System.Exception("Houve um erro na atualização do funcionário!");
 
-            db.Funcionarios.Update(func);
+            // Atualizar apenas os campos necessários
+            funcExistente.Nome = func.Nome;
+            funcExistente.DataNascimento = func.DataNascimento;
+            funcExistente.Sexo = func.Sexo;
+            funcExistente.Raca = func.Raca;
+            funcExistente.EstadoCivil = func.EstadoCivil;
+            funcExistente.NomeMae = func.NomeMae;
+            funcExistente.Naturalidade = func.Naturalidade;
+            funcExistente.Endereco = func.Endereco;
+            funcExistente.CidadeResidencia = func.CidadeResidencia;
+            funcExistente.Email = func.Email;
+            funcExistente.Celular = func.Celular;
+            funcExistente.SetorId = func.SetorId;
+            funcExistente.Cargo = func.Cargo;
+            funcExistente.Salario = func.Salario;
+            funcExistente.DataIngresso = func.DataIngresso;
+            funcExistente.DiasTrabalhados = func.DiasTrabalhados;
+            funcExistente.Ativo = func.Ativo;
+            funcExistente.DataAtualizacao = DateTime.Now;
+
+            db.Funcionarios.Update(funcExistente);
             db.SaveChanges();
 
-            return func;
+            return funcExistente;
         }
 
         //public List<FuncionariosPorSetorViewModel> ObterFuncionariosPorSetor()

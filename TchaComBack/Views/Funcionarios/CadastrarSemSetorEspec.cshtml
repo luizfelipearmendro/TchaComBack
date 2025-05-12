@@ -2,7 +2,7 @@
 
 @model FuncionariosModel
 @{
-    <title>@ViewData["Title"] </title>
+    <title>@ViewData["Title"] Cadastrar Funcionário</title>
 }
 
 <!DOCTYPE html>
@@ -29,13 +29,14 @@
         </div>
 
         <form asp-controller="Funcionarios" asp-action="Cadastrar" method="post" id="formCompleto">
-
-            <input type="hidden" name="SetorId" value="@Context.Request.Query["setorId"]" />
-            <input type="hidden" name="SetorNome" value="@Context.Request.Query["setorNome"]" />
-
             <div id="step1" class="step">
                 <h3>Etapa 1: Informações Pessoais</h3>
-                <p class="text-muted mb-3">Setor a ser atribuído: <strong class="text-setor">@Context.Request.Query["setorNome"]</strong></p>
+                <p class="text-muted mb-3">Setor a ser atribuído: 
+                    <select asp-for="SetorId" class="form-select" asp-items="ViewBag.Setores">
+                        <option value="">Selecione</option>
+                    </select>
+                    <span asp-validation-for="SetorId" class="text-danger"></span>
+                </p>
 
                 <div class="box-input">
                     <div class="flex-input">
@@ -101,12 +102,11 @@
 
                     <button type="button" class="btn btn-step-primary" id="next1" onclick="nextStep(2)">Próxima Etapa</button>
                 </div>
-   
+
             </div>
 
             <div id="step2" class="step" style="display: none;">
                 <h3>Etapa 2: Informações Adicionais</h3>
-                <p class="text-muted mb-3">Setor a ser atribuído: <strong class="text-setor">@Context.Request.Query["setorNome"]</strong></p>
 
                 <div class="box-input">
                     <div class="input-group mb-3">
@@ -133,12 +133,11 @@
                     <button type="button" class="btn btn-step-secundario" id="prev2" onclick="prevStep(1)">Retornar Etapa</button>
                     <button type="button" class="btn btn-step-primary" id="next2" onclick="nextStep(3)">Próxima Etapa</button>
                 </div>
- 
+
             </div>
 
             <div id="step3" class="step" style="display: none;">
                 <h3>Etapa 3: Informações Finais</h3>
-                <p class="text-muted mb-3">Setor a ser atribuído: <strong class="text-setor">@Context.Request.Query["setorNome"]</strong></p>
 
                 <div class="box-input">
                     <div class="input-group mb-3">
