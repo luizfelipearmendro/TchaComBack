@@ -229,24 +229,24 @@
                         </span>
                         <input asp-for="Salario" maxlength="100" class="form-control" placeholder="Salário" required />
                     </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" 
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="top" 
-                            data-bs-title="Informe a Data Ingresso.">
+                    <div class="input-group mb-3 grupo-ingresso">
+                        <span class="input-group-text"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              data-bs-title="Informe a Data Ingresso.">
                             <i class="fa-regular fa-calendar"></i>
                         </span>
-                        <input type="date" asp-for="DataIngresso" maxlength="100" class="form-control" placeholder="Data Ingresso" required />
+                        <input type="date" asp-for="DataIngresso" class="form-control dataIngresso" placeholder="Data Ingresso" required />
                     </div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" 
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="top" 
-                            data-bs-title="Informe os Dias Trabalhados.">
+                    <div class="input-group mb-3 grupo-ingresso">
+                        <span class="input-group-text"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              data-bs-title="Informe os Dias Trabalhados.">
                             <i class="fa-regular fa-calendar"></i>
                         </span>
-                        <input type="number" asp-for="DiasTrabalhados" maxlength="100" class="form-control" placeholder="Dias Trabalhados" required />
+                        <input type="number" asp-for="DiasTrabalhados" class="form-control diasTrabalhados" placeholder="Dias Trabalhados" required readonly />
                     </div>
                     <div class="form-example">
                         <label for="Confirmacao">Confirmação:</label>
@@ -265,7 +265,7 @@
         </form>
     </div>
 
-    <script src="~/js/Funcionarios/setores-funcionarios.js" defer></script>
+    <script src="~/js/Funcionarios/setores-funcionarios.js"></script>
     <script>
         function updateProgressBar(step) {
             const progressBar = document.querySelector('.progress-bar');

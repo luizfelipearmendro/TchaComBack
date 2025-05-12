@@ -225,25 +225,26 @@
                         </span>
                         <input asp-for="Salario" maxlength="100" class="form-control" placeholder="Salário" required />
                     </div>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3 grupo-ingresso">
                         <span class="input-group-text"
                               data-bs-toggle="tooltip"
                               data-bs-placement="top"
                               data-bs-title="Informe a Data Ingresso.">
                             <i class="fa-regular fa-calendar"></i>
                         </span>
-                        <input type="date" asp-for="DataIngresso" id="dataIngresso" class="form-control" placeholder="Data Ingresso" required />
+                        <input type="date" asp-for="DataIngresso" class="form-control dataIngresso" placeholder="Data Ingresso" required />
                     </div>
 
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3 grupo-ingresso">
                         <span class="input-group-text"
                               data-bs-toggle="tooltip"
                               data-bs-placement="top"
                               data-bs-title="Informe os Dias Trabalhados.">
                             <i class="fa-regular fa-calendar"></i>
                         </span>
-                        <input type="number" asp-for="DiasTrabalhados" id="diasTrabalhados" class="form-control" placeholder="Dias Trabalhados" required readonly />
+                        <input type="number" asp-for="DiasTrabalhados" class="form-control diasTrabalhados" placeholder="Dias Trabalhados" required readonly />
                     </div>
+
                     <div class="form-example">
                         <label for="Confirmacao">Confirmação:</label>
                         <p>Revise as informações inseridas antes de concluir.</p>
@@ -258,7 +259,7 @@
         </form>
     </div>
 
-    <script src="~/js/Funcionarios/setores-funcionarios.js" defer></script>
+    <script src="~/js/Funcionarios/setores-funcionarios.js"></script>
     <script>
         function updateProgressBar(step) {
             const progressBar = document.querySelector('.progress-bar');

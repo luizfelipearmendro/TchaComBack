@@ -115,31 +115,34 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    document.getElementById('dataIngresso').addEventListener('change', function () {
-        const dataIngresso = new Date(this.value);
-        const hoje = new Date();
+    document.querySelectorAll('.dataIngresso').forEach(function (input) {
+        input.addEventListener('change', function () {
+            const grupo = this.closest('.grupo-ingresso');
+            const dataIngresso = new Date(this.value);
+            const hoje = new Date();
 
-        if (isNaN(dataIngresso)) {
-            document.getElementById('diasTrabalhados').value = '';
-            return;
-        }
+            const diasTrabalhadosInput = grupo.parentElement.querySelector('.diasTrabalhados');
 
-        let diasUteis = 0;
-        let data = new Date(dataIngresso);
-
-        while (data <= hoje) {
-            const diaSemana = data.getDay();
-            if (diaSemana !== 0 && diaSemana !== 6) { // 0 = Domingo, 6 = Sábado
-                diasUteis++;
+            if (isNaN(dataIngresso)) {
+                diasTrabalhadosInput.value = '';
+                return;
             }
-            data.setDate(data.getDate() + 1);
-        }
 
-        document.getElementById('diasTrabalhados').value = diasUteis;
+            let diasUteis = 0;
+            let data = new Date(dataIngresso);
 
+            while (data <= hoje) {
+                const diaSemana = data.getDay();
+                if (diaSemana !== 0 && diaSemana !== 6) {
+                    diasUteis++;
+                }
+                data.setDate(data.getDate() + 1);
+            }
 
-
+            diasTrabalhadosInput.value = diasUteis;
+        });
     });
+
 
 });
 
