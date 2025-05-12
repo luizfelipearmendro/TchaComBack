@@ -2,7 +2,7 @@
 
 @model FuncionariosModel
 @{
-    <title>@ViewData["Title"] </title>
+    <title>@ViewData["Title"] Cadastrar Funcionário</title>
 }
 
 <!DOCTYPE html>
@@ -29,47 +29,29 @@
         </div>
 
         <form asp-controller="Funcionarios" asp-action="Cadastrar" method="post" id="formCompleto">
-
-            <input type="hidden" name="SetorId" value="@Context.Request.Query["setorId"]" />
-            <input type="hidden" name="SetorNome" value="@Context.Request.Query["setorNome"]" />
-
             <div id="step1" class="step">
                 <h3>Etapa 1: Informações Pessoais</h3>
-                <p class="text-muted mb-3">Setor a ser atribuído: <strong class="text-setor">@Context.Request.Query["setorNome"]</strong></p>
+                <p class="text-muted mb-3">Setor a ser atribuído: 
+                    <select asp-for="SetorId" class="form-select" asp-items="ViewBag.Setores">
+                        <option value="">Selecione</option>
+                    </select>
+                    <span asp-validation-for="SetorId" class="text-danger"></span>
+                </p>
 
                 <div class="box-input">
                     <div class="flex-input">
                         <div class="input-group mb-3">
-                            <span class="input-group-text"
-                                  data-bs-toggle="tooltip"
-                                  data-bs-placement="top"
-                                  data-bs-custom-class="custom-tooltip"
-                                  data-bs-title="Nome Completo">
-                                <i class="fas fa-user"></i>
-                             </span>
-                            <input asp-for="Nome" maxlength="100" class="form-control" placeholder="Nome Completo" required />
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input asp-for="Nome" maxlength="100" class="form-control" placeholder="Nome" required />
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" 
-                                  data-bs-toggle="tooltip" 
-                                  data-bs-placement="top" 
-                                  data-bs-title="Data de Nascimento">
-
-                            <i class="fa-regular fa-calendar"></i>
-                            </span>
+                            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Data de Nascimento"><i class="fa-regular fa-calendar"></i></span>
                             <input type="date" asp-for="DataNascimento" maxlength="150" class="form-control" placeholder="Data de Nascimento" required />
                         </div>
                     </div>
                     <div class="flex-input">
                         <div class="input-group mb-3">
-                            <label class="input-group-text"
-                                   data-bs-toggle="tooltip"
-                                   data-bs-placement="top"
-                                   data-bs-custom-class="custom-tooltip"
-                                   data-bs-title="Selecione Sexo"
-                                   for="Sexo">
-                                   <i class="fa-solid fa-venus-mars"></i>
-                            </label>
+                            <label class="input-group-text" for="Sexo"><i class="fa-solid fa-venus-mars"></i></label>
                             <select asp-for="Sexo" class="form-select">
                                 <option value="">Selecione o Sexo</option>
                                 <option value="F">Feminino</option>
@@ -77,14 +59,7 @@
                             </select>
                         </div>
                         <div class="input-group mb-3">
-                            <label class="input-group-text"
-                                   data-bs-toggle="tooltip"
-                                   data-bs-placement="top"
-                                   data-bs-custom-class="custom-tooltip"
-                                   data-bs-title="Selecione Raça"
-                                   for="Raca">
-                                   <i class="fa-solid fa-users"></i>
-                            </label>
+                            <label class="input-group-text" for="Raca"><i class="fa-solid fa-users"></i></label>
                             <select asp-for="Raca" class="form-select">
                                 <option value="">Selecione a Raça</option>
                                 <option value="1">Preto</option>
@@ -97,14 +72,7 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        <label class="input-group-text"
-                               data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               data-bs-custom-class="custom-tooltip"
-                               data-bs-title="Selecione Estado Civil"
-                               for="EstadoCivil">
-                            <i class="fa-solid fa-heart"></i>
-                         </label>
+                        <label class="input-group-text" for="EstadoCivil"><i class="fa-solid fa-heart"></i></label>
                         <select asp-for="EstadoCivil" class="form-select">
                             <option value="">Selecione o Estado Civil</option>
                             <option value="1">Solteiro</option>
@@ -118,23 +86,11 @@
                     </div>
                     <div class="flex-input">
                         <div class="input-group mb-3">
-                            <span class="input-group-text"
-                                  data-bs-toggle="tooltip"
-                                  data-bs-placement="top"
-                                  data-bs-custom-class="custom-tooltip"
-                                  data-bs-title="Nome da Mãe">
-                                <i class="fas fa-user"></i>
-                             </span>
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
                             <input asp-for="NomeMae" maxlength="100" class="form-control" placeholder="Nome Mãe" required />
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text"
-                                  data-bs-toggle="tooltip"
-                                  data-bs-placement="top"
-                                  data-bs-custom-class="custom-tooltip"
-                                  data-bs-title="Naturalidade">
-                                <i class="fa-solid fa-location-dot"></i>
-                             </span>
+                            <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
                             <input asp-for="Naturalidade" maxlength="100" class="form-control" placeholder="Naturalidade" required />
                         </div>
                     </div>
@@ -146,52 +102,27 @@
 
                     <button type="button" class="btn btn-step-primary" id="next1" onclick="nextStep(2)">Próxima Etapa</button>
                 </div>
-   
+
             </div>
 
             <div id="step2" class="step" style="display: none;">
                 <h3>Etapa 2: Informações Adicionais</h3>
-                <p class="text-muted mb-3">Setor a ser atribuído: <strong class="text-setor">@Context.Request.Query["setorNome"]</strong></p>
 
                 <div class="box-input">
                     <div class="input-group mb-3">
-                        <span class="input-group-text"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              data-bs-custom-class="custom-tooltip"
-                              data-bs-title="Informe o Endereço">
-                            <i class="fa-solid fa-location-dot"></i>
-                         </span>
+                        <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
                         <input asp-for="Endereco" maxlength="100" class="form-control" placeholder="Endereço" required />
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              data-bs-custom-class="custom-tooltip"
-                              data-bs-title="Cidade de Residencia">
-                            <i class="fa-solid fa-location-dot"></i>
-                         </span>
+                        <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
                         <input asp-for="CidadeResidencia" maxlength="100" class="form-control" placeholder="Cidade de Residência" required />
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              data-bs-custom-class="custom-tooltip"
-                              data-bs-title="Informe o E-mail">
-                            <i class="fas fa-envelope"></i>
-                         </span>
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                         <input type="email" asp-for="Email" maxlength="100" class="form-control" placeholder="E-mail" required />
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              data-bs-custom-class="custom-tooltip"
-                              data-bs-title="Informe o Celular">
-                            <i class="fa-solid fa-phone"></i>
-                          </span>
+                        <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
                         <input type="tel" asp-for="Celular" id="telefone" maxlength="15" class="form-control" placeholder="(00) 00000-0000" required />
                     </div>
                     <div class="form-example">
@@ -202,62 +133,41 @@
                     <button type="button" class="btn btn-step-secundario" id="prev2" onclick="prevStep(1)">Retornar Etapa</button>
                     <button type="button" class="btn btn-step-primary" id="next2" onclick="nextStep(3)">Próxima Etapa</button>
                 </div>
- 
+
             </div>
 
             <div id="step3" class="step" style="display: none;">
                 <h3>Etapa 3: Informações Finais</h3>
-                <p class="text-muted mb-3">Setor a ser atribuído: <strong class="text-setor">@Context.Request.Query["setorNome"]</strong></p>
 
                 <div class="box-input">
                     <div class="input-group mb-3">
-                        <span class="input-group-text"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              data-bs-custom-class="custom-tooltip"
-                              data-bs-title="Informe o Cargo">
-                            <i class="fas fa-user-tie"></i>
-                         </span>
+                        <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
                         <input asp-for="Cargo" maxlength="100" class="form-control" placeholder="Cargo" required />
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text" 
-                                data-bs-toggle="tooltip" 
-                                data-bs-placement="top"
-                                data-bs-title="Informe o Salário.">
-                                <i class="fa-solid fa-brazilian-real-sign"></i>
-                        </span>
+                        <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Salário."><i class="fa-solid fa-brazilian-real-sign"></i></span>
                         <input asp-for="Salario" maxlength="100" class="form-control" placeholder="Salário" required />
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text" 
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="top" 
-                            data-bs-title="Informe a Data Ingresso.">
+                        <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Data Ingresso.">
                             <i class="fa-regular fa-calendar"></i>
                         </span>
-                        <input type="date" asp-for="DataIngresso" maxlength="100" class="form-control" placeholder="Data Ingresso" required />
+                        <input type="date" asp-for="DataIngresso" id="dataIngresso" class="form-control" placeholder="Data Ingresso" required />
                     </div>
 
                     <div class="input-group mb-3">
-                        <span class="input-group-text" 
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="top" 
-                            data-bs-title="Informe os Dias Trabalhados.">
+                        <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Dias Trabalhados.">
                             <i class="fa-regular fa-calendar"></i>
                         </span>
-                        <input type="number" asp-for="DiasTrabalhados" maxlength="100" class="form-control" placeholder="Dias Trabalhados" required />
+                        <input type="number" asp-for="DiasTrabalhados" id="diasTrabalhados" class="form-control" placeholder="Dias Trabalhados" required readonly />
                     </div>
                     <div class="form-example">
                         <label for="Confirmacao">Confirmação:</label>
                         <p>Revise as informações inseridas antes de concluir.</p>
                     </div><br />
 
-                    <div class="flex-button-step-three">
-                        <button type="button" class="btn btn-step-secundario" id="prev3" onclick="prevStep(2)">Retornar Etapa</button>
-                        <button type="submit" class="btn btn-success">Cadastrar Funcionário</button>
-                    </div>
-
+                    <button type="button" class="btn btn-step-secundario" id="prev3" onclick="prevStep(2)">Retornar Etapa</button>
+                    <button type="submit" class="btn btn-success">Cadastrar Funcionário</button>
                 </div>
 
             </div>
@@ -297,13 +207,6 @@
             document.getElementById('step' + step).style.display = 'block';
             updateProgressBar(step);
         }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-                new bootstrap.Tooltip(tooltipTriggerEl)
-            })
-        });
     </script>
 
 </body>

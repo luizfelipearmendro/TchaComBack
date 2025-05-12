@@ -689,3 +689,15 @@ transform: translateY(-20px);
     }
 
 }
+
+#modalMoverFuncionario {
+    font-family: "Montserrat", sans-serif;
+}
+
+#modalDesativarFuncionario {
+    font-family: "Montserrat", sans-serif;
+}
+
+#modalReativarFuncionario {
+    font-family: "Montserrat", sans-serif;
+}

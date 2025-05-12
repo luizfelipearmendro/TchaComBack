@@ -85,3 +85,45 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     });
 });
+
+
+document.getElementById('telefone').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, '');
+
+    if (value.length > 11) value = value.slice(0, 11);
+
+    if (value.length <= 10) {
+        // Fixo: (00) 0000-0000
+        value = value.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3');
+    } else {
+        // Celular: (00) 00000-0000
+        value = value.replace(/^(\d{2})(\d{5})(\d{0,4})$/, '($1) $2-$3');
+    }
+
+    e.target.value = value;
+});
+
+
+
+document.getElementById('dataIngresso').addEventListener('change', function () {
+    const dataIngresso = new Date(this.value);
+    const hoje = new Date();
+
+    if (isNaN(dataIngresso)) {
+        document.getElementById('diasTrabalhados').value = '';
+        return;
+    }
+
+    let diasUteis = 0;
+    let data = new Date(dataIngresso);
+
+    while (data <= hoje) {
+        const diaSemana = data.getDay();
+        if (diaSemana !== 0 && diaSemana !== 6) { // 0 = Domingo, 6 = Sábado
+            diasUteis++;
+        }
+        data.setDate(data.getDate() + 1);
+    }
+
+    document.getElementById('diasTrabalhados').value = diasUteis;
+});
