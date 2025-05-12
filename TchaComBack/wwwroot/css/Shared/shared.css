@@ -22,7 +22,7 @@ transition: margin-left 0.3s ease, width 0.3s ease;
 margin-left: 16rem;
 width: calc(100% - 16rem);
 background-color: white;
-border-top-left-radius: 5vw !important;
+border-top-left-radius: 4vw !important;
 margin-top: 1vh;
 height: 100vh;
 }
