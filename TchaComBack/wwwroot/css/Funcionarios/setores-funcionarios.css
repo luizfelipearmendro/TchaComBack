@@ -711,3 +711,7 @@ transform: translateY(-20px);
 #modalReativarFuncionario {
     font-family: "Montserrat", sans-serif;
 }
+
+#btnImprimir{
+    margin-left: 50px;
+}

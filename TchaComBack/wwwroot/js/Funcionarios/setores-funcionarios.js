@@ -136,10 +136,36 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         document.getElementById('diasTrabalhados').value = diasUteis;
-
-
-
     });
-
 });
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+        new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+});
+
+
+async function exportarFichaFuncionario(id) {
+    const ficha = document.querySelector(`#ficha-${id}`);
+    if (!ficha) return;
+
+    const canvas = await html2canvas(ficha, { scale: 2 });
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    // Adiciona título centralizado no topo
+    const title = "Ficha Cadastral do(a) Funcionário(a)";
+    pdf.setFontSize(16);
+    pdf.text(title, pdfWidth / 2, 15, { align: "center" });
+
+    // Adiciona imagem abaixo do título (ajustando a posição Y para não sobrepor o texto)
+    pdf.addImage(imgData, 'PNG', 0, 20, pdfWidth, pdfHeight);
+
+    pdf.save("FichaFuncionario.pdf");
+}
