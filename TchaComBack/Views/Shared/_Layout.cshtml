@@ -55,11 +55,11 @@
                          }},
                          new { Texto = "Funcionários", Url = "#", SubLinks = new List<dynamic> {
                             new { Texto = "Todos os Funcionários", Url = "/Funcionarios/Funcionarios" },
-                            new { Texto = "Cadastrar Funcionários", Url = "/Funcionarios/Funcionarios" }
+                     new { Texto = "Cadastrar Funcionários", Url = "/Funcionarios/Cadastrar Novo" }
                         }},
                          new { Texto = "Usuários", Url = "#", SubLinks = new List<dynamic> {
-                                new { Texto = "Todos os Usuários", Url = "/Funcionarios/Funcionarios" },
-                                new { Texto = "Cadastrar Usuários", Url = "/Funcionarios/Funcionarios" }
+                                new { Texto = "Todos os Usuários", Url = "/Usuarios/Usuarios" },
+                                new { Texto = "Cadastrar Usuários", Url = "/Usuarios/Cadastrar Novo" }
                         }}
                      }
                  }
@@ -77,7 +77,7 @@
                     }
                     else
                     {
-                        <span class="me-2" style="color:gray; font-weight:bold;font-size:.8rem;" data-bs-toggle="dropdown" aria-expanded="false">Lider <span><i class="bi bi-caret-down-fill"></i></span></span>
+                        <span class="me-2" style="color:gray; font-weight:bold;font-size:.8rem;" data-bs-toggle="dropdown" aria-expanded="false">Coordenador <span><i class="bi bi-caret-down-fill"></i></span></span>
                     }
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
@@ -91,7 +91,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" asp-controller="Usuario" asp-action="MeusDados">
+                            <a class="dropdown-item" asp-controller="Usuarios" asp-action="MeusDados">
                                 <i class="bi bi-person-fill me-2"></i> Meus Dados
                             </a>
                         </li>

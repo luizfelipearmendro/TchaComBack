@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 using TchaComBack.Data;
 using TchaComBack.Models;
 using TchaComBack.Repositories;
@@ -44,13 +45,13 @@ namespace TchaComBack.Controllers
 
             var sessionIdUsuario = dbconsult.Id;
 
-            // Consulta inicial dos setores
+            // consulta inicial dos setores com base no id do usuario
             var setoresQuery = db.Setores
                                  .AsNoTracking()
                                  .Include(s => s.Categoria)
                                  .Where(s => s.UsuarioId == sessionIdUsuario);
 
-            // Aplica o filtro de busca por nome, descrição ou responsável
+            // consultas dos filtros..
             if (!string.IsNullOrEmpty(searchString))
             {
                 setoresQuery = setoresQuery.Where(s =>
@@ -61,32 +62,34 @@ namespace TchaComBack.Controllers
                 );
             }
 
-            // Aplica o filtro por categoria
             if (categoriaId.HasValue)
             {
                 setoresQuery = setoresQuery.Where(s => s.CategoriaId == categoriaId.Value);
             }
 
-            // Aplica o filtro por status (ativo/inativo)
             if (ativo.HasValue)
             {
                 setoresQuery = setoresQuery.Where(s => s.Ativo == ativo.Value);
             }
 
-            // Executa a consulta e ordena os resultados
+            // setores ordenados
             var setoresFiltrados = setoresQuery
                                    .OrderBy(s => s.Nome)
                                    .ThenByDescending(s => s.DataCriacao)
                                    .ToList();
 
-            // Obtém todas as categorias do banco de dados (independentemente dos filtros)
+            // apresentar somente o setor vinculado ao coordenador..
+            var setorCoord = db.Setores
+                                 .AsNoTracking()
+                                 .Include(s => s.Categoria)
+                                 .Where(s => s.Id == dbconsult.SetorId);
+
+
             var todasCategorias = db.Categorias
                                     .AsNoTracking()
                                     .ToList();
 
-
-            // ----------------------------------------------------- quantidade de funcionarios por setor
-
+            // qtd funcionarios por setor
             var quantidadeFunc = db.Funcionarios
                                    .GroupBy(f => f.SetorId)
                                    .Select(g => new SetoresViewModel
@@ -97,13 +100,7 @@ namespace TchaComBack.Controllers
                                    .ToList();
 
 
-            var viewModel = new SetoresViewModel
-            {
-                Setores = setoresFiltrados,
-                Categorias = todasCategorias,
-                QuantidadePorSetor = quantidadeFunc
-            };
-
+            // viewbags - propriedades dinâmicas que permitem transferir dados do controlador para a view. é útil para passar informações adicionais que não fazem parte do modelo da view..
             ViewBag.NomeCompleto = dbconsult.NomeCompleto;
             ViewBag.Email = dbconsult.Email;
             ViewBag.TipoPerfil = dbconsult.TipoPerfil;
@@ -112,19 +109,64 @@ namespace TchaComBack.Controllers
             ViewBag.Ativo = ativo;
 
             ViewBag.Categorias = db.Categorias
-                                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Nome })
-                                .ToList();
+                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Nome })
+                .ToList();
 
-            // Prepara as opções para os dropdowns
-            ViewBag.CategoriasOpcoes = new SelectList(todasCategorias, "Id", "Nome", categoriaId); // Todas as categorias
+            if(dbconsult.TipoPerfil == 1)
+            {
+                ViewBag.CategoriasOpcoes = new SelectList(todasCategorias, "Id", "Nome", categoriaId);
+            }
+            else
+            {
+                var categoriaDoSetor = db.Setores
+                                         .AsNoTracking()
+                                         .Where(s => s.Id == dbconsult.SetorId)
+                                         .Select(s => s.CategoriaId)
+                                         .FirstOrDefault();
+
+                var categoriasCriadasPeloCoord = db.Setores
+                                                   .AsNoTracking()
+                                                   .Where(s => s.UsuarioId == dbconsult.Id)
+                                                   .Select(s => s.CategoriaId)
+                                                   .FirstOrDefault();
+
+                var categoriasFiltradas = todasCategorias
+                                            .Where(c => c.Id == categoriasCriadasPeloCoord || c.Id == categoriaDoSetor)
+                                            .Distinct()
+                                            .ToList();
+
+                ViewBag.CategoriasOpcoes = new SelectList(categoriasFiltradas, "Id", "Nome", categoriaId);
+            }
+
             ViewBag.StatusOpcoes = new SelectList(new List<SelectListItem>
             {
                 new SelectListItem { Value = "S", Text = "Ativos" },
                 new SelectListItem { Value = "N", Text = "Inativos" }
             }, "Value", "Text", ativo);
 
-            return View(viewModel);
+            // condição para qual ViewModel retornar com base no perfil
+            if (dbconsult.TipoPerfil == 1)
+            {
+                var viewModel1 = new SetoresViewModel
+                {
+                    Setores = setoresFiltrados,
+                    Categorias = todasCategorias,
+                    QuantidadePorSetor = quantidadeFunc
+                };
+                return View(viewModel1);
+            }
+            else
+            {
+                var viewModel2 = new SetoresViewModel
+                {
+                    Setores = setorCoord,
+                    Categorias = todasCategorias,
+                    QuantidadePorSetor = quantidadeFunc
+                };
+                return View(viewModel2);
+            }
         }
+
 
         public IActionResult Cadastrar()
         {
