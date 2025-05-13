@@ -243,13 +243,13 @@
                 : $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalReativarFuncionario' data-id='{funcionario.Id}' data-nome='{funcionario.Nome}'>Reativar</a>";
 
                 var popoverHtml = $@"
-            <div class='flex-popover'>
-            <button type='button' class='close-btn btn btn-sm btn-light' style='float:right;'>&times;</button>
-            <div class='mt-3'>
-            <a role='button' class='rota-btn editar-setor' data-bs-toggle='modal' data-bs-target='#modalEditarFuncionario' data-id='{funcionario.Id}'>Editar</a><br/>
-        {acaoHtml}
-            </div>
-            </div>";
+                <div class='flex-popover'>
+                <button type='button' class='close-btn btn btn-sm' style='float:right;'>&times;</button>
+                <div class='mt-3'>
+                <a class='rota-btn editar-func' href='/Funcionarios/Editar/{funcionario.Id}?setorId={funcionario.Setor?.Id}&setorNome={funcionario.Setor?.Nome}'> Editar </a><br/>
+                {acaoHtml}<br/>
+                </div>
+                </div>";
 
                 <div class="card-funcionario @(funcionario.Ativo != 'S' ? "inativo" : "ativo")">
 
