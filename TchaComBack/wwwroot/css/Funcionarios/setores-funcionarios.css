@@ -189,6 +189,15 @@ gap: 5vw;
 height: auto;
 width:100%;
 }
+.flex-info-card-func-usu-per-log {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 5vw;
+    height: auto;
+    width: 100%;
+    padding-right: 2vw;
+}
 
 
 
@@ -358,6 +367,37 @@ background-color: white;
     border-bottom-right-radius: 2vw;
     padding: 1.5vh;
 }
+.body-card-usu-log {
+    background-color: black;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8vh;
+    padding: 1.5vh;
+    padding-bottom: 4vh !important;
+    
+}
+.card-footer {
+   background-color: #FFA500; 
+   width:100%;    
+   border-bottom-left-radius: 2vw !important; 
+   border-bottom-right-radius: 2vw !important;
+   display:flex;
+   justify-content:center;
+   align-items: center
+}
+
+.card-footer small{
+    color: rgba(0,0,0,0.8) !important;
+}
+    .card-footer small strong {
+        color: #8A2BE2;
+    }
 .body-card-inativo {
     background-color: rgba(0,0,0,0.8);
     width: 100%;
@@ -381,6 +421,15 @@ justify-content: space-between;
 align-items: center;
 flex-wrap:wrap;
 color: #ccc;
+}
+.body-card-usu-log p {
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    color: #ccc;
+    z-index:10
 }
 .body-card-inativo p {
     width: 80%;

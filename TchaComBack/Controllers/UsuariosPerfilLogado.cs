@@ -27,7 +27,7 @@ namespace TchaComBack.Controllers
             }
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchString, int? tipoPerfil, char? ativo)
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");
             if (idUsuario == null) return RedirectToAction("Index", "Login");
@@ -38,32 +38,58 @@ namespace TchaComBack.Controllers
 
             if (dbconsult == null) return RedirectToAction("Index", "Login");
 
-            var sessionIdUsuario = dbconsult.Id;
-
             var usuariosQuery = db.Usuarios
-                                    .OrderBy(u => u.DataCadastro)
-                                    .Include(f => f.Setor)
-                                    .AsNoTracking()
-                                    .ToList();
+                .Include(u => u.Setor)
+                .AsNoTracking()
+                .OrderBy(u => u.DataCadastro)
+                .AsQueryable();
 
-            var countUsurios = usuariosQuery.ToList();
+         
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                usuariosQuery = usuariosQuery.Where(u => EF.Functions.Like(u.NomeCompleto, $"%{searchString}%"));
+            }
+            if (tipoPerfil.HasValue)
+            {
+                usuariosQuery = usuariosQuery.Where(u => u.TipoPerfil == tipoPerfil.Value);
+            }
+
+            if (ativo.HasValue)
+            {
+                usuariosQuery = usuariosQuery.Where(u => u.Ativo == ativo.Value);
+            }
+
+            var usuariosFiltrados = usuariosQuery.ToList();
 
             var viewModel = new UsuariosViewModel
             {
-                QtdUsuariosAtivos = countUsurios.Count(f => f.Ativo == 'S'),
-                QtdUsuariosInativos = countUsurios.Count(f => f.Ativo == 'N'),
-                Usuarios = usuariosQuery
+                QtdUsuariosAtivos = usuariosFiltrados.Count(u => u.Ativo == 'S'),
+                QtdUsuariosInativos = usuariosFiltrados.Count(u => u.Ativo == 'N'),
+                Usuarios = usuariosFiltrados
             };
 
             ViewBag.NomeCompleto = dbconsult.NomeCompleto;
             ViewBag.Email = dbconsult.Email;
             ViewBag.TipoPerfil = dbconsult.TipoPerfil;
-            ViewBag.Setores = db.Setores
-                                .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Nome })
-                                .ToList();
+
+          
+            ViewBag.TiposPerfilOpcoes = new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "Administrador" },
+                new SelectListItem { Value = "2", Text = "Coordenador" }
+            }, "Value", "Text", tipoPerfil);
+
+          
+                    ViewBag.StatusOpcoes = new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Value = "S", Text = "Ativos" },
+                new SelectListItem { Value = "N", Text = "Inativos" }
+            }, "Value", "Text", ativo);
 
             return View(viewModel);
         }
+
+
 
         public IActionResult CadastrarNovoUsuario()
         {
@@ -89,6 +115,9 @@ namespace TchaComBack.Controllers
             return View();
         }
 
+
+
+
         [HttpPost]
         public IActionResult CadastrarNovoUsuario(UsuariosModel usuario)
         {
@@ -109,7 +138,7 @@ namespace TchaComBack.Controllers
             if (validaEmailExistente)
             {
                 TempData["MensagemErro"] = "Ops, o e-mail informado já existe!";
-                return RedirectToAction("CadastrarNovoUsuario", "Usuarios");
+                return RedirectToAction("Index", "UsuariosPerfilLogado");
             }
 
             var salt = Utilitarios.GerarSalt();
@@ -118,7 +147,7 @@ namespace TchaComBack.Controllers
             if (!Utilitarios.SenhaEhForte(usuario.Senha, out string mensagemErro))
             {
                 TempData["MensagemErro"] = mensagemErro;
-                return RedirectToAction("CadastrarNovoUsuario", "Usuarios");
+                return RedirectToAction("Index", "UsuariosPerfilLogado");
             }
 
             usuario.Senha = Utilitarios.GerarHashSenha(usuario.Senha, salt);
