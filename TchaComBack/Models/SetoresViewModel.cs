@@ -8,8 +8,8 @@
 
             public IEnumerable<SetoresViewModel> QuantidadePorSetor { get; set; }
 
-            public IEnumerable<SetoresModel> Setores { get; set; }
-
             public IEnumerable<CategoriaModel> Categorias { get; set; }
+
+            public IEnumerable<SetoresModel> Setores { get; set; }
         }
     }

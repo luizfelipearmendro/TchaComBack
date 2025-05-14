@@ -60,8 +60,9 @@ namespace TchaComBack.Controllers
                 .Include(f => f.RacaNav)
                 .Include(f => f.EstadoCivilNav)
                 .Where(f => f.SetorId == id);
+                //.Where(f => f.UsuarioId == sessionIdUsuario);
 
-            // Filtro por nome
+            // filtros
             if (!string.IsNullOrEmpty(searchString))
             {
                 funcionariosQuery = funcionariosQuery.Where(f => EF.Functions.Like(f.Nome, $"%{searchString}%"));
@@ -128,26 +129,29 @@ namespace TchaComBack.Controllers
 
             if (dbconsult == null) return RedirectToAction("Index", "Login");
 
-            var funcionariosQuery = db.Funcionarios
-                                      .AsNoTracking()
-                                      .Include(f => f.RacaNav)
-                                      .Include(f => f.EstadoCivilNav)
-                                      .Include(f => f.Setor)
-                                      .Where(f => f.UsuarioId == idUsuario);
+            IQueryable<FuncionariosModel> funcionariosQuery = db.Funcionarios
+                .AsNoTracking()
+                .Include(f => f.RacaNav)
+                .Include(f => f.EstadoCivilNav)
+                .Include(f => f.Setor);
 
-            // Filtro por nome
+            // filtrar pelo tipo do perfil
+            if (dbconsult.TipoPerfil != 1)
+            {
+                funcionariosQuery = funcionariosQuery.Where(f => f.SetorId == dbconsult.SetorId);
+            }
+
+            // --------------------------------------------------------------------------------- filtros
             if (!string.IsNullOrEmpty(searchString))
             {
                 funcionariosQuery = funcionariosQuery.Where(f => EF.Functions.Like(f.Nome, $"%{searchString}%"));
             }
 
-            // Filtro por setor
             if (!string.IsNullOrEmpty(setor))
             {
                 funcionariosQuery = funcionariosQuery.Where(f => f.Setor.Nome == setor);
             }
 
-            // Filtro por status
             if (ativo.HasValue)
             {
                 funcionariosQuery = funcionariosQuery.Where(f => f.Ativo == ativo.Value);
@@ -163,6 +167,7 @@ namespace TchaComBack.Controllers
                 QuantidadeFuncInativos = funcionarios.Count(f => f.Ativo == 'N')
             };
 
+            // viewBags
             ViewBag.NomeCompleto = dbconsult.NomeCompleto;
             ViewBag.Email = dbconsult.Email;
             ViewBag.TipoPerfil = dbconsult.TipoPerfil;
@@ -170,13 +175,22 @@ namespace TchaComBack.Controllers
             ViewBag.Setor = setor;
             ViewBag.Ativo = ativo;
 
-            // Lista distinta de setores dos funcionários desse usuário
-            ViewBag.SetoresOpcoes = new SelectList(db.Funcionarios
-                .Where(f => f.UsuarioId == idUsuario)
-                .Include(f => f.Setor)
-                .Select(f => f.Setor.Nome)
-                .Distinct()
-                .ToList());
+            if (dbconsult.TipoPerfil == 1)
+            {
+                ViewBag.SetoresOpcoes = new SelectList(db.Setores
+                    .Select(s => s.Nome)
+                    .Distinct()
+                    .ToList());
+            }
+            else
+            {
+                var setorCoordenador = db.Setores
+                    .Where(s => s.Id == dbconsult.SetorId)
+                    .Select(s => s.Nome)
+                    .ToList();
+
+                ViewBag.SetoresOpcoes = new SelectList(setorCoordenador);
+            }
 
             ViewBag.StatusOpcoes = new SelectList(new List<SelectListItem>
             {
@@ -186,7 +200,6 @@ namespace TchaComBack.Controllers
 
             return View(viewModel);
         }
-
 
         public IActionResult Cadastrar()
         {
@@ -221,9 +234,19 @@ namespace TchaComBack.Controllers
             ViewBag.Email = dbconsult.Email;
             ViewBag.TipoPerfil = dbconsult.TipoPerfil;
 
-            ViewBag.Setores = db.Setores
-                                .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Nome })
-                                .ToList();
+            if(dbconsult.TipoPerfil == 1)
+            {
+                ViewBag.Setores = db.Setores
+                                    .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Nome })
+                                    .ToList();
+            }
+            else
+            {
+                ViewBag.Setores = db.Setores
+                                    .Where(s => s.Id == dbconsult.SetorId)
+                                    .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Nome })
+                                    .ToList();
+            }
 
             return View();
         }

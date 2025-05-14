@@ -1,0 +1,105 @@
+﻿#formCompleto {
+    font-family: "Montserrat";
+}
+
+ h3 {
+    font-family: "Montserrat";
+    position: relative;
+}
+
+  h3:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        height: .3vh;
+        width: 10%;
+        background-color: #FFA500;
+    }
+
+.flex-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+}
+
+#formCompleto input:focus,
+#formCompleto select:focus {
+    border-color: #8A2BE2;
+    box-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+}
+
+#formCompleto i {
+    background: linear-gradient(90deg, #8A2BE2, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btn-step-primary {
+    color: white !important;
+    text-decoration: none;
+    cursor: pointer;
+    background: linear-gradient(90deg,#8A2BE2, #FFA500);
+    border-radius: .5vw;
+    width: fit-content;
+    border: none !important;
+}
+
+    .btn-step-primary:hover {
+        color: white !important;
+    }
+
+.btn-step-secundario {
+    background: black !important;
+    border-radius: .5vw;
+    border: 1px solid black !important;
+    color: white !important;
+    text-decoration: none;
+    width: fit-content
+}
+
+    .btn-step-secundario:hover {
+        border: 1px solid black;
+    }
+
+.form-example label {
+    color: #FFA500;
+}
+
+.form-example p {
+    color: rgba(33,37,41,0.75);
+}
+
+.box-input {
+    margin-top: 5vh;
+}
+
+.text-setor {
+    color: #FFA500;
+}
+
+.step p {
+    font-size: 1rem;
+}
+.flex-buttom-submit-usu-logado{
+    display: flex;
+    justify-content:flex-start;
+    align-items:center;
+    width: 100%;
+}
+.flex-buttom-submit-usu-logado button{
+    width: fit-content;
+}
+@media (max-width: 600px) {
+    .flex-input {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .flex-button-step-three {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1vh;
+    }
+}
