@@ -1,8 +1,8 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
-    const conteudo = document.getElementById('conteudo-setores');
-    const filtro = document.getElementById('id-filtro');
-    const toggleButton = document.getElementById('toggle-filtro');
-    const form = document.getElementById('id-filtro');
+    //const conteudo = document.getElementById('conteudo-setores');
+    //const filtro = document.getElementById('id-filtro');
+    //const toggleButton = document.getElementById('toggle-filtro');
+    //const form = document.getElementById('id-filtro');
 
     //function rolagemAoRodape(posicaoRolagem) {
     //    if (!conteudo || !filtro) {
@@ -56,13 +56,11 @@
         popoverTriggerEl.addEventListener('click', function (e) {
             e.preventDefault();
 
-            // Se clicar no mesmo botão, fecha
             if (activePopover && activeTrigger === popoverTriggerEl) {
                 activePopover.hide();
                 activePopover = null;
                 activeTrigger = null;
             } else {
-                // Fecha anterior
                 if (activePopover) {
                     activePopover.hide();
                 }
@@ -74,7 +72,6 @@
         });
     });
 
-    // Fecha ao clicar no "X" dentro do popover
     document.body.addEventListener('click', function (event) {
         if (event.target.closest('.close-btn')) {
             if (activePopover) {

@@ -263,7 +263,7 @@
 
 
                             <div class="body-card-usu-log ">
-                                <p><span>Nome</span> <span class="card-dado">@usuario.Email</span></p>
+                                <p><span>E-mail</span> <span class="card-dado">@usuario.Email</span></p>
                                 <p><span>Cargo</span> <span class="card-dado">@(usuario.TipoPerfil == 1 ? "Administrador" : "Coordenador")</span></p>
                                 <p><span>Setor Responsável</span> <span class="card-dado">@usuario.Setor?.Nome</span></p>
                                 <p><span>Ativo</span> <span class="card-dado">@(usuario.Ativo == 'S' ? "Sim" : "Não")</span></p>
@@ -276,7 +276,7 @@
                         {
                             <div class="flex-onda-inativo"></div>
                             <div class="body-card-inativo placeholder-glow">
-                                <p aria-hidden="true"><span class="placeholder " style="width: auto;">Nome</span> <span class="placeholder" style="width: auto;">@usuario.Email</span></p>
+                                <p aria-hidden="true"><span class="placeholder " style="width: auto;">E-mail</span> <span class="placeholder" style="width: auto;">@usuario.Email</span></p>
                                 <p aria-hidden="true"><span class="placeholder " style="width: auto;">Cargo</span> <span class="placeholder " style="width: auto;">@(usuario.TipoPerfil == 1 ? "Administrador" : "Coordenador")</span></p>
                                 <p aria-hidden="true"><span class="placeholder " style="width: auto;">Email</span> <span class="placeholder " style="width: auto;">@usuario.Setor?.Nome</span></p>
                                 <p aria-hidden="true"><span class="placeholder " style="width: auto;">Telefone</span> <span class="placeholder " style="width: auto;">@(usuario.Ativo == 'S' ? "Sim" : "Não")</span></p>

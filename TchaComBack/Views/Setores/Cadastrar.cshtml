@@ -28,6 +28,7 @@
                         <h1 id="modalCadastrarSetorLabel">Cadastrar Setor - Etapa 1</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
+                    <div class="modal-onda-header"></div>
                     <div class="modal-body">
                         <div class="input-group mb-3">
                             <span class="input-group-text"
@@ -79,6 +80,10 @@
                                 <option value="M">Masculino</option>
                             </select>
                         </div>
+
+                    </div>
+                    <div class="modal-onda-footer"></div>
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-step-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalCadastrarSetorConfirmar"
@@ -97,6 +102,7 @@
                         <h1  id="modalCadastrarSetorConfirmarLabel">Cadastrar Setor - Etapa 2</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
+                    <div class="modal-onda-header"></div>
                     <div class="modal-body">
                         <div class="input-group mb-3">
                             <span class="input-group-text"
@@ -128,11 +134,15 @@
                                 <i class="fas fa-image"></i>
                              </span>
                             <input asp-for="ImagemSetor" type="url" class="form-control" placeholder="https://exemplo.com/imagem.jpg" />
-                        </div>
+                        </div> 
+                    </div>
+                    <div class="modal-onda-footer"></div>
+                    <div class="modal-footer">
                         <div class="form-example">
                             <label for="Confirmacao">Confirmação:</label>
                             <p>Revise as informações inseridas nas etapas anteriores.</p>
                         </div>
+
                         <button type="button" class="btn btn-step-secundario"
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalCadastrarSetor"

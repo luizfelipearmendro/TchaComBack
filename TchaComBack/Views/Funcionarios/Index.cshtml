@@ -21,7 +21,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
 
@@ -35,8 +34,6 @@
 <link href="~/css/Funcionarios/setores-funcionarios.css" rel="stylesheet" />
 <script src="~/js/Funcionarios/setores-funcionarios.js" defer></script>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous" defer></script>
 <title>Funcionários</title>
 
 
@@ -421,7 +418,7 @@
     }
 
 </section>
-<!-- modal desativar funcíonário -->
+
 <div class="modal fade" id="modalDesativarFuncionario" tabindex="-1" aria-labelledby="modalDesativarFuncionarioLabel" aria-hidden="true" style="z-index:100000001;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -429,18 +426,21 @@
                 <h5 class="modal-title text-black" id="modalDesativarFuncionarioLabel" style="font-weight:bold">Desativar Funcionário</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-onda-header"></div>
+
             <div class="modal-body text-black">
                 Tem certeza que deseja desativar o funcionário <span id="modalUserName"></span>?
             </div>
+            <div class="modal-onda-footer"></div>
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <a id="confirmDesativeButton" role="button" class="btn btn-danger">Desativar</a>
+                <button type="button" class="btn btn-step-secundario" data-bs-dismiss="modal">Cancelar</button>
+                <a id="confirmDesativeButton" role="button" class="btn btn-step-primary ">Desativar</a>
             </div>
         </div>
     </div>
 </div>
 
-<!-- modal reativar funcíonário -->
 <div class="modal fade" id="modalReativarFuncionario" tabindex="-1" aria-labelledby="modalReativarFuncionarioLabel" aria-hidden="true" style="z-index:100000001;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -448,12 +448,14 @@
                 <h5 class="modal-title text-black" id="modalReativarFuncionarioLabel" style="font-weight:bold">Reativar Funcionário</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-onda-header"></div>
             <div class="modal-body text-black">
                 Tem certeza que deseja Reativar o funcionário <span id="modalUserNameReativo"></span>?
             </div>
+            <div class="modal-onda-footer"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <a id="confirmReativeButton" role="button" class="btn btn-primary">Reativar</a>
+                <button type="button" class="btn btn-step-secundario" data-bs-dismiss="modal">Cancelar</button>
+                <a id="confirmReativeButton" role="button" class="btn btn-step-primary">Reativar</a>
             </div>
         </div>
     </div>
@@ -467,28 +469,31 @@
                 <h5 class="modal-title text-black" id="modalMoverFuncionarioLabel" style="font-weight:bold">Mover Funcionário</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-onda-header"></div>
+            <form method="post" asp-controller="Funcionarios" asp-action="Mover">
             <div class="modal-body text-black">
                 Selecione para que setor <span id="modalUserNameMovido"></span> será movido:
-                <form method="post" asp-controller="Funcionarios" asp-action="Mover">
+                
                     <select asp-for="SetorId" class="form-select" asp-items="ViewBag.Setores">
                         <option value="">Selecione</option>
                     </select>
                     <span asp-validation-for="SetorId" class="text-danger"></span>
-
+            </div>
+                <div class="modal-onda-footer"></div>
+                <div class="modal-footer">
                     <input type="hidden" name="id" id="inputIdFuncionarioMovido" />
-                    <button class="btn btn-dark" type="button"
+                    <button class="btn btn-step-secundario" type="button"
                             data-bs-toggle="modal"
                             data-bs-target="#modalMoverFuncionario"
                             style="margin-top: 1.5rem;">
                         Cancelar
                     </button>
-                    <button type="submit" id="confirmMovidoButton" class="btn btn-success" style="margin-top: 1.5rem;">Mover Funcionário</button>
-                </form>
-            </div>
+                    <button type="submit" id="confirmMovidoButton" class="btn btn-step-primary" style="margin-top: 1.5rem;">Mover Funcionário</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
 <script>
         document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("click", function (event) {

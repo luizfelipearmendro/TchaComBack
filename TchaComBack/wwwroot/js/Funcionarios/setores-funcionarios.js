@@ -43,6 +43,28 @@
 
 
 //});
+async function exportarFichaFuncionario(id) {
+    const ficha = document.querySelector(`#ficha-${id}`);
+    if (!ficha) {
+        return;
+
+    } else {
+        const canvas = await html2canvas(ficha, { scale: 2 });
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        const title = "Ficha Cadastral do(a) Funcionário(a)";
+        pdf.setFontSize(16);
+        pdf.text(title, pdfWidth / 2, 15, { align: "center" });
+
+        pdf.addImage(imgData, 'PNG', 0, 20, pdfWidth, pdfHeight);
+
+        pdf.save("FichaFuncionario.pdf");
+    }
+}
 
 function closeAlert(alertId) {
     const alertElement = document.getElementById(alertId);
@@ -69,13 +91,12 @@ document.addEventListener('DOMContentLoaded', function () {
         popoverTriggerEl.addEventListener('click', function (e) {
             e.preventDefault();
 
-            // Se clicar no mesmo botão, fecha
             if (activePopover && activeTrigger === popoverTriggerEl) {
                 activePopover.hide();
                 activePopover = null;
                 activeTrigger = null;
             } else {
-                // Fecha anterior
+
                 if (activePopover) {
                     activePopover.hide();
                 }
@@ -87,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Fecha ao clicar no "X" dentro do popover
     document.body.addEventListener('click', function (event) {
         if (event.target.closest('.close-btn')) {
             if (activePopover) {
@@ -98,21 +118,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    document.getElementById('telefone').addEventListener('input', function (e) {
-        let value = e.target.value.replace(/\D/g, '');
+    const inputTelefone = document.getElementById('telefone');
+    if (inputTelefone) {
+        inputTelefone.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
 
-        if (value.length > 11) value = value.slice(0, 11);
+            if (value.length > 11) value = value.slice(0, 11);
 
-        if (value.length <= 10) {
-            // Fixo: (00) 0000-0000
-            value = value.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3');
-        } else {
-            // Celular: (00) 00000-0000
-            value = value.replace(/^(\d{2})(\d{5})(\d{0,4})$/, '($1) $2-$3');
-        }
+            if (value.length <= 10) {
+                value = value.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3');
+            } else {
+                value = value.replace(/^(\d{2})(\d{5})(\d{0,4})$/, '($1) $2-$3');
+            }
 
-        e.target.value = value;
-    });
+            e.target.value = value;
+        });
+    }
+
 
 
     document.querySelectorAll('.dataIngresso').forEach(function (input) {
@@ -139,37 +161,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 data.setDate(data.getDate() + 1);
             }
 
-        document.getElementById('diasTrabalhados').value = diasUteis;
+            document.getElementById('diasTrabalhados').value = diasUteis;
+        });
+
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+
     });
+    document.querySelectorAll("[data-ficha-id]").forEach(botao => {
+        botao.addEventListener("click", function () {
+            const id = this.dataset.fichaId;
+            exportarFichaFuncionario(id);
+        });
+    });
+
+
 });
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-        new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-});
-
-
-async function exportarFichaFuncionario(id) {
-    const ficha = document.querySelector(`#ficha-${id}`);
-    if (!ficha) return;
-
-    const canvas = await html2canvas(ficha, { scale: 2 });
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-    const imgProps = pdf.getImageProperties(imgData);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-    // Adiciona título centralizado no topo
-    const title = "Ficha Cadastral do(a) Funcionário(a)";
-    pdf.setFontSize(16);
-    pdf.text(title, pdfWidth / 2, 15, { align: "center" });
-
-    // Adiciona imagem abaixo do título (ajustando a posição Y para não sobrepor o texto)
-    pdf.addImage(imgData, 'PNG', 0, 20, pdfWidth, pdfHeight);
-
-    pdf.save("FichaFuncionario.pdf");
-}
+  

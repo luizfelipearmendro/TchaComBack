@@ -63,19 +63,16 @@ namespace TchaComBack.Controllers
                 .Where(f => f.SetorId == id);
                 //.Where(f => f.UsuarioId == sessionIdUsuario);
 
-            // filtros
             if (!string.IsNullOrEmpty(searchString))
             {
                 funcionariosQuery = funcionariosQuery.Where(f => EF.Functions.Like(f.Nome, $"%{searchString}%"));
             }
 
-            // Filtro por cargo
             if (!string.IsNullOrEmpty(cargo))
             {
                 funcionariosQuery = funcionariosQuery.Where(f => f.Cargo == cargo);
             }
 
-            // Filtro por status
             if (ativo.HasValue)
             {
                 funcionariosQuery = funcionariosQuery.Where(f => f.Ativo == ativo.Value);

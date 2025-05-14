@@ -1,87 +1,90 @@
 ﻿#formCompleto  {
-    font-family: "Montserrat";
+font-family: "Montserrat";
 }
 
 .step h3 {
-    font-family: "Montserrat";
-    position: relative;
+font-family: "Montserrat";
+position: relative;
+font-size: 1.8rem !important;
+font-weight: 500 !important;
 }
 .step h3:before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    height: .3vh;
-    width: 10%;
-    background-color: #FFA500;
+content: "";
+position: absolute;
+bottom: 0;
+height: .3vh;
+width: 10%;
+background-color: #FFA500;
+
 }
 
 .flex-input{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:2vw;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:2vw;
 }
 #formCompleto input:focus,
 #formCompleto select:focus {
-    border-color: #8A2BE2;
-    box-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+border-color: #8A2BE2;
+box-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
 }
 #formCompleto i {
-    background: linear-gradient(90deg, #8A2BE2, #FFA500);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+background: linear-gradient(90deg, #8A2BE2, #FFA500);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
 }
 
 .btn-step-primary {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-    background: linear-gradient(90deg,#8A2BE2, #FFA500);
-    border-radius: .5vw;
-    width: fit-content;
-    border: none;
+color: white;
+text-decoration: none;
+cursor: pointer;
+background: linear-gradient(90deg,#8A2BE2, #FFA500);
+border-radius: .5vw;
+width: fit-content;
+border: none;
 }
 
 .btn-step-primary:hover{
-    color: white;
+color: white;
 }
 
 .btn-step-secundario {
-    background: black;
-    border-radius: .5vw;
-    border: 1px solid black;
-    color: white;
-    text-decoration: none;
-    width: fit-content
+background: black;
+border-radius: .5vw;
+border: 1px solid black;
+color: white;
+text-decoration: none;
+width: fit-content
 }
 .btn-step-secundario:hover{
-    border: 1px solid black;
+border: 1px solid black;
 }
 .form-example label {
-    color: #FFA500;
+color: #FFA500;
 }
 .form-example p {
-    color: rgba(33,37,41,0.75);
+color: rgba(33,37,41,0.75);
 }
 .box-input{
-    margin-top: 5vh;
+margin-top: 5vh;
 }
 .text-setor {
-    color: #FFA500;
+color: #FFA500;
 }
 .step p{
-    font-size: 1rem;
+font-size: 1rem;
 }
 
 @media (max-width: 600px){
-    .flex-input{
-        display:flex;
-        flex-direction:column;
-    }
-    .flex-button-step-three{
-        display:flex;
-        flex-direction:column;
-        align-items:flex-start;
-        gap: 1vh;
-    }
+.flex-input{
+display:flex;
+flex-direction:column;
+}
+.flex-button-step-three{
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+gap: 1vh;
+}
 }
