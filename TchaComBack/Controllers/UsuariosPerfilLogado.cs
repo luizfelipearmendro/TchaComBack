@@ -147,7 +147,7 @@ namespace TchaComBack.Controllers
             if (!Utilitarios.SenhaEhForte(usuario.Senha, out string mensagemErro))
             {
                 TempData["MensagemErro"] = mensagemErro;
-                return RedirectToAction("Index", "UsuariosPerfilLogado");
+                return RedirectToAction("CadastrarNovoUsuario", "UsuariosPerfilLogado");
             }
 
             usuario.Senha = Utilitarios.GerarHashSenha(usuario.Senha, salt);
