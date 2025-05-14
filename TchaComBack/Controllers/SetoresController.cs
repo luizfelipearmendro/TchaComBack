@@ -239,6 +239,10 @@ namespace TchaComBack.Controllers
             ViewBag.Email = dbconsult.Email;
             ViewBag.TipoPerfil = dbconsult.TipoPerfil;
 
+            ViewBag.Categorias = db.Categorias
+                                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Nome })
+                                .ToList();
+
             SetoresModel setor = setoresRepositorio.ListarPorId(id);
             return View(setor);
         }

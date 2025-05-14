@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using System;
+using System.Data;
 using TchaComBack.Data;
 using TchaComBack.Models;
 using TchaComBack.Repositories;
@@ -100,10 +101,10 @@ namespace TchaComBack.Controllers
 
             // Lista distinta de cargos dos funcionários desse setor
             ViewBag.CargosOpcoes = new SelectList(db.Funcionarios
-                .Where(f => f.SetorId == id)
-                .Select(f => f.Cargo)
-                .Distinct()
-                .ToList());
+                                                    .Where(f => f.SetorId == id)
+                                                    .Select(f => f.Cargo)
+                                                    .Distinct()
+                                                    .ToList());
 
             ViewBag.Setores = db.Setores
                                 .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Nome })
@@ -130,10 +131,10 @@ namespace TchaComBack.Controllers
             if (dbconsult == null) return RedirectToAction("Index", "Login");
 
             IQueryable<FuncionariosModel> funcionariosQuery = db.Funcionarios
-                .AsNoTracking()
-                .Include(f => f.RacaNav)
-                .Include(f => f.EstadoCivilNav)
-                .Include(f => f.Setor);
+                                                                .AsNoTracking()
+                                                                .Include(f => f.RacaNav)
+                                                                .Include(f => f.EstadoCivilNav)
+                                                                .Include(f => f.Setor);
 
             // filtrar pelo tipo do perfil
             if (dbconsult.TipoPerfil != 1)

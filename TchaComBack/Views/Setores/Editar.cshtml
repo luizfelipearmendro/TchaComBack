@@ -1,4 +1,6 @@
-﻿@model SetoresModel
+﻿@using Microsoft.AspNetCore.Http
+
+@model SetoresModel
 @{
     <title>@ViewData["Title"] </title>
 }
@@ -8,79 +10,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous" defer></script>
 
-    <link rel="stylesheet" href="~/css/cadastrar-setor.css">
+    <link rel="stylesheet" href="~/css/Funcionarios/cadastrar-funcionario.css">
+
+    <title>Editar Setor</title>
 </head>
 <body>
 
-    <div class="modal fade" id="modalEditarSetor" aria-hidden="true" aria-labelledby="modalEditarSetorLabel" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalEditarSetorLabel">Editar Setor</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="container ">
+        <div class="progress mb-4" style="height:4vh;">
+            <div class="progress-bar" role="progressbar" style="width: 50%;  background: linear-gradient(90deg, #8A2BE2, #FFA500); " aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">50%</div>
+        </div>
+
+        <form asp-controller="Setores" asp-action="Editar" method="post" id="formCompleto">
+
+            <input type="hidden" name="SetorId" value="@Context.Request.Query["setorId"]" />
+
+            <div id="step1" class="step">
+                <h3>Etapa 1: Informações Pessoais</h3>
+
+                <div class="box-input">
+                    <div class="flex-input">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-custom-class="custom-tooltip"
+                                  data-bs-title="Nome do Setor">
+
+                                <i class="bi bi-building-fill"></i>
+                            </span>
+
+                            <input asp-for="Nome" maxlength="100" class="form-control" placeholder="Nome do setor" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-custom-class="custom-tooltip"
+                                  data-bs-title="Descrição">
+
+                                  <i class="fas fa-comment"></i>
+                            </span>
+                            <input asp-for="Descricao" maxlength="150" class="form-control" placeholder="Descrição" required />
+                        </div>
+                    </div>
+                    <div class="flex-input">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-custom-class="custom-tooltip"
+                                  data-bs-title="Responsável">
+                                <i class="fas fa-user-tie"></i>
+                            </span>
+                            <input asp-for="ResponsavelSetor" maxlength="100" class="form-control" placeholder="Responsável" required />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-custom-class="custom-tooltip"
+                                  data-bs-title="E-mail Responsável">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <input asp-for="EmailResponsavelSetor" maxlength="100" class="form-control" placeholder="E-mail Responsável" required />
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="SexoResponsavel">Sexo do Responsável:</label>
+                        <select asp-for="SexoResponsavel" class="form-select">
+                            <option value="F">Feminino</option>
+                            <option value="M">Masculino</option>
+                        </select>
+                    </div>
+
+                    <div class="form-example">
+                        <label for="Confirmacao">Atenção:</label>
+                        <p>Revise as informações inseridas antes de concluir.</p>
+                    </div><br />
+
+                    <button type="button" class="btn btn-step-primary" id="next1" onclick="nextStep(2)">Próxima Etapa</button>
                 </div>
-                <div class="modal-body">
-                    <form asp-controller="Setores" asp-action="Editar" method="post" id="formEtapa1">
-                        <input type="hidden" asp-for="Id"/>
 
-                        <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            <input asp-for="Nome" maxlength="100" type="text" class="form-control" placeholder="Nome" required />
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-comment"></i></span>
-                            <input asp-for="Descricao" type="text" maxlength="150" class="form-control" placeholder="Descrição" required />
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
-                            <input asp-for="ResponsavelSetor" type="text" maxlength="100" class="form-control" placeholder="Responsável" required />
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            <input asp-for="EmailResponsavelSetor" type="email" maxlength="100" class="form-control" placeholder="E-mail Responsável" required />
-                        </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="SexoResponsavel">Sexo do Responsável:</label>
-                            <select asp-for="SexoResponsavel" class="form-select">
-                                <option value="">Selecione</option>
-                                <option value="F">Feminino</option>
-                                <option value="M">Masculino</option>
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                            <input asp-for="Localizacao" class="form-control" placeholder="Localização" required />
-                        </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="CategoriaId">Categoria do Setor:</label>
-                            <select asp-for="CategoriaId" class="form-select">
-                                <option value="">Selecione</option>
-                                <option value="1">Recursos Humanos</option>
-                                <option value="2">Financeiro</option>
-                                <option value="3">Tecnologia da Informação (TI)</option>
-                                <option value="4">Marketing</option>
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-image"></i></span>
-                            <input asp-for="ImagemSetor" type="url" class="form-control" placeholder="https://exemplo.com/imagem.jpg" />
-                        </div>
-                        <div class="form-example">
-                            <label for="Confirmacao">Confirmação:</label>
-                            <p>Revise as informações inseridas nas etapas anteriores.</p>
-                        </div>
-                        <button type="submit" class="btn btn-secondary" asp-controller="Setores" asp-action="Index">Cancelar Alterações</button>
-                        <button type="submit" class="btn btn-success">Finalizar alterações</button>
+            </div>
 
-                    </form>
+            <div id="step2" class="step" style="display: none;">
+                <h3>Etapa 2: Informações Adicionais</h3>
+
+                <div class="box-input">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              data-bs-title="Localização">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </span>
+                        <input asp-for="Localizacao" class="form-control" placeholder="Localização" required />
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="SexoResponsavel">Categoria do Setor:</label>
+                        <select asp-for="CategoriaId" class="form-select" asp-items="ViewBag.Categorias">
+                            <option value="">Selecione</option>
+                        </select>
+                        <span asp-validation-for="CategoriaId" class="text-danger"></span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              data-bs-title="Imagem do Setor">
+                            <i class="fas fa-image"></i>
+                        </span>
+                        <input asp-for="ImagemSetor" type="url" class="form-control" placeholder="https://exemplo.com/imagem.jpg" />
+                    </div>
+                    <div class="form-example">
+                        <label for="Confirmacao">Conclusão:</label>
+                        <p>Revise as informações inseridas antes de concluir.</p>
+                    </div><br />
+
+                    <button type="button" class="btn btn-step-secundario" id="prev2" onclick="prevStep(1)">Retornar Etapa</button>
+                    <button type="submit" class="btn btn-success">Editar Setor</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
+
+    <script src="~/js/Funcionarios/setores-funcionarios.js" defer></script>
+    <script>
+        function updateProgressBar(step) {
+            const progressBar = document.querySelector('.progress-bar');
+            let progress = 0;
+
+            if (step === 1) {
+                progress = 50;
+            } else if (step === 2) {
+                progress = 100;
+            }
+
+            progressBar.style.width = progress + '%';
+            progressBar.setAttribute('aria-valuenow', progress);
+            progressBar.textContent = progress + '%';
+        }
+
+        function nextStep(step) {
+            document.getElementById('step' + (step - 1)).style.display = 'none';
+            document.getElementById('step' + step).style.display = 'block';
+            updateProgressBar(step);
+        }
+
+        function prevStep(step) {
+            document.getElementById('step' + (step + 1)).style.display = 'none';
+            document.getElementById('step' + step).style.display = 'block';
+            updateProgressBar(step);
+        }
+    </script>
+
 </body>
 </html>

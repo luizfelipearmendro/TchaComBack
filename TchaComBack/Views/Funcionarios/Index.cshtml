@@ -25,6 +25,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -267,12 +270,12 @@
                         <div class="flex-imagem-funcionario">
                             <div class="flex-botao-edition">
                                 <button type="button"
-                                class="btn-popover"
-                                data-bs-toggle="popover"
-                                data-bs-placement="right"
-                                data-bs-html="true"
-                                data-id="@funcionario.Id"
-                                data-bs-content="@popoverHtml">
+                                    class="btn-popover"
+                                    data-bs-toggle="popover"
+                                    data-bs-placement="right"
+                                    data-bs-html="true"
+                                    data-id="@funcionario.Id"
+                                    data-bs-content="@popoverHtml">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                     class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                                         <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
@@ -343,16 +346,26 @@
                         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg-custom modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="modalLabel-@funcionario.Id">@funcionario.Nome</h1>
+                                    <h1 class="modal-title fs-5" id="modalLabel-@funcionario.Id">Ficha Cadastral do(a) Funcionário(a)</h1>
+                                    <button type="button"
+                                            class="btn btn-sm btn-warning"
+                                            id="btnImprimir"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                            data-bs-title="Exportar Ficha do Funcionário"
+                                            onclick="exportarFichaFuncionario(@funcionario.Id)">
+                                        <i class="bi bi-printer" style="font-size:17px"></i>
+                                    </button>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-
-                                    <div class="container-fluid">
+                                    <div id="ficha-@funcionario.Id">
+                                        <div class="container-fluid">
                                         <div class="row g-4">
                                             <div class="col-md-6">
                                                 <div class="categoria">
                                                     <h5><i class="fa fa-user-circle" aria-hidden="true"></i> Informações Pessoais</h5>
+                                                    <p><strong>Nome:</strong> @funcionario.Nome</p>
                                                     <p><strong>Data de Nascimento:</strong> @funcionario.DataNascimento.ToString("dd/MM/yyyy")</p>
                                                     <p><strong>Sexo:</strong> @funcionario.Sexo</p>
                                                     <p><strong>Raça:</strong> @funcionario.RacaNav?.Raca</p>
@@ -394,7 +407,7 @@
 
                                         </div>
                                     </div>
-
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -402,7 +415,6 @@
                             </div>
                         </div>
                     </div>
-
                 }
             </div>
         </div>
