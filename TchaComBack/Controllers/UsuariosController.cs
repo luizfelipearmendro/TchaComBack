@@ -92,10 +92,10 @@ namespace TchaComBack.Controllers
             };
 
             // Caminho físico da imagem
-            var logoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "logo2TCB-removebg-preview.png");
+            var logoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "TCG.png");
 
             // Adicionando a logo como anexo inline
-            bodyBuilder.Attachments.Add(logoPath, new ContentType("image", "png") { Name = "logo2TCB-removebg-preview.png" })
+            bodyBuilder.Attachments.Add(logoPath, new ContentType("image", "png") { Name = "TCG.png" })
                          .ContentId = "logo";
 
             message.Body = bodyBuilder.ToMessageBody();
