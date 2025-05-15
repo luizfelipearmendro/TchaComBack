@@ -647,7 +647,7 @@ color: black;
 .form-floating{
 width:100%;
 }
-.modal-header h5 {
+.modal-header h5{
 background: linear-gradient(90deg, #8A2BE2, #FFA500 );
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
@@ -658,10 +658,25 @@ text-transform: uppercase;
 font-size: 1.8rem;
 text-decoration: none;
 }
-
+    
+.modal-header h1 {
+background: linear-gradient(90deg, #8A2BE2, #FFA500 );
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+width: 100%;
+font-weight: bold;
+font-family: "Bebas Neue", sans-serif;
+text-transform: uppercase;
+font-size: 1.8rem !important;
+text-decoration: none;
+}
+#btnImprimir{
+    margin-right: 2vw;
+    background-color: white
+}
 
 .modal-header {
-background-color: black;
+    background-color: black;
 }
 
 
