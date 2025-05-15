@@ -116,7 +116,7 @@ text-decoration: none;
 }
 
 .flex-menu-logo img {
-height: 10vh
+height: 3rem;
 }
 
 .flex-menu-logo h2 {
@@ -125,6 +125,7 @@ width: 100%;
 font-family: 'Montserrat';
 font-size: .9rem;
 color: #ccc;
+margin-left: -1vw;
 }
 
 strong {

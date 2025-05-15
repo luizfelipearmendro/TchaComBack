@@ -183,16 +183,19 @@ display: flex;
 justify-content: center;
 align-items: center;
 gap: 1vw;
+position:relative;
 }
 
 
 .flex-imagem-box-two {
-background: url("/img/3d-animal-shape-glowing-with-bright-holographic-colors (1).jpg");
-background-position: center;
+background: url("/img/ChatGPT Image 15 de mai. de 2025, 09_22_53.png");
+background-position: center ;
 background-repeat: no-repeat;
 background-size: cover;
 width: 50%;
-height: 100%
+height: 90%;
+position: relative;
+top: 5%;
 }
 
 .conteúdo {
@@ -1550,7 +1553,6 @@ width: 100%;
 }
 
 
-/* SESSÃO FOOTER */
 footer {
 height: auto;
 bottom: -300px;

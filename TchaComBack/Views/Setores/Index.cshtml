@@ -139,7 +139,7 @@
         </section>
 
         <partial name="Cadastrar" model="new SetoresModel()" />
-        <partial name="Editar" model="new SetoresModel()" />
+        @* <partial name="Editar" model="new SetoresModel()" /> *@
     }
     else
     {
@@ -150,7 +150,6 @@
         </div>
     }
 
-    <!-- modal desativar setor -->
     <div class="modal fade" id="modalDesativarSetor" tabindex="-1" aria-labelledby="modalDesativarSetorLabel" aria-hidden="true" style="z-index:100000001;">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -158,18 +157,18 @@
                     <h5 class="modal-title text-black" id="modalDesativarSetorLabel" style="font-weight:bold">Desativar Setor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-onda-header"></div>
                 <div class="modal-body text-black">
                     Tem certeza que deseja desativar o setor <span id="modalUserName"></span>?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a id="confirmDesativeButton" role="button" class="btn btn-danger">Desativar</a>
+                    <button type="button" class="btn btn-step-secundario" data-bs-dismiss="modal">Cancelar</button>
+                    <a id="confirmDesativeButton" role="button" class="btn btn-step-primary">Desativar</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- modal reativar setor -->
     <div class="modal fade" id="modalReativarSetor" tabindex="-1" aria-labelledby="modalReativarSetorLabel" aria-hidden="true" style="z-index:100000001;">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -177,12 +176,14 @@
                     <h5 class="modal-title text-black" id="modalReativarSetorLabel" style="font-weight:bold">Reativar Setor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-onda-header"></div>
+
                 <div class="modal-body text-black">
                     Tem certeza que deseja Reativar o setor <span id="modalUserNameReativo"></span>?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a id="confirmReativeButton" role="button" class="btn btn-primary">Reativar</a>
+                    <button type="button" class="btn btn-step-secundario  " data-bs-dismiss="modal">Cancelar</button>
+                    <a id="confirmReativeButton" role="button" class="btn btn-step-primary">Reativar</a>
                 </div>
             </div>
         </div>

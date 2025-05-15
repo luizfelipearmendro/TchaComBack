@@ -168,15 +168,15 @@ background-color: transparent;
 
 
 .mt-3 .rota-btn {
-    text-decoration: none;
-    color: #333;
-    padding: 0.2rem;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-    width: 100%;
+text-decoration: none;
+color: #333;
+padding: 0.2rem;
+border-radius: 4px;
+transition: background-color 0.3s ease;
+width: 100%;
 }
 .rota-btn:hover {
- background-color: #FFA500;
+background-color: #FFA500;
 }
 
 
@@ -358,42 +358,42 @@ border: 1px solid black;
 }
 
 @media (max-width: 800px){
-    .glide__slides {
-        display: flex;
-        gap: 0px;
-    }
+.glide__slides {
+display: flex;
+gap: 0px;
+}
 
-    .glide__bullets {
-        position: relative;
-        top: 84vh;
-    }
+.glide__bullets {
+position: relative;
+top: 84vh;
+}
 
-    .glide__bullet {
-        background-color: rgba(0,0,0,.5) !important;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+.glide__bullet {
+background-color: rgba(0,0,0,.5) !important;
+width: 10px;
+height: 10px;
+border-radius: 50%;
+border: none;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
 
-    .glide__bullet--active {
-        background-color: #FFA500 !important;
-    }
+.glide__bullet--active {
+background-color: #FFA500 !important;
+}
 
-    .glide__bullet:hover {
-        background-color: #999;
-    }
-    .card-container {
+.glide__bullet:hover {
+background-color: #999;
+}
+.card-container {
      
-        height: 80vh;
+height: 80vh;
 
-    }
-    .titulo-categoria::after {
+}
+.titulo-categoria::after {
        
-        width: 15%;
+width: 15%;
     
-    }
+}
 
 }
