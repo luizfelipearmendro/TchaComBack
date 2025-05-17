@@ -1,6 +1,8 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Microsoft.AspNetCore.Html
+
 @{
     var texto = ViewData["Texto"]?.ToString();
     var url = ViewData["Url"]?.ToString();
@@ -12,7 +14,7 @@
     var aspController = ViewData["AspController"]?.ToString();
     var aspRouteId = ViewData["AspRouteId"]?.ToString();
     var target = ViewData["Target"]?.ToString();
-
+       var conteudoHtml = ViewData["ConteudoHtml"] as HtmlString;
 
 }
 
@@ -30,12 +32,14 @@
     @if( elemento == "a")
     {
         <a href="@url" class="botao-primario @classeExtra" id="@id" type="@type" target="@target">
+            @conteudoHtml
             @texto
         </a>
     }
     else if(elemento == "button")
     {
         <button type="@type" class="botao-primario @classeExtra" id="@id">
+            @conteudoHtml
             @texto
         </button>
     }
@@ -45,6 +49,7 @@
             <button class="botao-primario @classeExtra " type="@(string.IsNullOrEmpty(type) ? "submit" : type)"
                     class="@classeExtra"
                     id="@id">
+                @conteudoHtml
                 @texto
             </button>
         </form>

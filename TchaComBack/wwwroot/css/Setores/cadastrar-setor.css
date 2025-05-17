@@ -40,9 +40,7 @@ border: none;
 .modal-header .btn-close{
 background-color: #FFA500 !important;
 }
-.form-example {
-color: gray
-}
+
 
 .btn-step-primary {
 color: white;
@@ -73,7 +71,7 @@ color: #FFA500;
 }
 
 .form-example p {
-color: white;
+color: gray;
 }
 .modal-onda-header{
 width: 100%;

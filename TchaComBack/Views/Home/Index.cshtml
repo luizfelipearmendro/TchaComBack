@@ -2,11 +2,22 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+@{
+    var totalFuncionarios = Model.TotalDeFuncionarios;
 
+    var totalSetores = Model.TotalDeSetores;
+
+    var totalUsuarios = Model.TotalDeUsuarios;
+}
 <link rel="stylesheet" href="~/css/Home/home.css">
 <script src="~/js/Home/home.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-<section style="padding-top: 20vh;">
+
+<section>
     @if (TempData["MensagemSucesso"] != null)
     {
         <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
@@ -34,9 +45,142 @@
             </div>
         </div>
     }
-
-
+    <section class="container-home">
+        <article class="box-one-home">
+            <div class="card-box-one">
+                <div class="flex-subox-one">
+                    <i class="bi bi-people-fill"></i>
+                    <p>Funcionarios Ativos</p>
+                </div>
+                <h1>@totalFuncionarios</h1>
+            </div>
+            <div class="card-box-one">
+                <div class="flex-subox-one">
+                    <i class="bi bi-building-fill"></i>
+                    <p>Setores Ativos</p>
+                </div>
+                <h1>@totalSetores</h1>
+            </div>
+            <div class="card-box-one">
+                <div class="flex-subox-one">
+                    <i class="bi bi-person-fill-gear"></i>
+                    <p>Usuários Ativos</p>
+                </div>
+                <h1>@totalUsuarios</h1>
+            </div>
+        </article>
+        <article class="box-two-home">
+            <article class="sub-box-home">
+                <h2>Funcionários Ativos e Inativos por Setor</h2>
+                <div>
+                    <canvas id="idGraficoFuncionariosPorSetores"></canvas>
+                </div>
+                <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                         view-data=@(new ViewDataDictionary(ViewData){
+                         { "Texto", "Acessar" },
+                         { "Url", "/Funcionarios/Funcionarios" },
+                         { "ClasseExtra", "btn-dash" },
+                         { "Id", "" },
+                         { "Elemento", "a"}
+                         }) />
+            </article>
+        </article>
+        <article class="box-three-home" >
+            <article class="sub-box-home">
+                <h2>Usuários Ativos e Inativos por Perfil</h2>
+                <div>
+                    <canvas id="idGraficoUsuariosPorPerfil"></canvas>
+                </div>
+                <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                         view-data=@(new ViewDataDictionary(ViewData){
+                         { "Texto", "Visualizar" },
+                         { "Url", "/UsuariosPerfilLogado" },
+                         { "ClasseExtra", "btn-dash" },
+                         { "Id", "" },
+                         { "Elemento", "a"}
+                         }) />
+            </article>
+            <article class="sub-box-home">
+                <h2>Setores Ativos e Inativos por Categorias</h2>
+                <div>
+                    <canvas id="idGraficoSetoresPorCategorias"  ></canvas>
+                </div>
+                <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                         view-data=@(new ViewDataDictionary(ViewData){
+                         { "Texto", "Visualizar" },
+                         { "Url", "/Setores" },
+                         { "ClasseExtra", "btn-dash" },
+                         { "Id", "" },
+                         { "Elemento", "a"}
+                         }) />
+            </article>
+        </article>
+        <article class="box-foor-home">
+            <article class="sub-box-home">
+                <h2>Quantidade de Funcionarios por Sexo</h2>
+                <div style="display:flex; justify-content:center; align-items:center;">
+                    <canvas id="idGraficoFuncionariosPorSexo"></canvas>
+                </div>
+                <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                         view-data=@(new ViewDataDictionary(ViewData){
+                         { "Texto", "Visualizar" },
+                         { "Url", "/Funcionarios/Funcionarios" },
+                         { "ClasseExtra", "btn-dash" },
+                         { "Id", "" },
+                         { "Elemento", "a"}
+                         }) />
+            </article>
+            <article class="sub-box-home">
+                <h2>Ranking de Setores com Mais Funcionarios</h2>
+                <div>
+                   <canvas id="idGraficoRankingSetores" ></canvas>
+                </div>
+                <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                         view-data=@(new ViewDataDictionary(ViewData){
+                         { "Texto", "Visualizar" },
+                         { "Url", "/Setores" },
+                         { "ClasseExtra", "btn-dash" },
+                         { "Id", "" },
+                         { "Elemento", "a"}
+                         }) />
+            </article>
+        </article>
+       
+    </section>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+<script src="~/js/Home/graficoSetoresPorCategorias.js" ></script>
+<script src="~/js/Home/graficoFuncionariosPorSetores.js"></script>
+<script src="~/js/Home/graficoUsuariosPerfil.js"></script>
+<script src="~/js/Home/graficoQuantidadeFuncionariosPorSexo.js"></script>
+<script src="~/js/Home/graficoSetoresComMaisFuncionarios.js"></script>
+
+<script id="dadosGraficos" type="application/json">
+    {
+        "labelsCategorias": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.NomesCategorias)),
+        "dataSetoresAtivos": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeSetorAtivos)),
+        "dataSetoresInativos": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeSetorInativos)),
+
+        "labelsSetores": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.NomesSetores)),
+        "dataFuncionariosAtivos": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeFuncionariosAtivos)),
+        "dataFuncionariosInativos": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeFuncionariosInativos)),
+
+        "labelsPerfis": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.NomesPerfis)),
+        "usuariosAtivosPorPerfil": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeUsuariosAtivosPorPerfil)),
+        "usuariosInativosPorPerfil": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeUsuariosInativosPorPerfil)),
+
+        "labelsSexoFuncionarios": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsSexoFuncionarios)),
+        "quantidadeFuncionariosPorSexo": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeFuncionariosPorSexo)),
+
+        "labelsRankingSetores": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsRankingSetores)),
+        "quantidadeFuncionariosRankingSetores": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeFuncionariosRankingSetores))
+
+    }
+</script>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const toastElList = [].slice.call(document.querySelectorAll('.toast'));

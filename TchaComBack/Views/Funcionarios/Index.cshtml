@@ -16,10 +16,11 @@
         return $"{partes[0]} {partes[^1]}";
     }
 }
-
+@using Microsoft.AspNetCore.Html
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css" />
@@ -100,15 +101,15 @@
                         Cadastrar
                     </span>
                 </a>
-                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                view-data='@new ViewDataDictionary(ViewData) {
+                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
                          { "Texto", "Filtrar" },
-                         { "Url", "" },
-                         { "ClasseExtra", "btn-filtrar" },
+                         { "Url", "/Login" },
+                         { "ClasseExtra", "btn btn-filtrar mb-2 btn-filtrar" },
                          { "Id", "" },
                          { "Type", "submit" },
-                         { "Elemento", "button" }
-                     }' />
+                         { "elemento", "Button"},
+                         { "ConteudoHtml", new HtmlString("<i class='fa fa-filter me-2'></i>") }
+                         }) />
             </div>
             @* <button type="button" class="btn-fechar" id="toggle-filtro-func">˄</button> *@
         </div>

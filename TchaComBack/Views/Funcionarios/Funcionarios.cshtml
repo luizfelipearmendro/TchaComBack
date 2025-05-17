@@ -16,6 +16,7 @@
         return $"{partes[0]} {partes[^1]}";
     }
 }
+@using Microsoft.AspNetCore.Html
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
@@ -94,15 +95,16 @@
                 <div class="form-floating mb-3">
                     <input name="searchString" value="@ViewBag.SearchString" type="text" class="form-control" id="floatingInput" placeholder="Buscar setor...">
                     <label for="floatingInput">Buscar setor...</label>
-                </div>                   <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                view-data='@new ViewDataDictionary(ViewData) {
-                         { "Texto", "Filtrar" },
-                         { "Url", "" },
-                         { "ClasseExtra", "btn-filtrar" },
-                         { "Id", "" },
-                         { "Type", "submit" },
-                         { "Elemento", "button" }
-                     }' />
+                </div>       
+                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@( new ViewDataDictionary(ViewData){
+                { "Texto", "Filtrar" },
+                { "Url", "/Login" },
+                { "ClasseExtra", "btn btn-filtrar mb-2 btn-filtrar" },
+                { "Id", "" },
+                { "Type", "submit" },
+                { "elemento", "Button"},
+                { "ConteudoHtml", new HtmlString("<i class='fa fa-filter me-2'></i>") }
+                }) />
             </div>
         </div>
     </form>

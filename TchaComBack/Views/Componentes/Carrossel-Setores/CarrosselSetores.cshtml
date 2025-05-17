@@ -309,10 +309,12 @@
                             @for (int i = setoresDaCategoria.Count; i < totalSlidesBreve; i++)
                             {
                                 <li class="glide__slide">
-                                    <div class="card-container" style="background-image: url('https://i.postimg.cc/rwY7GtrP/card-embreve.png');">
-                                        <main class="main-content">
-                                            <h1 class="title-breve">Em Breve</h1>
-                                            <p>Novos setores serão adicionados nesta categoria.</p>
+                                    <div class="card-container embreve sem-imagem">
+                                        <main class="main-content sem-imagem-content">
+                                            <div class="flex-main-embreve">
+                                                <h1 class="title-breve">Em Breve</h1>
+                                                <p>Em breve, novos setores serão adicionados a esta categoria. Fique atento às atualizações!</p>
+                                            </div>
                                         </main>
                                     </div>
                                 </li>
@@ -348,9 +350,8 @@
                <h2>Setor inativo. Acesso indisponível.</h2>
            </span>
       </div>
-      <div class="modal-onda-footer"></div>
       <div class="modal-footer">
-                <button type="button" class="btn btn-step-primary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-step-primary" data-bs-dismiss="modal">Fechar</button>
       </div>
     </div>
   </div>
