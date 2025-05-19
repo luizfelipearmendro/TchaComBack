@@ -181,4 +181,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-  
+document.addEventListener('DOMContentLoaded', function () {
+    const dataNascimento = document.getElementById('dataNascimento');
+    const cargoInputGroup = document.getElementById('inputCargoGroup');
+    const cargoInput = document.getElementById('cargoInput');
+    const cargoSelectGroup = document.getElementById('selectCargoGroup');
+    const cargoSelect = document.getElementById('cargoSelect');
+
+    dataNascimento.addEventListener('change', function () {
+        const nascimento = new Date(dataNascimento.value);
+        const hoje = new Date();
+        let idade = hoje.getFullYear() - nascimento.getFullYear();
+        const m = hoje.getMonth() - nascimento.getMonth();
+        if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+            idade--;
+        }
+
+        if (isNaN(idade)) {
+            return;
+        }
+
+        if (idade < 14) {
+            alert("A idade mínima para cadastro é 14 anos.");
+            dataNascimento.value = "";
+            cargoInput.value = "";
+            cargoSelect.value = "";
+            cargoInputGroup.classList.remove("d-none");
+            cargoSelectGroup.classList.add("d-none");
+            return;
+        }
+
+        if (idade >= 14 && idade <= 17) {
+            cargoInputGroup.classList.add("d-none");
+            cargoSelectGroup.classList.remove("d-none");
+            cargoInput.value = "";
+        } else {
+            cargoSelectGroup.classList.add("d-none");
+            cargoInputGroup.classList.remove("d-none");
+            cargoSelect.value = "";
+            cargoInput.value = "";
+        }
+    });
+});
