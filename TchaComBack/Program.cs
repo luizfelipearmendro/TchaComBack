@@ -24,7 +24,7 @@ builder.Services.AddSession();
 
 builder.Services.AddScoped<ISetoresRepositorio, SetoresRepositorio>();
 builder.Services.AddScoped<IFuncionariosRepositorio, FuncionariosRepositorio>();
-
+builder.Services.AddMemoryCache(); 
 var app = builder.Build();
 
 app.Use(async (context, next) =>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using TchaComBack.Data;
@@ -14,11 +15,12 @@ namespace TchaComBack.Controllers
     {
         private readonly ApplicationDbContext db;
         private readonly ISetoresRepositorio setoresRepositorio;
-
-        public SetoresController(ApplicationDbContext db, ISetoresRepositorio _setoresRepositorio)
+        private readonly IMemoryCache _cache;
+        public SetoresController(ApplicationDbContext db, ISetoresRepositorio _setoresRepositorio, IMemoryCache cache)
         {
             this.db = db;
             setoresRepositorio = _setoresRepositorio;
+            _cache = cache;
         }
 
         public int sessionIdUsuario
@@ -214,6 +216,26 @@ namespace TchaComBack.Controllers
                 setor.UsuarioId = sessionIdUsuario;
                 setor = setoresRepositorio.Cadastrar(setor);
 
+                int totalAntes = db.Setores.Count(s => s.Ativo == 'S' && s.Id != setor.Id); // evita contar o novo duas vezes
+                int totalDepois = db.Setores.Count(s => s.Ativo == 'S');
+
+                double porcentagemVariacao = 0;
+
+                if (totalAntes > 0)
+                {
+                    porcentagemVariacao = ((double)(totalDepois - totalAntes) / totalAntes) * 100;
+                }
+                else if (totalDepois > 0)
+                {
+                    porcentagemVariacao = 100; // primeiro setor ativo
+                }
+
+                string cacheKey = "PorcentagemAumentoSetores";
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(1));
+
+                _cache.Set(cacheKey, porcentagemVariacao, cacheEntryOptions);
+
                 TempData["MensagemSucesso"] = "Setor cadastrado com sucesso!";
                 return RedirectToAction("Index", "Setores");
             }
@@ -295,6 +317,19 @@ namespace TchaComBack.Controllers
             {
                 bool desativado = setoresRepositorio.Desativar(id);
 
+                int totalAntes = db.Setores.Count(s => s.Ativo == 'S');
+                int totalDepois = totalAntes - 1;
+
+                double porcentagemVariacao = 0;
+
+                if (totalAntes > 0)
+                {
+                    porcentagemVariacao = ((double)(totalDepois - totalAntes) / totalAntes) * 100;
+                }
+
+                string cacheKey = "PorcentagemAumentoSetores";
+                _cache.Set(cacheKey, porcentagemVariacao, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1)));
+
                 if (desativado)
                 {
                     TempData["MensagemSucesso"] = "Setor desativado com sucesso!";
@@ -322,11 +357,26 @@ namespace TchaComBack.Controllers
             if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
                 return RedirectToAction("Index", "Login");
 
-            var sessionIdUsuario = dbconsult.Id;
-
             try
             {
                 bool reativado = setoresRepositorio.Reativar(id);
+
+                int totalAntes = db.Setores.Count(s => s.Ativo == 'S');
+                int totalDepois = totalAntes + 1;
+
+                double porcentagemVariacao = 0;
+
+                if (totalAntes > 0)
+                {
+                    porcentagemVariacao = ((double)(totalDepois - totalAntes) / totalAntes) * 100;
+                }
+                else if (totalDepois > 0)
+                {
+                    porcentagemVariacao = 100; 
+                }
+
+                string cacheKey = "PorcentagemAumentoSetores";
+                _cache.Set(cacheKey, porcentagemVariacao, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1)));
 
                 if (reativado)
                 {
@@ -334,12 +384,12 @@ namespace TchaComBack.Controllers
                 }
                 else
                 {
-                    TempData["MensagemErro"] = "Erro ao reativar o setor!";
+                    TempData["MensagemErro"] = "Erro ao reativar o setor.";
                 }
 
                 return RedirectToAction("Index", "Setores");
             }
-            catch (System.Exception erro)
+            catch (Exception erro)
             {
                 TempData["MensagemErro"] = $"Ops, não foi possível reativar o setor. Detalhes do erro: {erro.Message}";
                 return RedirectToAction("Index", "Setores");

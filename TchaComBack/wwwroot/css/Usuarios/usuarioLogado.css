@@ -92,8 +92,9 @@ width: 100%;
 .flex-buttom-submit-usu-logado button{
 width: fit-content;
 }
+
 @media (max-width: 600px) {
-.flex-input {
+    .flex-input {
 display: flex;
 flex-direction: column;
 }

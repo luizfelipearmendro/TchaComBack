@@ -22,7 +22,10 @@
 <body>
     <div class="cabecalho-box-one" id="cabecalho-box-one">
         <div class="menu-desktop">
-            <img style="height: 9vh;" src="~/img/TCG.png" alt="Alternate Text" />
+            <div class="flex-logo-landing">
+                <img src="~/img/TCG.png" alt="Alternate Text" />
+                <h3>TCG</h3>
+            </div>
             <nav class="cabecalho-barra-navegacao">
                 <div class="flex-links-cabecalho">
                     <a id="home-navegacao"> Home</a>
@@ -59,7 +62,7 @@
                                          { "ClasseExtra", "animar-com-scroll " }
                                          }) />
                                 <partial name="~/Views/Componentes/Paragrafo-Primario/ParagrafoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
-                                         { "Texto", " Centralize os <strong>dados</strong> da sua <strong>equipe</strong>, organize informações essenciais e tenha tudo àmão para <strong>decisões mais eficientes!.</strong> " },
+                                         { "Texto", " Centralize os <strong>dados</strong> da sua <strong>equipe</strong>, organize informações essenciais e tenha tudo à mão para <strong>decisões mais eficientes!.</strong> " },
                                          { "ClasseExtra", "" }
                                          }) />
                                 <div class="flex-botoes-box-two">

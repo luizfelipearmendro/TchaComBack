@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Setores";
 }
+@using Microsoft.AspNetCore.Html
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -127,7 +128,8 @@
                              { "ClasseExtra", "btn btn-filtrar mb-2 btn-filtrar" },
                              { "Id", "" },
                              { "Type", "submit" },
-                             { "elemento", "Button"}
+                             { "elemento", "Button"},
+                             { "ConteudoHtml", new HtmlString("<i class='fa fa-filter me-2'></i>") }
                              }) />
                         </div>
                         @*                         <button type="button" class="btn-fechar" id="toggle-filtro">˄</button>*@                    
@@ -139,7 +141,6 @@
         </section>
 
         <partial name="Cadastrar" model="new SetoresModel()" />
-        @* <partial name="Editar" model="new SetoresModel()" /> *@
     }
     else
     {
@@ -163,7 +164,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-step-secundario" data-bs-dismiss="modal">Cancelar</button>
-                    <a id="confirmDesativeButton" role="button" class="btn btn-step-primary">Desativar</a>
+                    <a id="confirmDesativeButton" role="button" class="btn btn-danger">Desativar</a>
                 </div>
             </div>
         </div>
@@ -183,7 +184,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-step-secundario  " data-bs-dismiss="modal">Cancelar</button>
-                    <a id="confirmReativeButton" role="button" class="btn btn-step-primary">Reativar</a>
+                    <a id="confirmReativeButton" role="button" class="btn btn-warning">Reativar</a>
                 </div>
             </div>
         </div>

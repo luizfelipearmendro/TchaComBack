@@ -1,4 +1,5 @@
 ﻿
+
 .custom-alert {
 position: fixed;
 top: 20px;
@@ -39,8 +40,173 @@ transition: color 0.3s ease;
 color: #000;
 }
 
+.container-home{
+    display:flex;
+    flex-direction:column;
+    gap:8vh;
+}
+.box-one-home{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content:center;
+    align-items:center;
+    gap: 2vw;
+}
+.box-one-home .card-box-one{
+width: 100%;
+height: 22vh;
+border-radius: 10px;
+background-color: #ffffff;
+box-shadow:  10px 10px 50px #d9d9d9,
+             -10px -10px 50px #ffffff;
+display:flex;
+justify-content:space-around;
+align-items:center;
+padding-top:2vh;
+}
+.flex-info-card-home{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    color: white;
+    font-weight:bold;
+}
+.flex-subox-two{
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100%;
+    padding: 1vh
+}
+.title-flex-subox-two {
+    color: rgba(0,0,0,0.5);
+    font-family: "Montserrat";
+    font-weight: 500;
+}
+.title-flex-secondary-subox-two {
+    color: #ccc;
+    font-family: "Montserrat";
+    font-weight: 500;
+}
+.card-box-one h1,
+.card-box-one p {
+    font-family: "Montserrat";
+}
+
+.card-box-one h1 {
+    font-size: 2rem;
+}
+.box-one-home .card-box-one:first-of-type {
+    background-color: #FFA500;
+}
+.box-one-home .card-box-one:nth-of-type(2) {
+    background-color: black;
+}
+.box-one-home .card-box-one:nth-of-type(3) {
+    background-color: black;
+}
+
+.flex-subox-one {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2vh;
+}
+
+.flex-icon i {
+    font-size: 1.5vw;
+    color: white;
+}
+.flex-icon-secondary i {
+    font-size: 1.5vw;
+    color: black;
+}
+.flex-subox-one p{
+    margin-top: 1vh;
+}
+.flex-icon {
+    width: 3.5vw;
+    height: 3.5vw;
+    background-color: black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.flex-icon-secondary {
+    width: 3.5vw;
+    height: 3.5vw;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.box-three-home {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: stretch;
+    gap: 2vw;
+}
+.sub-box-home {
+    border-radius: 10px;
+    background-color: black;
+    box-shadow: 10px 10px 50px #d9d9d9, -10px -10px 50px #ffffff;
+    padding: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5vh;
+}
+.sub-box-home h2{
+text-align: start;
+font-size: 1.8rem;
+font-weight: 500;
+position: relative;
+background: linear-gradient(90deg, #8A2BE2, #FFA500);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+font-family: "Bebas Neue", sans-serif;
+}
+.sub-box-home h2:before{
+content: "";
+position: absolute;
+bottom: -.1vh;
+height: .3vh;
+width: 10%;
+background-color: #FFA500;
+}
+.sub-box-home  p {
+font-family: "Montserrat";
+}
+.sub-box-home canvas{
+    width:100%;
+    height: 50%;
+}
+.box-two-home .sub-box-home canvas {
+    width: 100%;
+    height: 100%;
+}
+.box-foor-home {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: stretch;
+    gap: 2vw;
+}
+#idGraficoFuncionariosPorSexo{
+    height: 40vh !important;
+}
+.btn-dash{
+    padding: 1.2vh !important;
+    font-weight: normal !important;
+}
+
 @keyframes fadeIn {
-from {
+    from {
 opacity: 0;
 transform: translateY(-20px);
 }
@@ -60,4 +226,123 @@ to {
 opacity: 0;
 transform: translateY(-20px);
 }
+}
+
+
+@media (max-width: 1400px){
+    .box-one-home .card-box-one {
+        width: 100%;
+        height: 22vh;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 10px 10px 50px #d9d9d9, -10px -10px 50px #ffffff;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding-top: 2vh;
+        padding: 1vw;
+    }
+
+    .flex-info-card-home {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        width: fit-content;
+        font-size: .8rem !important;
+    }
+
+    .flex-subox-two {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between !important;
+        align-items: flex-end;
+        height: 110%;
+        
+
+        
+    }
+
+    .title-flex-subox-two {
+        color: rgba(0,0,0,0.5);
+        font-family: "Montserrat";
+        font-weight: 500;
+        font-size: .9rem;
+        width: fit-content;
+    }
+
+    .title-flex-secondary-subox-two {
+        color: #ccc;
+        font-family: "Montserrat";
+        font-weight: 500;
+        font-size: .9rem;
+        width: fit-content;
+    }
+
+    .card-box-one h1,
+    .card-box-one p {
+        font-family: "Montserrat";
+        width: fit-content;
+    }
+
+    .card-box-one h1 {
+        font-size: 1.5rem;
+        width: fit-content;
+    }
+
+    .box-one-home .card-box-one:first-of-type {
+        background-color: #FFA500;
+    }
+
+    .box-one-home .card-box-one:nth-of-type(2) {
+        background-color: black;
+    }
+
+    .box-one-home .card-box-one:nth-of-type(3) {
+        background-color: black;
+    }
+
+    .flex-subox-one {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-start;
+        gap: 2vh;
+    }
+
+    .flex-icon i {
+        font-size: 1.5vw;
+        color: white;
+    }
+
+    .flex-icon-secondary i {
+        font-size: 1.5vw;
+        color: black;
+    }
+
+    .flex-subox-one p {
+        margin-top: 1vh;
+        width: fit-content;
+    }
+
+    .flex-icon {
+        width: 3.5vw;
+        height: 3.5vw;
+        background-color: black;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .flex-icon-secondary {
+        width: 3.5vw;
+        height: 3.5vw;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

@@ -45,13 +45,27 @@ width: 100vw;
 height: 100%;
 }
 
+.flex-logo-landing{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center
+}
+.flex-logo-landing img{
+    height: 8vh;
+}
+.flex-logo-landing h3{
+    color: white;
+    font-family: "Montserrat";
+    margin-top: -.5vh;
+}
 .cabecalho-box-one {
-transition: background-color 0.5s ease-in-out;
-padding: 0;
-position: fixed;
-z-index: 100000;
-gap: 30vw;
-padding: 1vh;
+    transition: background-color 0.5s ease-in-out;
+    padding: 0;
+    position: fixed;
+    z-index: 100000;
+    gap: 30vw;
+    padding: 1vh;
 }
 
 .cabecalho-box-one .menu-desktop {

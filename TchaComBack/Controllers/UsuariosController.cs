@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using MimeKit;
 using TchaComBack.Data;
 using TchaComBack.Helper;
@@ -11,10 +12,12 @@ namespace TchaComBack.Controllers
     public class UsuariosController : Controller
     {
         private readonly ApplicationDbContext db;
+        private readonly IMemoryCache _cache;
 
-        public UsuariosController(ApplicationDbContext _db)
+        public UsuariosController(ApplicationDbContext _db, IMemoryCache cache)
         {
             db = _db;
+            _cache = cache;
         }   
 
         public IActionResult Index()
@@ -65,6 +68,27 @@ namespace TchaComBack.Controllers
             {
                 db.Usuarios.Add(usuario);
                 db.SaveChanges();
+
+                int totalAntes = db.Usuarios.Count(f => f.Ativo == 'S') - 1;
+                int totalDepois = db.Usuarios.Count(f => f.Ativo == 'S');
+
+                double porcentagemVariacao = 0;
+
+                if (totalAntes > 0)
+                {
+                    porcentagemVariacao = ((double)(totalDepois - totalAntes) / totalAntes) * 100;
+                }
+                else if (totalDepois > 0)
+                {
+                    porcentagemVariacao = 100;
+                }
+
+                string cacheKey = "PorcentagemAumentoUsuarios";
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(1));
+
+                _cache.Set(cacheKey, porcentagemVariacao, cacheEntryOptions);
 
                 TempData["MensagemSucesso"] = "Usuário cadastrado com sucesso!";
                 return RedirectToAction("Index", "Login");
