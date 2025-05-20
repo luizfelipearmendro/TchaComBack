@@ -1,0 +1,108 @@
+﻿@model AtualizarSenhaViewModel
+@{
+    <title>@ViewData["Title"]Atualizar Senha</title>
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/Usuarios/usuarioLogado.css">
+    <title>Atualizar Senha</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex h-screen">
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div id="successAlert" class="alert success" role="alert">
+            <span class="closebtn">&times;</span>
+            <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById("successAlert").style.display = 'none';
+            }, 5000);
+        </script>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div id="errorAlert" class="alert danger" role="alert">
+            <span class="closebtn">&times;</span>
+            <strong>Atenção!</strong> @TempData["MensagemErro"]
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById("errorAlert").style.display = 'none';
+            }, 5000);
+        </script>
+    }
+
+    <section class="login flex items-center justify-center h-screen" style="height: 100%; justify-items: center;">
+        <div class="bg-white rounded-2xl shadow-lg flex w-full max-w-5xl overflow-hidden">
+            <div class="box-one-login hidden md:block md:w-1/2 bg-[url('/caminho-da-imagem.jpg')] bg-cover bg-center"></div>
+
+            <div class="box-two-login w-full md:w-1/2 p-10">
+                <div class="flex flex-col items-center mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-800">Redefina sua senha</h3>
+                    <p class="text-gray-500">Tchá Com Gente</p>
+                </div>
+
+                <div class="flex items-center justify-center">
+                    <div class="w-full max-w-md">
+                        @Html.AntiForgeryToken()
+                        @using (Html.BeginForm("AtualizarSenha", "UsuariosPerfilLogado", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.Hash)
+
+                            <div class="relative mb-6">
+                                <input type="password" id="password" name="novaSenha" class="w-full border border-gray-300 rounded-lg p-3 pr-10 focus:ring-2 focus:ring-brown-400 focus:outline-none peer" placeholder=" " required>
+                                <label for="password" class="absolute left-3 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-0 peer-focus:text-sm peer-focus:text-brown-500">Nova Senha</label>
+                                <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" onclick="togglePassword()">
+                                    <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                    </svg>
+                                </span>
+                            </div>
+
+                            <div class="relative mb-6">
+                                <input type="password" id="password2" name="confirmarSenha" class="w-full border border-gray-300 rounded-lg p-3 pr-10 focus:ring-2 focus:ring-brown-400 focus:outline-none peer" placeholder=" " required>
+                                <label for="password2" class="absolute left-3 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-0 peer-focus:text-sm peer-focus:text-brown-500">Confirmar Senha</label>
+                                <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" onclick="togglePassword2()">
+                                    <svg id="eye-icon2" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                    </svg>
+                                </span>
+                            </div>
+
+                            <button type="submit" class="w-full bg-brown-600 hover:bg-brown-700 text-white font-semibold py-3 rounded-lg transition duration-300">Atualizar Senha</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<script>
+    function togglePassword() {
+        const input = document.getElementById('password');
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function togglePassword2() {
+        const input = document.getElementById('password2');
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+</script>
+
+</body>
+</html>
