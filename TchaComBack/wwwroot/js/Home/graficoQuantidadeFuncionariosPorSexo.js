@@ -14,13 +14,13 @@
             datasets: [{
                 data: dados.quantidadeFuncionariosPorSexo,
                 backgroundColor: [
-                    'rgba(54, 162, 235, 0.6)',   // Masculino - Azul
-                    'rgba(255, 99, 132, 0.6)',   // Feminino - Rosa
+                    'rgba(255, 165, 0, 0.6)',   // Masculino - Azul
+                    'rgba(138, 43, 226, 0.6)',   // Feminino - Rosa
                     'rgba(255, 206, 86, 0.6)'    // Outro - Amarelo
                 ],
                 borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 165, 0, 1)',
+                    'rgba(138, 43, 226, 1)',
                     'rgba(255, 206, 86, 1)'
                 ],
                 borderWidth: 1
@@ -30,7 +30,10 @@
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'top'
+                    position: 'top',
+                    labels: {
+                        color: 'white'
+                    }
                 }
             }
         }

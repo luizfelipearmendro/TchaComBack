@@ -15,15 +15,15 @@
                 {
                     label: 'Usuários Ativos',
                     data: dados.usuariosAtivosPorPerfil,
-                    backgroundColor: 'rgba(60, 179, 113, 0.6)',
-                    borderColor: 'rgba(60, 179, 113, 1)',
+                    backgroundColor: 'rgba(255, 165, 0, 0.6)',
+                    borderColor:'rgba(255, 165, 0, 1)',
                     borderWidth: 1
                 },
                 {
                     label: 'Usuários Inativos',
                     data: dados.usuariosInativosPorPerfil,
-                    backgroundColor: 'rgba(220, 20, 60, 0.6)',
-                    borderColor: 'rgba(220, 20, 60, 1)',
+                    backgroundColor: 'rgba(138, 43, 226, 0.6)',
+                    borderColor: 'rgba(138, 43, 226, 1)',
                     borderWidth: 1
                 }
             ]
@@ -32,7 +32,10 @@
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'top'
+                    position: 'top',
+                    labels: {
+                        color: 'white'
+                    }
                 }
             },
             scales: {
@@ -40,13 +43,21 @@
                     beginAtZero: true,
                     title: {
                         display: false,
-                        text: 'Quantidade de Usuários'
+                        text: 'Quantidade de Usuários',
+                        color: 'white'
+                    },
+                    ticks: {
+                        color: 'white' 
                     }
                 },
                 x: {
                     title: {
-                        display: true,
-                        text: 'Perfil de Usuário'
+                        display: false,
+                        text: 'Perfil de Usuário',
+                        color: 'white'
+                    },
+                    ticks: {
+                        color: 'white'
                     }
                 }
             }

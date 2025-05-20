@@ -11,5 +11,7 @@
             public IEnumerable<CategoriaModel> Categorias { get; set; }
 
             public IEnumerable<SetoresModel> Setores { get; set; }
-        }
+
+          
+    }
     }

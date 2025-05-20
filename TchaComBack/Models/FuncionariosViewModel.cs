@@ -9,5 +9,9 @@
         public int QuantidadeFuncAtivos { get; set; }
 
         public int QuantidadeFuncInativos { get; set; }
+
+        public int PaginaAtual { get; set; }
+
+        public int TotalPaginas { get; set; }
     }
 }

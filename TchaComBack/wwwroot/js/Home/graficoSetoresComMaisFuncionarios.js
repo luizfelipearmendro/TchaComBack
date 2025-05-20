@@ -4,8 +4,14 @@
 
     const dados = JSON.parse(dataJson.textContent);
 
-    const ctx = document.getElementById('idGraficoRankingSetores');
-    if (!ctx) return;
+    const canvas = document.getElementById('idGraficoRankingSetores');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0); 
+    gradient.addColorStop(0, '#8A2BE2');  // roxo
+    gradient.addColorStop(1, '#FFA500');  // laranja
 
     new Chart(ctx, {
         type: 'bar',
@@ -14,17 +20,20 @@
             datasets: [{
                 label: 'Funcionários por Setor',
                 data: dados.quantidadeFuncionariosRankingSetores,
-                backgroundColor: 'rgba(60, 179, 113, 0.7)',
-                borderColor: 'rgba(60, 179, 113, 1)',
+                backgroundColor: gradient,
+                borderColor: gradient,
                 borderWidth: 1
             }]
         },
         options: {
-            indexAxis: 'y', 
+            indexAxis: 'y',
             responsive: true,
             plugins: {
                 legend: {
-                    display: false
+                    display: false,
+                    labels: {
+                        color: 'white'
+                    }
                 },
                 title: {
                     display: false,
@@ -33,7 +42,16 @@
             },
             scales: {
                 x: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        color: 'white'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: 'white'
+                    }
                 }
             }
         }

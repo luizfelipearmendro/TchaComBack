@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Identity.Client;
 using System;
 using System.Data;
@@ -14,11 +15,12 @@ namespace TchaComBack.Controllers
     {
         private readonly ApplicationDbContext db;
         private readonly IFuncionariosRepositorio funcionariosRepositorio;
-
-        public FuncionariosController(ApplicationDbContext db, IFuncionariosRepositorio _funcionariosRepositorio)
+        private readonly IMemoryCache _cache;
+        public FuncionariosController(ApplicationDbContext db, IFuncionariosRepositorio _funcionariosRepositorio, IMemoryCache cache)
         {
             this.db = db;
             this.funcionariosRepositorio = _funcionariosRepositorio;
+            _cache = cache;
         }
 
         public int sessionIdUsuario
@@ -32,7 +34,7 @@ namespace TchaComBack.Controllers
             }
         }
 
-        public IActionResult Index(int id, string searchString, string cargo, char? ativo)
+        public IActionResult Index(int id, string searchString, string cargo, char? ativo, int pagina = 1, int itensPorPagina = 6)
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");
             if (idUsuario == null) return RedirectToAction("Index", "Login");
@@ -78,15 +80,23 @@ namespace TchaComBack.Controllers
                 funcionariosQuery = funcionariosQuery.Where(f => f.Ativo == ativo.Value);
             }
 
-            var funcionarios = funcionariosQuery.ToList();
+            var totalFuncionarios = funcionariosQuery.Count();
+            var totalPaginas = (int)Math.Ceiling(totalFuncionarios / (double)itensPorPagina);
+
+            var funcionariosPaginados = funcionariosQuery
+                .Skip((pagina - 1) * itensPorPagina)
+                .Take(itensPorPagina)
+                .ToList();
 
             var viewModel = new FuncionariosPorSetorViewModel
             {
+                Funcionarios = funcionariosPaginados,
                 SetorId = setor.Id,
                 NomeSetor = setor.Nome,
-                Funcionarios = funcionarios,
-                QuantidadeFuncAtivos = funcionarios.Count(f => f.Ativo == 'S'),
-                QuantidadeFuncInativos = funcionarios.Count(f => f.Ativo == 'N')
+                QuantidadeFuncAtivos = funcionariosPaginados.Count(f => f.Ativo == 'S'),
+                QuantidadeFuncInativos = funcionariosPaginados.Count(f => f.Ativo == 'N'),
+                PaginaAtual = pagina,
+                TotalPaginas = totalPaginas
             };
 
             ViewBag.NomeCompleto = dbconsult.NomeCompleto;
@@ -116,7 +126,7 @@ namespace TchaComBack.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Funcionarios(string searchString, string setor, char? ativo)
+        public IActionResult Funcionarios(string searchString, string setor, char? ativo, int pagina = 1, int itensPorPagina = 6)
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");
             if (idUsuario == null) return RedirectToAction("Index", "Login");
@@ -154,15 +164,22 @@ namespace TchaComBack.Controllers
             {
                 funcionariosQuery = funcionariosQuery.Where(f => f.Ativo == ativo.Value);
             }
+            var totalFuncionarios = funcionariosQuery.Count();
+            var totalPaginas = (int)Math.Ceiling(totalFuncionarios / (double)itensPorPagina);
 
-            var funcionarios = funcionariosQuery.ToList();
+            var funcionariosPaginados = funcionariosQuery
+                .Skip((pagina - 1) * itensPorPagina)
+                .Take(itensPorPagina)
+                .ToList();
 
             var viewModel = new FuncionariosViewModel
             {
                 NomeSetor = "Todos Funcionários",
-                Funcionarios = funcionarios,
-                QuantidadeFuncAtivos = funcionarios.Count(f => f.Ativo == 'S'),
-                QuantidadeFuncInativos = funcionarios.Count(f => f.Ativo == 'N')
+                Funcionarios = funcionariosPaginados, 
+                QuantidadeFuncAtivos = funcionariosPaginados.Count(f => f.Ativo == 'S'),
+                QuantidadeFuncInativos = funcionariosPaginados.Count(f => f.Ativo == 'N'),
+                PaginaAtual = pagina,
+                TotalPaginas = totalPaginas,
             };
 
             // viewBags
@@ -259,8 +276,6 @@ namespace TchaComBack.Controllers
             if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
                 return RedirectToAction("Index", "Login");
 
-            var sessionIdUsuario = dbconsult.Id;
-
             try
             {
                 if (!ModelState.IsValid)
@@ -269,13 +284,34 @@ namespace TchaComBack.Controllers
                     return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
                 }
 
-                func.UsuarioId = sessionIdUsuario;
+                func.UsuarioId = dbconsult.Id;
                 func = funcionariosRepositorio.Cadastrar(func);
+
+                int totalAntes = db.Funcionarios.Count(f => f.Ativo == 'S') - 1;
+                int totalDepois = db.Funcionarios.Count(f => f.Ativo == 'S');
+
+                double porcentagemVariacao = 0;
+
+                if (totalAntes > 0)
+                {
+                    porcentagemVariacao = ((double)(totalDepois - totalAntes) / totalAntes) * 100;
+                }
+                else if (totalDepois > 0)
+                {
+                    porcentagemVariacao = 100;
+                }
+
+                string cacheKey = "PorcentagemAumentoFuncionarios";
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(1));
+
+                _cache.Set(cacheKey, porcentagemVariacao, cacheEntryOptions);
 
                 TempData["MensagemSucesso"] = "Funcionário cadastrado com sucesso!";
                 return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
             }
-            catch (System.Exception erro)
+            catch (Exception erro)
             {
                 TempData["MensagemErro"] = $"Ops, não foi possível cadastrar o funcionário. Detalhes do erro: {erro.Message}";
                 return RedirectToAction("Index", "Funcionarios");
@@ -295,35 +331,40 @@ namespace TchaComBack.Controllers
             {
                 bool desativado = funcionariosRepositorio.Desativar(id);
 
+                int totalAntes = db.Funcionarios.Count(f => f.Ativo == 'S');
+                int totalDepois = totalAntes - 1;
+
+                double porcentagemVariacao = 0;
+
+                if (totalAntes > 0)
+                {
+                    porcentagemVariacao = ((double)(totalDepois - totalAntes) / totalAntes) * 100;
+                }
+
+                string cacheKey = "PorcentagemAumentoFuncionarios";
+                _cache.Set(cacheKey, porcentagemVariacao, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1)));
+
                 if (desativado)
                 {
                     TempData["MensagemSucesso"] = "Funcionário desativado com sucesso!";
                 }
                 else
                 {
-                    TempData["MensagemErro"] = "Erro ao desativar o funcionário!";
+                    TempData["MensagemErro"] = "Erro ao desativar o funcionário.";
                 }
 
                 if (setorId == 0)
                 {
-                    return RedirectToAction("Funcionarios", "Funcionarios");
+                    return RedirectToAction("Funcionarios");
                 }
-
                 return Redirect($"/Funcionarios/Index/{setorId}");
             }
-            catch (System.Exception erro)
+            catch (Exception erro)
             {
                 TempData["MensagemErro"] = $"Ops, não foi possível desativar o funcionário. Detalhes do erro: {erro.Message}";
-
-                if (setorId == 0)
-                {
-                    return RedirectToAction("Funcionarios", "Funcionarios");
-                }
-
                 return Redirect($"/Funcionarios/Index/{setorId}");
             }
         }
-
         public IActionResult Reativar(int id, int setorId)
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");
@@ -337,31 +378,41 @@ namespace TchaComBack.Controllers
             {
                 bool reativado = funcionariosRepositorio.Reativar(id);
 
+                int totalAntes = db.Funcionarios.Count(f => f.Ativo == 'S');
+                int totalDepois = totalAntes + 1;
+
+                double porcentagemVariacao = 0;
+
+                if (totalAntes > 0)
+                {
+                    porcentagemVariacao = ((double)(totalDepois - totalAntes) / totalAntes) * 100;
+                }
+                else
+                {
+                    porcentagemVariacao = 100; // primeiro funcionário ativo
+                }
+
+                string cacheKey = "PorcentagemAumentoFuncionarios";
+                _cache.Set(cacheKey, porcentagemVariacao, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1)));
+
                 if (reativado)
                 {
                     TempData["MensagemSucesso"] = "Funcionário reativado com sucesso!";
                 }
                 else
                 {
-                    TempData["MensagemErro"] = "Erro ao reativar o funcionário!";
+                    TempData["MensagemErro"] = "Erro ao reativar o funcionário.";
                 }
-
-                if(setorId == 0)
-                {
-                    return RedirectToAction("Funcionarios", "Funcionarios");
-                }
-
-                return Redirect($"/Funcionarios/Index/{setorId}");
-            }
-            catch (System.Exception erro)
-            {
-                TempData["MensagemErro"] = $"Ops, não foi possível reativar o funcionário. Detalhes do erro: {erro.Message}";
 
                 if (setorId == 0)
                 {
-                    return RedirectToAction("Funcionarios", "Funcionarios");
+                    return RedirectToAction("Funcionarios");
                 }
-
+                return Redirect($"/Funcionarios/Index/{setorId}");
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não foi possível reativar o funcionário. Detalhes do erro: {erro.Message}";
                 return Redirect($"/Funcionarios/Index/{setorId}");
             }
         }

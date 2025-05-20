@@ -33,16 +33,25 @@
             plugins: {
                 legend: {
                     position: 'top',
+                    labels: {
+                        color: 'white'
+                    }
                 }
             },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        color: 'white'
+                    }
                 },
                 x: {
                     title: {
                         display: false,
                         text: 'Setores'
+                    },
+                    ticks: {
+                        color: 'white'
                     }
                 }
             }

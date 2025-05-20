@@ -32,17 +32,26 @@
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'top'
+                    position: 'top',
+                    labels: {
+                        color: 'white'
+                    }
                 }
             },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        color: 'white'
+                    }
                 },
                 x: {
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Categorias'
+                    },
+                    ticks: {
+                        color: 'white'
                     }
                 }
             }

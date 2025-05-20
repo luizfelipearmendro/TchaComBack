@@ -49,33 +49,143 @@
         <article class="box-one-home">
             <div class="card-box-one">
                 <div class="flex-subox-one">
-                    <i class="bi bi-people-fill"></i>
-                    <p>Funcionarios Ativos</p>
+                    <div class="flex-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div class="flex-info-card-home">
+                        <h1>@totalFuncionarios</h1>
+                        <p>Funcionarios Ativos</p>
+                    </div>
                 </div>
-                <h1>@totalFuncionarios</h1>
+                <div class="flex-subox-two">
+                    <p class="title-flex-subox-two">Total acumulativo</p>
+                    <div>
+
+                    </div>
+                    @{
+                        var porcentagem = Model.PorcentagemAumentoFuncionarios;
+                        string sinal = porcentagem switch
+                        {
+                            > 0 => "+",
+                            < 0 => "-",
+                            _ => ""
+                        };
+
+                        string classeCor = porcentagem switch
+                        {
+                            > 0 => "text-success",
+                            < 0 => "text-danger",
+                            _ => ""
+                        };
+                    }
+
+                    @if (porcentagem != 0)
+                    {
+                        <div>
+                            <span class="@classeCor" >@sinal</span>
+                            <strong class="@classeCor">@Math.Abs(porcentagem).ToString("F2")%</strong>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="color: black;" >0%</div>
+                    }
+                </div>
+              
             </div>
             <div class="card-box-one">
                 <div class="flex-subox-one">
-                    <i class="bi bi-building-fill"></i>
-                    <p>Setores Ativos</p>
+                    <div class="flex-icon-secondary">
+                        <i class="bi bi-building-fill"></i>
+                    </div>
+                    <div class="flex-info-card-home">
+                        <h1>@totalSetores</h1>
+                        <p>Setores Ativos</p>
+                    </div>
                 </div>
-                <h1>@totalSetores</h1>
+                <div class="flex-subox-two">
+                    <p class="title-flex-secondary-subox-two">Total acumulativo</p>
+                    @{
+                        var porcentagem2 = Model.PorcentagemAumentoSetores;
+                        string sinal2 = porcentagem2 switch
+                        {
+                            > 0 => "+",
+                            < 0 => "-",
+                            _ => ""
+                        };
+
+                        string classeCor2 = porcentagem2 switch
+                        {
+                            > 0 => "text-success",
+                            < 0 => "text-danger",
+                            _ => ""
+                        };
+                    }
+
+                    @if (porcentagem2 != 0)
+                    {
+                        <div>
+                            <span class="@classeCor2">@sinal2</span>
+                            <strong class="@classeCor2">@Math.Abs(porcentagem2).ToString("F2")%</strong>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="color: white" >0%</div>
+                    }
+                </div>
             </div>
             <div class="card-box-one">
                 <div class="flex-subox-one">
-                    <i class="bi bi-person-fill-gear"></i>
-                    <p>Usuários Ativos</p>
+                    <div class="flex-icon-secondary">
+                        <i class="bi bi-person-fill-gear"></i>
+                    </div>
+                    <div class="flex-info-card-home">
+                        <h1>@totalUsuarios</h1>
+                        <p>Usuários Ativos</p>
+                    </div>
                 </div>
-                <h1>@totalUsuarios</h1>
+                <div class="flex-subox-two">
+                    <p class="title-flex-secondary-subox-two">Total acumulativo</p>
+                    @{
+                        var porcentagem3 = Model.PorcentagemAumentoUsuarios;
+                        string sinal3 = porcentagem3 switch
+                        {
+                            > 0 => "+",
+                            < 0 => "-",
+                            _ => ""
+                        };
+
+                        string classeCor3 = porcentagem3 switch
+                        {
+                            > 0 => "text-success",
+                            < 0 => "text-danger",
+                            _ => ""
+                        };
+                    }
+
+                    @if (porcentagem3 != 0)
+                    {
+                        <div>
+                            <span class="@classeCor3" >@sinal3</span>
+                            <strong class="@classeCor3">@Math.Abs(porcentagem3).ToString("F2")%</strong>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="color: white;">0%</div>
+                    }
+                </div>
             </div>
         </article>
         <article class="box-two-home">
             <article class="sub-box-home">
                 <h2>Funcionários Ativos e Inativos por Setor</h2>
+                <div class="modal-onda-header"></div>
                 <div>
                     <canvas id="idGraficoFuncionariosPorSetores"></canvas>
                 </div>
-                <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
                          view-data=@(new ViewDataDictionary(ViewData){
                          { "Texto", "Acessar" },
                          { "Url", "/Funcionarios/Funcionarios" },
@@ -91,9 +201,9 @@
                 <div>
                     <canvas id="idGraficoUsuariosPorPerfil"></canvas>
                 </div>
-                <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
                          view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Visualizar" },
+                         { "Texto", "Acessar" },
                          { "Url", "/UsuariosPerfilLogado" },
                          { "ClasseExtra", "btn-dash" },
                          { "Id", "" },
@@ -105,9 +215,9 @@
                 <div>
                     <canvas id="idGraficoSetoresPorCategorias"  ></canvas>
                 </div>
-                <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
                          view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Visualizar" },
+                         { "Texto", "Acessar" },
                          { "Url", "/Setores" },
                          { "ClasseExtra", "btn-dash" },
                          { "Id", "" },
@@ -121,9 +231,9 @@
                 <div style="display:flex; justify-content:center; align-items:center;">
                     <canvas id="idGraficoFuncionariosPorSexo"></canvas>
                 </div>
-                <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
                          view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Visualizar" },
+                         { "Texto", "Acessar" },
                          { "Url", "/Funcionarios/Funcionarios" },
                          { "ClasseExtra", "btn-dash" },
                          { "Id", "" },
@@ -135,9 +245,9 @@
                 <div>
                    <canvas id="idGraficoRankingSetores" ></canvas>
                 </div>
-                <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
+                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
                          view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Visualizar" },
+                         { "Texto", "Acessar" },
                          { "Url", "/Setores" },
                          { "ClasseExtra", "btn-dash" },
                          { "Id", "" },

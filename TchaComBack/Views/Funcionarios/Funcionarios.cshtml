@@ -239,6 +239,7 @@
 
 
         <div class="container-cards" style="margin-top: 10vh;">
+            <div class="flex-body-funcionarios">
             @foreach (var funcionario in Model.Funcionarios)
             {
                 var acaoHtml = funcionario.Ativo == 'S'
@@ -407,8 +408,34 @@
                     </div>
                 </div>
             </div>
-        }
-    </div>
+            }
+               
+            </div>
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item @(Model.PaginaAtual == 1 ? "disabled" : "")">
+                        <a class="page-link"
+                           href="@(Model.PaginaAtual == 1 ? "javascript:void(0)" : Url.Action("Funcionarios", new { pagina = Model.PaginaAtual - 1 }))">
+                            Anterior
+                        </a>
+                    </li>
+
+                    @for (int i = 1; i <= Model.TotalPaginas; i++)
+                    {
+                        <li class="page-item @(i == Model.PaginaAtual ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("Funcionarios", new { pagina = i })">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(Model.PaginaAtual == Model.TotalPaginas ? "disabled" : "")">
+                        <a class="page-link"
+                           href="@(Model.PaginaAtual == Model.TotalPaginas ? "javascript:void(0)" : Url.Action("Funcionarios", new { pagina = Model.PaginaAtual + 1 }))">
+                            Próxima
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     }
 </section>
 
@@ -426,7 +453,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-step-secundario" data-bs-dismiss="modal">Cancelar</button>
-                <a id="confirmDesativeButton" role="button" class="btn btn-step-primary ">Desativar</a>
+                <a id="confirmDesativeButton" role="button" class="btn btn-danger ">Desativar</a>
             </div>
         </div>
     </div>
@@ -446,7 +473,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-step-secundario" data-bs-dismiss="modal">Cancelar</button>
-                <a id="confirmReativeButton" role="button" class="btn btn-step-primary">Reativar</a>
+                <a id="confirmReativeButton" role="button" class="btn btn-warning">Reativar</a>
             </div>
         </div>
     </div>

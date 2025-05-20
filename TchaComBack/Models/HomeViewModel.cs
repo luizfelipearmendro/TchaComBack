@@ -24,5 +24,10 @@
         public List<string> LabelsRankingSetores { get; set; }
         public List<int> QuantidadeFuncionariosRankingSetores { get; set; }
 
+        public double PorcentagemAumentoFuncionarios { get; set; }
+
+        public double PorcentagemAumentoSetores { get; set; }
+
+        public double PorcentagemAumentoUsuarios { get; set; }
     }
 }

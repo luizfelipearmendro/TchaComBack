@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using TchaComBack.Data;
 using TchaComBack.Helper;
 using TchaComBack.Models;
@@ -10,10 +11,11 @@ namespace TchaComBack.Controllers
     public class UsuariosPerfilLogado : Controller
     {
         private readonly ApplicationDbContext db;
-
-        public UsuariosPerfilLogado(ApplicationDbContext _db)
+        private readonly IMemoryCache _cache;
+        public UsuariosPerfilLogado(ApplicationDbContext _db, IMemoryCache cache)
         {
             db = _db;
+            _cache = cache;
         }
 
         public int sessionIdUsuario
@@ -27,7 +29,7 @@ namespace TchaComBack.Controllers
             }
         }
 
-        public IActionResult Index(string searchString, int? tipoPerfil, char? ativo)
+        public IActionResult Index(string searchString, int? tipoPerfil, char? ativo, int pagina = 1, int itensPorPagina = 6)
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");
             if (idUsuario == null) return RedirectToAction("Index", "Login");
@@ -59,13 +61,22 @@ namespace TchaComBack.Controllers
                 usuariosQuery = usuariosQuery.Where(u => u.Ativo == ativo.Value);
             }
 
-            var usuariosFiltrados = usuariosQuery.ToList();
+            var totalUsuarios = usuariosQuery.Count();
+            var totalPaginas = (int)Math.Ceiling(totalUsuarios / (double)itensPorPagina);
+
+            var funcionariosPaginados = usuariosQuery
+                .Skip((pagina - 1) * itensPorPagina)
+                .Take(itensPorPagina)
+                .ToList();
 
             var viewModel = new UsuariosViewModel
             {
-                QtdUsuariosAtivos = usuariosFiltrados.Count(u => u.Ativo == 'S'),
-                QtdUsuariosInativos = usuariosFiltrados.Count(u => u.Ativo == 'N'),
-                Usuarios = usuariosFiltrados
+                QtdUsuariosAtivos = usuariosQuery.Count(u => u.Ativo == 'S'),
+                QtdUsuariosInativos = usuariosQuery.Count(u => u.Ativo == 'N'),
+                Usuarios = funcionariosPaginados,
+                PaginaAtual = pagina,
+                TotalPaginas = totalPaginas
+
             };
 
             ViewBag.NomeCompleto = dbconsult.NomeCompleto;
@@ -159,6 +170,27 @@ namespace TchaComBack.Controllers
             {
                 db.Usuarios.Add(usuario);
                 db.SaveChanges();
+
+                int totalAntes = db.Usuarios.Count(f => f.Ativo == 'S') - 1;
+                int totalDepois = db.Usuarios.Count(f => f.Ativo == 'S');
+
+                double porcentagemVariacao = 0;
+
+                if (totalAntes > 0)
+                {
+                    porcentagemVariacao = ((double)(totalDepois - totalAntes) / totalAntes) * 100;
+                }
+                else if (totalDepois > 0)
+                {
+                    porcentagemVariacao = 100;
+                }
+
+                string cacheKey = "PorcentagemAumentoUsuarios";
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(1));
+
+                _cache.Set(cacheKey, porcentagemVariacao, cacheEntryOptions);
 
                 TempData["MensagemSucesso"] = "Usuário cadastrado com sucesso!";
                 return RedirectToAction("Index", "UsuariosPerfilLogado");

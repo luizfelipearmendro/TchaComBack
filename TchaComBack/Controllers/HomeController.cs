@@ -1,18 +1,21 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Caching.Memory;
 using TchaComBack.Data;
 using TchaComBack.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace TchaComBack.Controllers;
 
 public class HomeController : Controller
 {
     readonly private ApplicationDbContext _db;
-
-    public HomeController(ApplicationDbContext db)
+    private readonly IMemoryCache _cache;
+    public HomeController(ApplicationDbContext db, IMemoryCache cache)
     {
         _db = db;
+        _cache = cache;
     }
 
     public int sessionidusuario
@@ -51,7 +54,6 @@ public class HomeController : Controller
 
         if (usuario.TipoPerfil == 1)
         {
-            // Admin: totais gerais
             totalDeFuncionarios = _db.Funcionarios.Count(f => f.Ativo == 'S');
             totalDeSetores = _db.Setores.Count(s => s.Ativo == 'S');
             totalDeUsuarios = _db.Usuarios.Count(u => u.Ativo == 'S');
@@ -67,16 +69,41 @@ public class HomeController : Controller
             // Se o setor estiver ativo, conta 1, senão zero
             totalDeSetores = _db.Setores.Any(s => s.Id == setorId && s.Ativo == 'S') ? 1 : 0;
 
-            // Usuários ativos vinculados ao mesmo setor (coordenadores, colaboradores, etc)
             totalDeUsuarios = _db.Usuarios.Count(u => u.Ativo == 'S' && u.SetorId == setorId);
         }
+
+        int totalFuncionariosAntes = _db.Funcionarios.Count(f => f.Ativo == 'S');
+        int totalFuncionariosAgora = totalFuncionariosAntes; // usado apenas na inicialização
+
+        string chaveInicial = "PorcentagemAumentoFuncionarios";
+        double porcentagemAumento = 0;
+        _cache.TryGetValue(chaveInicial, out porcentagemAumento);
+
+
+        int totalSetoresAntes = _db.Setores.Count(f => f.Ativo == 'S');
+        int totalSetoresAgora = totalSetoresAntes; // usado apenas na inicialização
+
+        string chaveInicialSetores = "PorcentagemAumentoSetores";
+        double porcentagemAumentoSetores = 0;
+        _cache.TryGetValue(chaveInicialSetores, out porcentagemAumentoSetores);
+
+
+        int totalUsuariosAntes = _db.Setores.Count(f => f.Ativo == 'S');
+        int totalUsuariosAgora = totalSetoresAntes; // usado apenas na inicialização
+
+        string chaveInicialUsuarios = "PorcentagemAumentoUsuarios";
+        double porcentagemAumentoUsuarios = 0;
+        _cache.TryGetValue(chaveInicialUsuarios, out porcentagemAumentoUsuarios);
 
         var viewModel = new HomeViewModel
         {
             Usuario = usuario,
             TotalDeFuncionarios = totalDeFuncionarios,
             TotalDeSetores = totalDeSetores,
-            TotalDeUsuarios = totalDeUsuarios
+            TotalDeUsuarios = totalDeUsuarios,
+            PorcentagemAumentoFuncionarios = porcentagemAumento,
+            PorcentagemAumentoSetores = porcentagemAumentoSetores,
+            PorcentagemAumentoUsuarios = porcentagemAumentoUsuarios
         };
 
         GraficoFuncionarios(viewModel);
