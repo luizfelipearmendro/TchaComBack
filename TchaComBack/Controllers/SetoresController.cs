@@ -227,7 +227,7 @@ namespace TchaComBack.Controllers
                 }
                 else if (totalDepois > 0)
                 {
-                    porcentagemVariacao = 100; // primeiro setor ativo
+                    porcentagemVariacao = 100; 
                 }
 
                 string cacheKey = "PorcentagemAumentoSetores";

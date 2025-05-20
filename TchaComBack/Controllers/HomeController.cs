@@ -73,7 +73,7 @@ public class HomeController : Controller
         }
 
         int totalFuncionariosAntes = _db.Funcionarios.Count(f => f.Ativo == 'S');
-        int totalFuncionariosAgora = totalFuncionariosAntes; // usado apenas na inicialização
+        int totalFuncionariosAgora = totalFuncionariosAntes; 
 
         string chaveInicial = "PorcentagemAumentoFuncionarios";
         double porcentagemAumento = 0;
@@ -81,7 +81,7 @@ public class HomeController : Controller
 
 
         int totalSetoresAntes = _db.Setores.Count(f => f.Ativo == 'S');
-        int totalSetoresAgora = totalSetoresAntes; // usado apenas na inicialização
+        int totalSetoresAgora = totalSetoresAntes; 
 
         string chaveInicialSetores = "PorcentagemAumentoSetores";
         double porcentagemAumentoSetores = 0;
@@ -89,7 +89,7 @@ public class HomeController : Controller
 
 
         int totalUsuariosAntes = _db.Setores.Count(f => f.Ativo == 'S');
-        int totalUsuariosAgora = totalSetoresAntes; // usado apenas na inicialização
+        int totalUsuariosAgora = totalSetoresAntes; 
 
         string chaveInicialUsuarios = "PorcentagemAumentoUsuarios";
         double porcentagemAumentoUsuarios = 0;
