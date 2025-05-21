@@ -4,7 +4,10 @@ padding: 0;
 box-sizing: border-box;
 font-family: 'Montserrat', sans-serif;
 }
-
+.purple-focus:focus {
+    border-color: #8A2BE2;
+    box-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+}
 body, html {
 width: 100vw;
 height: 100vh;

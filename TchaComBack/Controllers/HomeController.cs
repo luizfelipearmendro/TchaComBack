@@ -235,8 +235,10 @@ public class HomeController : Controller
         if (usuarioLogado.TipoPerfil == 1)
         {
             var usuariosPorPerfil = _db.Usuarios
-                .GroupBy(u => u.TipoPerfil)
-                .ToList();
+            .Where(u => u.TipoPerfil.HasValue)
+            .GroupBy(u => u.TipoPerfil.Value)
+            .ToList();
+
 
             foreach (var grupo in usuariosPorPerfil)
             {
@@ -258,9 +260,9 @@ public class HomeController : Controller
         else if (usuarioLogado.TipoPerfil == 2)
         {
             var usuariosDoSetor = _db.Usuarios
-                .Where(u => u.SetorId == usuarioLogado.SetorId)
-                .GroupBy(u => u.TipoPerfil)
-                .ToList();
+            .Where(u => u.SetorId == usuarioLogado.SetorId && u.TipoPerfil.HasValue)
+            .GroupBy(u => u.TipoPerfil.Value)
+            .ToList();
 
             foreach (var grupo in usuariosDoSetor)
             {
@@ -289,7 +291,7 @@ public class HomeController : Controller
     private void GraficoQuantidadeFuncionariosPorSexo(HomeViewModel viewModel)
     {
         var idUsuario = HttpContext.Session.GetInt32("idUsuario");
-        if (idUsuario == null) return;
+        if (idUsuario == 0) return;
 
         var usuarioLogado = _db.Usuarios.FirstOrDefault(u => u.Id == idUsuario);
         if (usuarioLogado == null) return;

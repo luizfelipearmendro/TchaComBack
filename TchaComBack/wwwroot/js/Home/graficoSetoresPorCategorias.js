@@ -15,14 +15,14 @@
                 {
                     label: 'Setores Ativos',
                     data: dados.dataSetoresAtivos,
-                    backgroundColor: 'rgba(255, 165, 0, 0.6)',
+                    backgroundColor: 'rgba(255, 165, 0,1)',
                     borderColor: 'rgba(255, 165, 0, 1)',
                     borderWidth: 1
                 },
                 {
                     label: 'Setores Inativos',
                     data: dados.dataSetoresInativos,
-                    backgroundColor: 'rgba(138, 43, 226, 0.6)',
+                    backgroundColor: 'rgba(138, 43, 226, 1)',
                     borderColor: 'rgba(138, 43, 226, 1)',
                     borderWidth: 1
                 }

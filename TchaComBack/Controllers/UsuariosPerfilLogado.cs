@@ -101,7 +101,26 @@ namespace TchaComBack.Controllers
         }
 
 
+        public IActionResult MeusDados()
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
 
+            var dbconsult = db.Usuarios
+                .AsNoTracking()
+                .FirstOrDefault(u => u.Id == idUsuario && u.Hash == HttpContext.Session.GetString("hash"));
+
+            if (dbconsult == null) return RedirectToAction("Index", "Login");
+
+            var sessionIdUsuario = dbconsult.Id;
+
+            ViewBag.NomeCompleto = dbconsult.NomeCompleto;
+            ViewBag.Email = dbconsult.Email;
+            ViewBag.TipoPerfil = dbconsult.TipoPerfil;
+            ViewBag.Senha = dbconsult.Senha;
+           
+            return View();
+        }
         public IActionResult CadastrarNovoUsuario()
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");

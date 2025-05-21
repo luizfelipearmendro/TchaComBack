@@ -18,6 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="~/css/Usuarios/recuperarsenha.css">
@@ -65,9 +66,9 @@
             </p>
             @Html.AntiForgeryToken()
             <form asp-controller="Usuarios" asp-action="EnviarEsqueceuSenha" method="post">
-                <div class="input-group">
-                    <input type="email" asp-for="Email" placeholder=" " required>
-                    <label>E-mail</label>
+                <div class="form-floating mb-4">
+                    <input type="email" asp-for="Email" class="form-control purple-focus" id="floatingEmail" placeholder="E-mail" required />
+                    <label for="floatingEmail">E-mail</label>
                 </div>
                 <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
                          { "Texto", "Solicitar Redefinição de Senha" },
@@ -75,14 +76,14 @@
                          { "ClasseExtra", "w-full text-white font-bold py-3 rounded-lg transition-all botao-entrar" },
                          { "Id", "cadastrarButton" },
                          { "Type", "submit" },
-                         { "elemento", "Button"}
+                         { "elemento", "Button" }
                          }) />
-
             </form>
             <p class="text-center text-gray-500 text-sm mt-4">
                 Já tenho cadastro.
-                <a asp-area="" asp-controller="Login" asp-action="Index" class="linkRecuperarSenha">Voltar ao Login</a>
+                <a asp-area="" asp-controller="Login" asp-action="Index" class="linkRecuperarSenha hover:underline">Voltar ao Login</a>
             </p>
+
         </div>
     </div>
 </body>

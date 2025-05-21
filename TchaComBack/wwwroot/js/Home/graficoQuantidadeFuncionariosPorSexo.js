@@ -14,9 +14,9 @@
             datasets: [{
                 data: dados.quantidadeFuncionariosPorSexo,
                 backgroundColor: [
-                    'rgba(255, 165, 0, 0.6)',   // Masculino - Azul
-                    'rgba(138, 43, 226, 0.6)',   // Feminino - Rosa
-                    'rgba(255, 206, 86, 0.6)'    // Outro - Amarelo
+                    'rgba(255, 165, 0, 1)',   // Masculino - Azul
+                    'rgba(138, 43, 226, 1)',   // Feminino - Rosa
+                    'rgba(255, 206, 86, 1)'    // Outro - Amarelo
                 ],
                 borderColor: [
                     'rgba(255, 165, 0, 1)',
