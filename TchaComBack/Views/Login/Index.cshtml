@@ -56,56 +56,69 @@
                 <div class="w-96 flex-form">
                     @Html.AntiForgeryToken()
                     <form asp-controller="Login" asp-action="Login" method="post" id="loginForm">
-                        <div class="input-group">
-                            <input type="email" asp-for="Email" class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-brown-400" placeholder=" " required>
-                            <label for="email">E-mail</label>
+                        <div class="form-floating mb-4">
+                            <input type="email" asp-for="Email" class="form-control " id="floatingEmail" placeholder="E-mail" required />
+                            <label for="floatingEmail">E-mail</label>
                         </div>
-                        <div class="input-group relative">
-                            <input type="password" asp-for="Senha" id="password" class="w-full border rounded-lg p-3 pr-10 outline-none focus:ring-2 focus:ring-brown-400" placeholder=" " required>
-                            <label for="password">Senha</label>
-                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" onclick="togglePassword()">
-                                <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+
+                        <div class="form-floating mb-4 position-relative">
+                            <input type="password" asp-for="Senha" id="floatingPassword" class="form-control" placeholder="Senha" required />
+                            <label for="floatingPassword">Senha</label>
+
+                            <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer" onclick="togglePassword()">
+                                <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-eye-fill text-secondary" viewBox="0 0 16 16">
                                     <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                                     <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                 </svg>
                             </span>
                         </div>
+
                         <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
                                  { "Texto", "Entrar" },
                                  { "Url", "/Login" },
                                  { "ClasseExtra", "w-full text-white font-bold py-3 rounded-lg transition-all botao-entrar" },
                                  { "Id", "loginButton" },
                                  { "Type", "submit" },
-                                 { "elemento", "Button"}
+                                 { "elemento", "Button" }
                                  }) />
                     </form>
+
                     <div class="flex-redirecionar">
-                        <p class="text-center text-gray-500 text-sm mt-4">Novo aqui? <a class="hover:underline linkRecuperarSenha" asp-controller="Usuarios" asp-action="Cadastrar">Cadastrar aqui</a></p>
-                        <p class="text-center text-gray-500 text-sm mt-4">Esqueceu sua senha? <a class="hover:underline linkRecuperarSenha" asp-controller="Usuarios" asp-action="EsqueceuSenha">Recupere aqui</a></p>
+                        <p class="text-center text-gray-500 text-sm mt-4">
+                            Novo aqui? <a class="hover:underline linkRecuperarSenha" asp-controller="Usuarios" asp-action="Cadastrar">Cadastrar aqui</a>
+                        </p>
+                        <p class="text-center text-gray-500 text-sm mt-4">
+                            Esqueceu sua senha? <a class="hover:underline linkRecuperarSenha" asp-controller="Usuarios" asp-action="EsqueceuSenha">Recupere aqui</a>
+                        </p>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
 
     <script>
         function togglePassword() {
-            const passwordInput = document.getElementById("password");
+            const passwordInput = document.getElementById("floatingPassword");
             const eyeIcon = document.getElementById("eye-icon");
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
-                eyeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
-                    <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
-                    <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
-                </svg>`;
+                eyeIcon.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                        <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+                        <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+                    </svg>`;
             } else {
                 passwordInput.type = "password";
-                eyeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-                </svg>`;
+                eyeIcon.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                    </svg>`;
             }
         }
     </script>
+
 </body>
 </html>

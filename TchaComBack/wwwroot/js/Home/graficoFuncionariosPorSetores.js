@@ -15,14 +15,14 @@
                 {
                     label: 'Funcionários Ativos',
                     data: dados.dataFuncionariosAtivos,
-                    backgroundColor: 'rgba(255, 165, 0, 0.6)',
+                    backgroundColor: 'rgba(255, 165, 0, 1)',
                     borderColor: 'rgba(255, 165, 0, 1)',
                     borderWidth: 1
                 },
                 {
                     label: 'Funcionários Inativos',
                     data: dados.dataFuncionariosInativos,
-                    backgroundColor: 'rgba(138, 43, 226, 0.6)',
+                    backgroundColor: 'rgba(138, 43, 226, 1)',
                     borderColor: 'rgba(138, 43, 226, 1)',
                     borderWidth: 1
                 }

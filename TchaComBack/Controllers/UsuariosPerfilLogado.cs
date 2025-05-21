@@ -101,7 +101,26 @@ namespace TchaComBack.Controllers
         }
 
 
+        public IActionResult MeusDados()
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
 
+            var dbconsult = db.Usuarios
+                .AsNoTracking()
+                .FirstOrDefault(u => u.Id == idUsuario && u.Hash == HttpContext.Session.GetString("hash"));
+
+            if (dbconsult == null) return RedirectToAction("Index", "Login");
+
+            var sessionIdUsuario = dbconsult.Id;
+
+            ViewBag.NomeCompleto = dbconsult.NomeCompleto;
+            ViewBag.Email = dbconsult.Email;
+            ViewBag.TipoPerfil = dbconsult.TipoPerfil;
+            ViewBag.Senha = dbconsult.Senha;
+           
+            return View();
+        }
         public IActionResult CadastrarNovoUsuario()
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");
@@ -125,7 +144,6 @@ namespace TchaComBack.Controllers
 
             return View();
         }
-
 
 
 
@@ -197,6 +215,78 @@ namespace TchaComBack.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult AtualizarSenha()
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios
+                .AsNoTracking()
+                .FirstOrDefault(u => u.Id == idUsuario && u.Hash == HttpContext.Session.GetString("hash"));
+
+            if (dbconsult == null) return RedirectToAction("Index", "Login");
+
+            var sessionIdUsuario = dbconsult.Id;
+
+            var usuario = db.Usuarios.FirstOrDefault(u => u.Id == sessionIdUsuario);
+
+            ViewBag.NomeCompleto = dbconsult.NomeCompleto;
+            ViewBag.Email = dbconsult.Email;
+            ViewBag.TipoPerfil = dbconsult.TipoPerfil;
+
+            if (usuario != null)
+            {
+                var viewModel = new AtualizarSenhaViewModel
+                {
+                    Id = usuario.Id,
+                    Hash = usuario.Hash
+                };
+                return View(viewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult AtualizarSenha(AtualizarSenhaViewModel model)
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios
+                .AsNoTracking()
+                .FirstOrDefault(u => u.Id == idUsuario && u.Hash == HttpContext.Session.GetString("hash"));
+
+            if (dbconsult == null) return RedirectToAction("Index", "Login");
+
+            var sessionIdUsuario = dbconsult.Id;
+
+            var usuario = db.Usuarios.FirstOrDefault(u => u.Id == model.Id && u.Hash == model.Hash);
+
+            if (usuario != null)
+            {
+                if (model.NovaSenha == model.ConfirmarSenha)
+                {
+                    usuario.Senha = Utilitarios.GerarHashSenha(model.NovaSenha, usuario.Salt);
+                    usuario.Hash = Utilitarios.GeradorHash();
+                    db.SaveChanges();
+
+                    TempData["MensagemSucesso"] = "Senha atualizada com sucesso!";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View(model);
+                }
+            }
+            else
+            {
+                return View(model);
+            }
         }
     }
 }

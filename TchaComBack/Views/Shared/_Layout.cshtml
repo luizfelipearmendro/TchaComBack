@@ -89,12 +89,12 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" asp-controller="Usuarios" asp-action="AtualizarSenha">
+                            <a class="dropdown-item" asp-controller="UsuariosPerfilLogado" asp-action="AtualizarSenha">
                                 <i class="bi bi-key-fill me-2"></i> Alterar Senha
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" asp-controller="Usuarios" asp-action="MeusDados">
+                            <a class="dropdown-item" asp-controller="UsuariosPerfilLogado" asp-action="MeusDados">
                                 <i class="bi bi-person-fill me-2"></i> Meus Dados
                             </a>
                         </li>
@@ -102,25 +102,33 @@
                 </div>
             </div>
         </div>
-        <div class="p-3">
-            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a style="text-decoration:none;color: #8A2BE2; " href="/Home">Home</a></li>
-                    @{
-                        var pathSegments = Context.Request.Path.Value.Trim('/').Split('/');
-                        var urlBase = "/";
+        @{
+            var caminhoAtual = Context.Request.Path.Value;
+            var esconderBreadcrumb = caminhoAtual.Equals("/UsuariosPerfilLogado/MeusDados", StringComparison.OrdinalIgnoreCase);
+        }
 
-                        foreach (var segment in pathSegments)
-                        {
-                            urlBase += segment + "/";
-                            <li class="breadcrumb-item" >
-                                <a href="@urlBase" style="text-decoration:none; color: rgba(33,37,41,0.75);">@segment</a>
-                            </li>
+        @if (!esconderBreadcrumb)
+        {
+            <div class="p-3">
+                <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a style="text-decoration:none;color: #8A2BE2; " href="/Home">Home</a></li>
+                        @{
+                            var pathSegments = Context.Request.Path.Value.Trim('/').Split('/');
+                            var urlBase = "/";
+
+                            foreach (var segment in pathSegments)
+                            {
+                                urlBase += segment + "/";
+                                <li class="breadcrumb-item">
+                                    <a href="@urlBase" style="text-decoration:none; color: rgba(33,37,41,0.75);">@segment</a>
+                                </li>
+                            }
                         }
-                    }
-                </ol>
-            </nav>
-        </div>
+                    </ol>
+                </nav>
+            </div>
+        }
 
         <div class="p-3 flex-container">
 
