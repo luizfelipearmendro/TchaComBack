@@ -50,7 +50,7 @@
                             <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Data de Nascimento">
                                 <i class="fa-regular fa-calendar"></i>
                             </span>
-                            <input type="date" id="dataNascimento" class="form-control" placeholder="Data de Nascimento" required />
+                            <input type="date" asp-for="DataNascimento" id="dataNascimento" class="form-control" placeholder="Data de Nascimento" required />
                         </div>
                     </div>
                     <div class="flex-input">
@@ -207,14 +207,14 @@
                         <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Informe o Cargo">
                             <i class="fas fa-user-tie"></i>
                         </span>
-                        <input id="cargoInput" name="Cargo" maxlength="100" class="form-control" placeholder="Cargo" />
+                        <input id="cargoInput" asp-for="Cargo" name="Cargo" maxlength="100" class="form-control" placeholder="Cargo" />
                     </div>
                     @* inicialmente escondido *@
                     <div class="input-group mb-3 d-none" id="selectCargoGroup">
                         <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Selecione o Cargo">
                             <i class="fas fa-user-tie"></i>
                         </span>
-                        <select id="cargoSelect" name="Cargo" class="form-control">
+                        <select id="cargoSelect" asp-for="Cargo" class="form-control">
                             <option value="">Selecione o Cargo</option>
                             <option value="Menor Aprendiz">Menor Aprendiz</option>
                             <option value="Jovem Aprendiz">Jovem Aprendiz</option>
@@ -237,7 +237,7 @@
                               data-bs-title="Informe a Data Ingresso.">
                             <i class="fa-regular fa-calendar"></i>
                         </span>
-                        <input type="date" asp-for="DataIngresso" class="form-control dataIngresso" id="dataIngresso" placeholder="Data Ingresso" required />
+                        <input type="date" asp-for="DataIngresso" id="dataIngresso" class="form-control dataIngresso" id="dataIngresso" placeholder="Data Ingresso" required />
                     </div>
 
                     <div class="input-group mb-3 grupo-ingresso">

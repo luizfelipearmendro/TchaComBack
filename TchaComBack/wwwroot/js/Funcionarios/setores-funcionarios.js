@@ -206,11 +206,15 @@ document.addEventListener('DOMContentLoaded', function () {
             dataNascimento.value = "";
             cargoInput.value = "";
             cargoSelect.value = "";
-            cargoInputGroup.classList.remove("d-none");
+            cargoInputGroup.classList.add("d-none");
             cargoSelectGroup.classList.add("d-none");
             return;
         }
-
+        if (nascimento > hoje) {
+            alert("A data de nascimento não pode ser no futuro.");
+            dataNascimento.value = "";
+            return;
+        }
         if (idade >= 14 && idade <= 17) {
             cargoInputGroup.classList.add("d-none");
             cargoSelectGroup.classList.remove("d-none");
@@ -220,6 +224,27 @@ document.addEventListener('DOMContentLoaded', function () {
             cargoInputGroup.classList.remove("d-none");
             cargoSelect.value = "";
             cargoInput.value = "";
+        }
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const dataIngresso = document.getElementById('dataIngresso');
+
+    dataIngresso.addEventListener('change', function () {
+        const hoje = new Date();
+        const ingresso = new Date(dataIngresso.value);
+
+        // Normalizar horas para evitar problemas com fuso/horário
+        hoje.setHours(0, 0, 0, 0);
+        ingresso.setHours(0, 0, 0, 0);
+
+        const diffDias = Math.ceil((ingresso - hoje) / (1000 * 60 * 60 * 24));
+
+        if (diffDias > 14) {
+            alert("A data de ingresso deve ser até no máximo duas semanas após a data atual.");
+            dataIngresso.value = "";
         }
     });
 });
