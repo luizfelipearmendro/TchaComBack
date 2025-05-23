@@ -90,7 +90,7 @@ namespace TchaComBack.Controllers
 
                 _cache.Set(cacheKey, porcentagemVariacao, cacheEntryOptions);
 
-                TempData["MensagemSucesso"] = "Usuário cadastrado com sucesso!";
+                TempData["MensagemSucesso"] = "Usuário cadastrado com sucesso! Aguarde o administrador liberar seu acesso.";
                 return RedirectToAction("Index", "Login");
             }
 

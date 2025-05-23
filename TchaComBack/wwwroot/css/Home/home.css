@@ -346,3 +346,112 @@ transform: translateY(-20px);
         justify-content: center;
     }
 }
+
+
+.modal-header h5 {
+    background: linear-gradient(90deg, #8A2BE2, #FFA500 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: 100%;
+    font-weight: bold;
+    font-family: "Bebas Neue", sans-serif;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    text-decoration: none;
+}
+
+
+.modal-header {
+    background-color: black;
+}
+
+
+.botao-proxima-etapa {
+    background: linear-gradient(90deg,#8A2BE2, #FFA500);
+    border-radius: .5vw;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+}
+
+.modal-header .btn-close {
+    background-color: #FFA500 !important;
+}
+
+.form-example {
+    color: gray
+}
+
+.btn-step-primary {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    background: linear-gradient(90deg,#8A2BE2, #FFA500);
+    border-radius: .5vw;
+    width: fit-content;
+    border: none;
+}
+
+    .btn-step-primary:hover {
+        color: white;
+    }
+
+.btn-step-secundario {
+    background: black;
+    border-radius: .5vw;
+    border: 1px solid white;
+    color: white;
+    text-decoration: none;
+    width: fit-content
+}
+
+    .btn-step-secundario:hover {
+        border: 1px solid white;
+        color: white !important;
+        background-color: black !important;
+    }
+
+.form-example label {
+    color: #FFA500;
+}
+
+.form-example p {
+    color: white;
+}
+
+.modal-onda-header {
+    width: 100%;
+    height: 5vh;
+    background-color: white;
+    position: relative;
+}
+
+    .modal-onda-header:after {
+        content: "";
+        position: absolute;
+        top: -.5px !important;
+        right: 0;
+        width: 10%;
+        height: 5vh;
+        background-color: white;
+        border-top-right-radius: 10vw;
+    }
+
+    .modal-onda-header:before {
+        position: absolute;
+        content: "";
+        top: 0;
+        right: 0;
+        width: 10%;
+        height: 5vh;
+        background-color: black;
+    }
+
+.modal-footer {
+    background-color: white !important;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}

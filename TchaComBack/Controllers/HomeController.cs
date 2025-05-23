@@ -95,9 +95,18 @@ public class HomeController : Controller
         double porcentagemAumentoUsuarios = 0;
         _cache.TryGetValue(chaveInicialUsuarios, out porcentagemAumentoUsuarios);
 
+        var usuarioAindaNaoConfirmado = _db.Usuarios
+                                           .Where(t => (t.Confirmado == 0)).ToList();
+
+        if (usuarioAindaNaoConfirmado.Count() > 0)
+        {
+            TempData["MensagemAtraso"] = "Administrador, há usuarios esperando ter o seu acesso confirmado.";
+        }
+
         var viewModel = new HomeViewModel
         {
             Usuario = usuario,
+            UsuarioNaoConfirmado = usuarioAindaNaoConfirmado,
             TotalDeFuncionarios = totalDeFuncionarios,
             TotalDeSetores = totalDeSetores,
             TotalDeUsuarios = totalDeUsuarios,

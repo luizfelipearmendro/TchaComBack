@@ -16,6 +16,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
+<style>
+    .padrao60 {
+        width: 300px;
+        text-align: center;
+    }
+
+    .padrao500 {
+        width: 500px;
+    }
+</style>
 
 <section>
     @if (TempData["MensagemSucesso"] != null)
@@ -45,6 +55,67 @@
             </div>
         </div>
     }
+
+    @if (TempData["MensagemAtraso"] != null)
+    {
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Solicitação de Acesso</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        @TempData["MensagemAtraso"]
+
+                        <form asp-controller="UsuariosPerfilLogado" asp-action="AtualizarConfirmacoes" method="post">
+                            @Html.AntiForgeryToken()
+                            <table class="table table-hover" id="table1">
+                                <thead>
+                                    <tr>
+                                        <th style="width:20px; text-align: center;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Liberar Acesso">
+                                            <i class="bi bi-check" style="font-size:20px; color: #00a95cff; display: inline-block;"></i>
+                                        </th>
+                                        <th class="padrao60 text-center">Data Cadastro</th>
+                                        <th class="padrao500 text-center">Nome</th>
+                                        <th class="padrao500 text-center">E-mail</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var usuario in Model.UsuarioNaoConfirmado)
+                                        {
+                                            if (usuario.Confirmado == 0)
+                                            {
+                                                <tr>
+                                                    <td style="width: 60rem;">
+                                                        <select class="form-select form-select-sm" name="Confirmacoes[@usuario.Id]">
+                                                            <option value="0" selected="@(usuario.Confirmado == 0)">Manter sem Acesso</option>
+                                                            <option value="1" selected="@(usuario.Confirmado == 1)">Confirmar Acesso</option>
+                                                            <option value="2" selected="@(usuario.Confirmado == 2)">Recusar Acesso</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="col1 text-center">@usuario.DataCadastro.ToShortDateString()</td>
+                                                    <td class="col3">@usuario.NomeCompleto</td>
+                                                    <td class="col3">@usuario.Email</td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Salvar Decisões</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     <section class="container-home">
         <article class="box-one-home">
             <div class="card-box-one">
@@ -299,4 +370,12 @@
             bsToast.show();
         });
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                backdrop: 'static',
+                keyboard: false
+            });
+            myModal.show();
+        });
 </script>
