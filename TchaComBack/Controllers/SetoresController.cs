@@ -51,7 +51,7 @@ namespace TchaComBack.Controllers
             var setoresQuery = db.Setores
                                  .AsNoTracking()
                                  .Include(s => s.Categoria)
-                                 .Where(s => s.UsuarioId == sessionIdUsuario);
+                                 .Where(s => s.UsuarioResponsavelId  == sessionIdUsuario);
 
             // consultas dos filtros..
             if (!string.IsNullOrEmpty(searchString))
@@ -128,7 +128,7 @@ namespace TchaComBack.Controllers
 
                 var categoriasCriadasPeloCoord = db.Setores
                                                    .AsNoTracking()
-                                                   .Where(s => s.UsuarioId == dbconsult.Id)
+                                                   .Where(s => s.UsuarioResponsavelId  == dbconsult.Id)
                                                    .Select(s => s.CategoriaId)
                                                    .FirstOrDefault();
 
@@ -213,7 +213,7 @@ namespace TchaComBack.Controllers
                     return RedirectToAction("Index", "Setores");
                 }
 
-                setor.UsuarioId = sessionIdUsuario;
+                setor.UsuarioResponsavelId  = sessionIdUsuario;
                 setor = setoresRepositorio.Cadastrar(setor);
 
                 int totalAntes = db.Setores.Count(s => s.Ativo == 'S' && s.Id != setor.Id); // evita contar o novo duas vezes
@@ -289,7 +289,7 @@ namespace TchaComBack.Controllers
                     return RedirectToAction("Index", "Setores");
                 }
 
-                setor.UsuarioId = sessionIdUsuario;
+                setor.UsuarioResponsavelId  = sessionIdUsuario;
                 setor = setoresRepositorio.Editar(setor);
 
                 TempData["MensagemSucesso"] = "Setor atualizado com sucesso!";

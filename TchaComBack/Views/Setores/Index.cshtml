@@ -64,10 +64,59 @@
             return texto;
         }
     }
-    @if (possuiSetores || possuiCategorias)
-    {
+   
         <section class="sessao-setores">
+        <form asp-controller="Setores" asp-action="Index" method="get" class="form-inline mb-4 text-center filtro p-4 border-2 " id="id-filtro">
+            <h1>Setores</h1>
+            <div class="flex-filtro">
+                <div class="flex-input-group filtro-content">
+                    <div class="form-floating mb-3">
+                        @Html.DropDownList(
+                                 "categoriaId",
+                                 ViewBag.CategoriasOpcoes as SelectList,
+                                 "Todas as Categorias",
+                                 new { @class = "form-select", id = "floatingCategoria" }
+                                 )
+                        <label for="floatingCategoria">Categorias</label>
+                    </div>
 
+                    <div class="form-floating mb-3">
+                        @Html.DropDownList(
+                                 "ativo",
+                                 ViewBag.StatusOpcoes as SelectList,
+                                 "Todos",
+                                 new { @class = "form-select", id = "floatingCategoria" }
+                                 )
+                        <label for="floatingAtivo">Status</label>
+                    </div>
+                </div>
+                <div class="flex-input-two filtro-content">
+                    <div class="form-floating mb-3">
+                        <input name="searchString" value="@ViewBag.SearchString" type="text" class="form-control" id="floatingInput" placeholder="Buscar setor...">
+                        <label for="floatingInput">Buscar setor...</label>
+                    </div>
+                    <a role="button" class="botao-adicionar mb-2 " style="color:white;" data-bs-toggle="modal" data-bs-target="#modalCadastrarSetor">
+                        <span>
+                            <i class="bi bi-building-fill-add"></i>
+                            Cadastrar
+                        </span>
+                    </a>
+                    <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@( new ViewDataDictionary(ViewData){
+                             { "Texto", "Filtrar" },
+                             { "Url", "/Login" },
+                             { "ClasseExtra", "btn btn-filtrar mb-2 btn-filtrar" },
+                             { "Id", "" },
+                             { "Type", "submit" },
+                             { "elemento", "Button"},
+                             { "ConteudoHtml", new HtmlString("<i class='fa fa-filter me-2'></i>") }
+                             }) />
+                </div>
+                        @*                         <button type="button" class="btn-fechar" id="toggle-filtro">˄</button>*@                    
+                    </div>
+        </form>
+        <partial name="Cadastrar" model="new SetoresModel()" />
+        @if (possuiSetores || possuiCategorias)
+        {
             @if (setoresIndisponiveis)
             {
                 <div class="flex-mensagem-inativo">
@@ -87,69 +136,32 @@
             }
             else
             {
-                <form asp-controller="Setores" asp-action="Index" method="get" class="form-inline mb-4 text-center filtro p-4 border-2 " id="id-filtro">
-                    <h1>Setores</h1>
-                    <div class="flex-filtro">
-                        <div class="flex-input-group filtro-content">
-                            <div class="form-floating mb-3">
-                                @Html.DropDownList(
-                                         "categoriaId",
-                                         ViewBag.CategoriasOpcoes as SelectList,
-                                         "Todas as Categorias",
-                                         new { @class = "form-select", id = "floatingCategoria" }
-                                         )
-                                <label for="floatingCategoria">Categorias</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                                    @Html.DropDownList(
-                                             "ativo",
-                                             ViewBag.StatusOpcoes as SelectList,
-                                             "Todos",
-                                             new { @class = "form-select", id = "floatingCategoria" }
-                                             )
-                                <label for="floatingAtivo">Status</label>
-                            </div>
-                        </div>
-                        <div class="flex-input-two filtro-content">
-                            <div class="form-floating mb-3">
-                                <input name="searchString" value="@ViewBag.SearchString"  type="text" class="form-control" id="floatingInput" placeholder="Buscar setor...">
-                                <label for="floatingInput">Buscar setor...</label>
-                            </div>
-                            <a role="button" class="botao-adicionar mb-2 " style="color:white;" data-bs-toggle="modal" data-bs-target="#modalCadastrarSetor">
-                                <span>
-                                    <i class="bi bi-building-fill-add"></i>
-                                    Cadastrar
-                                </span>
-                            </a>
-                            <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@( new ViewDataDictionary(ViewData){
-                             { "Texto", "Filtrar" },
-                             { "Url", "/Login" },
-                             { "ClasseExtra", "btn btn-filtrar mb-2 btn-filtrar" },
-                             { "Id", "" },
-                             { "Type", "submit" },
-                             { "elemento", "Button"},
-                             { "ConteudoHtml", new HtmlString("<i class='fa fa-filter me-2'></i>") }
-                             }) />
-                        </div>
-                        @*                         <button type="button" class="btn-fechar" id="toggle-filtro">˄</button>*@                    
-                    </div>
-                </form>
+          
                 <partial name="~/Views/Componentes/Carrossel-Setores/CarrosselSetores.cshtml" />
             }
 
+        }
+        else
+        {
+            <div class="flex-mensagem-inativo">
+                <div class="box-mensegem-inativo">
+                    <h1>Nenhum Setor Disponível</h1>
+                    <p>Infelizmente, não há setores vinculados a esse perfil no momento. Por favor, volte em outro momento ou entre em contato com o administrador para obter mais informações.</p>
+                    <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@(new ViewDataDictionary(ViewData){
+                         { "Texto", "Voltar a Sessão" },
+                         { "Url", "/Setores" },
+                         { "ClasseExtra", "" },
+                         { "Id", "" },
+                         { "Type", "" },
+                         { "elemento", "a"}
+                         }) />
+                </div>
+            </div>
+        }
+
         </section>
 
-        <partial name="Cadastrar" model="new SetoresModel()" />
-    }
-    else
-    {
-        <div class="d-flex justify-content-center">
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-    }
+  
 
     <div class="modal fade" id="modalDesativarSetor" tabindex="-1" aria-labelledby="modalDesativarSetorLabel" aria-hidden="true" style="z-index:100000001;">
         <div class="modal-dialog">

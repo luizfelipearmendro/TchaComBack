@@ -1,56 +1,81 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace TchaComBack.Models
 {
     public class FuncionariosModel
     {
-        public int Id { get; set; } // id do funcionario
+        public int Id { get; set; }
 
-        public int UsuarioId { get; set; } // usuario que cadastrou o funcionario
+        public int UsuarioResponsavelId { get; set; }
 
-        public string Nome { get; set; } // nome do funcionario
+        [Required(ErrorMessage = "O nome é obrigatório.")]
+        public string Nome { get; set; }
 
-        public DateTime DataNascimento { get; set; } // data de nascimento do funcionario
+        [Required(ErrorMessage = "A data de nascimento é obrigatória.")]
+        public DateTime DataNascimento { get; set; }
 
-        public char Sexo { get; set; } // sexo do funcionario
+        [Required(ErrorMessage = "O sexo é obrigatório.")]
+        public char Sexo { get; set; }
 
-        public int Raca { get; set; } // raça do funcionario
+        [Required(ErrorMessage = "A raça é obrigatória.")]
+        [Range(1, 5, ErrorMessage = "Selecione uma raça válida.")]
+        public int Raca { get; set; }
 
-        public int EstadoCivil { get; set; } // estado civil do funcionario
+        [Required(ErrorMessage = "O estado civil é obrigatório.")]
+        [Range(1, 8, ErrorMessage = "Selecione um estado civil válido.")]
+        public int EstadoCivil { get; set; }
 
-        public string? NomeMae { get; set; } // nome da mae do funcionario
+        public string? NomeMae { get; set; }
 
-        public string Naturalidade { get; set; } // naturalidade do funcionario
+        [Required(ErrorMessage = "A naturalidade é obrigatória.")]
+        public string Naturalidade { get; set; }
 
-        public string Endereco { get; set; } // endereco do funcionario
+        [Required(ErrorMessage = "O endereço é obrigatório.")]
+        public string Endereco { get; set; }
 
-        public string CidadeResidencia { get; set; } // cidade de residencia do funcionario
+        [Required(ErrorMessage = "A cidade de residência é obrigatória.")]
+        public string CidadeResidencia { get; set; }
 
         [EmailAddress(ErrorMessage = "O e-mail informado não é válido!")]
-        public string Email { get; set; } // e-mail do funcionario
+        public string Email { get; set; }
 
         [Phone(ErrorMessage = "O celular informado não é válido!")]
-        public string Celular { get; set; }// celular do funcionario
+        public string Celular { get; set; }
 
-        public int SetorId { get; set; } // setor do funcionario
+        public int SetorId { get; set; }
 
-        public string Cargo { get; set; } // cargo do funcionario
+        [Required(ErrorMessage = "O cargo é obrigatório.")]
+        public string Cargo { get; set; }
 
-        public Decimal Salario { get; set; } // salario do funcionario
+        [Required(ErrorMessage = "O salário é obrigatório.")]
+        [Range(0, double.MaxValue, ErrorMessage = "O salário deve ser maior ou igual a zero.")]
+        public decimal Salario { get; set; }
 
-        public DateTime DataIngresso { get; set; } // data de ingresso do funcionario
+        public DateTime DataIngresso { get; set; } // Pode adicionar Required se for obrigatório
 
-        public int DiasTrabalhados { get; set; } // dias trabalhados no mes
+        [Required(ErrorMessage = "Os dias trabalhados são obrigatórios.")]
+        [Range(0, 365, ErrorMessage = "Os dias trabalhados devem estar entre 0 e 365.")]
+        public int DiasTrabalhados { get; set; }
 
-        public DateTime DataCadastro { get; set; } // data de cadastro do funcionario
+        public DateTime DataCadastro { get; set; }
 
-        public DateTime? DataAtualizacao { get; set; } // data da ultima atualizacao do cadastro
+        public DateTime? DataAtualizacao { get; set; }
 
-        public char Ativo { get; set; } = 'S'; // status do funcionario
+        public char Ativo { get; set; } = 'S';
 
+        [StringLength(6, ErrorMessage = "A matrícula deve ter exatamente 6 caracteres.")]
+        public string? Matricula { get; set; }
 
+        // Relacionamentos
+
+        [InverseProperty("Funcionario")]
+        public ICollection<UsuariosModel>? UsuariosVinculados { get; set; }
+
+        [ValidateNever]
+        public ICollection<ExtratoPontoModel> ExtratosDePonto { get; set; } = new List<ExtratoPontoModel>();
 
         [ValidateNever]
         public SetoresModel Setor { get; set; }
@@ -61,6 +86,8 @@ namespace TchaComBack.Models
         [ValidateNever]
         public EstadoCivilModel EstadoCivilNav { get; set; }
 
+        [ValidateNever]
+        public UsuariosModel UsuarioResponsavel { get; set; }
 
         public void Desativar()
         {

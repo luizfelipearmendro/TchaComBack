@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TchaComBack.Models
 {
@@ -32,9 +33,15 @@ namespace TchaComBack.Models
 
         public DateTime UltimoAcesso { get; set; }
 
-
         [ValidateNever]
         public SetoresModel Setor { get; set; }
+
+        [StringLength(6)]
+        public string? Matricula { get; set; } // Agora é anulável
+
+        [ForeignKey("Matricula")]
+        [ValidateNever]
+        public FuncionariosModel? Funcionario { get; set; } // Relacionamento opcional
 
         public void Desativar()
         {
