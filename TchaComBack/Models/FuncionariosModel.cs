@@ -50,6 +50,7 @@ namespace TchaComBack.Models
 
         public char Ativo { get; set; } = 'S'; // status do funcionario
 
+        [ValidateNever]
         public UsuariosModel Usuario { get; set; }
 
         [ValidateNever]
@@ -62,7 +63,7 @@ namespace TchaComBack.Models
         public EstadoCivilModel EstadoCivilNav { get; set; }
 
         [ValidateNever]
-        public ICollection<ExtratoPontoModel> ExtratoPontoModel { get; set; }
+        public ICollection<ExtratoPontoModel> ExtratoPonto { get; set; }
 
         public void Desativar()
         {

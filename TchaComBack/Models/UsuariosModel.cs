@@ -32,6 +32,7 @@ namespace TchaComBack.Models
 
         public DateTime UltimoAcesso { get; set; }
 
+        [ValidateNever]
         public FuncionariosModel Funcionario { get; set; }
 
 

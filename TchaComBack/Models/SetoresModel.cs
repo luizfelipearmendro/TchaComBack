@@ -40,6 +40,9 @@ namespace TchaComBack.Models
         public string? ImagemSetor { get; set; }
 
 
+
+
+
         [ValidateNever]
         public CategoriaModel Categoria { get; set; }
 

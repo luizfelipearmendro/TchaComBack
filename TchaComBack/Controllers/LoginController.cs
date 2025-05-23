@@ -36,24 +36,42 @@ namespace TchaComBack.Controllers
                         return View("Index");
                     }
 
-                    if (senhaHash == usuario.Senha)
+
+                    // 0 - usuário com perfil ainda não confirmado pelo adm
+                    // 1 - usuário com perfil confirmado pelo adm
+                    // 2 - usuário com perfil bloqueado pelo adm
+                    if (usuario.Confirmado == 0)
                     {
-                        string hash = Utilitarios.GeradorHash();
-
-                        usuario.Hash = hash;
-                        usuario.UltimoAcesso = DateTime.Now;
-                        db.SaveChanges();
-
-                        HttpContext.Session.SetInt32("idUsuario", usuario.Id);
-                        HttpContext.Session.SetString("hash", hash);
-
-                        TempData["MensagemSucesso"] = $"Seja bem-vindo {usuario.NomeCompleto}";
-                        return RedirectToAction("Index", "Home");
+                        TempData["MensagemErro"] = $"Desculpe! O seu acesso ainda não foi liberado pelo administrador.";
+                        return View("Index");
+                    }
+                    else if (usuario.Confirmado == 2)
+                    {
+                        TempData["MensagemErro"] = $"Desculpe! O seu acesso foi recusado pelo administrador.";
+                        return View("Index");
                     }
                     else
                     {
-                        TempData["MensagemErro"] = $"E-mail ou senha incorretos!";
-                        return View("Index");
+
+                        if (senhaHash == usuario.Senha)
+                        {
+                            string hash = Utilitarios.GeradorHash();
+
+                            usuario.Hash = hash;
+                            usuario.UltimoAcesso = DateTime.Now;
+                            db.SaveChanges();
+
+                            HttpContext.Session.SetInt32("idUsuario", usuario.Id);
+                            HttpContext.Session.SetString("hash", hash);
+
+                            TempData["MensagemSucesso"] = $"Seja bem-vindo {usuario.NomeCompleto}";
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            TempData["MensagemErro"] = $"E-mail ou senha incorretos!";
+                            return View("Index");
+                        }
                     }
                 }
 

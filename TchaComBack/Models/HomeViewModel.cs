@@ -3,6 +3,8 @@
     public class HomeViewModel
     {
         public UsuariosModel Usuario { get; set; }
+
+        public List<UsuariosModel> UsuarioNaoConfirmado { get; set; }
         public int TotalDeFuncionarios { get; set; }
         public int TotalDeSetores { get; set; }
         public int TotalDeUsuarios {  get; set; }

@@ -18,6 +18,10 @@ namespace TchaComBack.Data
         public DbSet<CategoriaModel> Categorias { get; set; }
         public DbSet<ExtratoPontoModel> ExtratosPonto { get; set; }
 
+        public DbSet<ExtratoPontoModel> ExtratoPonto { get; set; }
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

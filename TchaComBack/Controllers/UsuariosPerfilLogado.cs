@@ -288,5 +288,39 @@ namespace TchaComBack.Controllers
                 return View(model);
             }
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AtualizarConfirmacoes(Dictionary<int, int> confirmacoes)
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios
+                .AsNoTracking()
+                .FirstOrDefault(u => u.Id == idUsuario && u.Hash == HttpContext.Session.GetString("hash"));
+
+            if (dbconsult == null) return RedirectToAction("Index", "Login");
+
+            var sessionIdUsuario = dbconsult.Id;
+
+            foreach (var item in confirmacoes)
+            {
+                int usuarioId = item.Key;
+                int novoStatus = item.Value;
+
+                var usuario = db.Usuarios.FirstOrDefault(u => u.Id == usuarioId);
+                if (usuario != null)
+                {
+                    usuario.Confirmado = novoStatus;
+                    usuario.Ativo = 'N';
+                }
+            }
+
+            db.SaveChanges();
+
+            TempData["MensagemSucesso"] = "Confirmações atualizadas com sucesso!";
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
