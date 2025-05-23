@@ -317,6 +317,16 @@ namespace TchaComBack.Controllers
             {
                 bool desativado = setoresRepositorio.Desativar(id);
 
+                var desativarFuncionariosVinculadosAoSetor = db.Funcionarios.Where(f => f.SetorId == id && f.Ativo == 'S').ToList();
+
+                foreach( var funcionarios  in desativarFuncionariosVinculadosAoSetor)
+                {
+                    funcionarios.Ativo = 'N';
+
+                }
+
+                db.SaveChanges();
+
                 int totalAntes = db.Setores.Count(s => s.Ativo == 'S');
                 int totalDepois = totalAntes - 1;
 

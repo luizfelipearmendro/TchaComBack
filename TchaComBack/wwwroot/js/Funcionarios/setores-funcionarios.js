@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cargoInput = document.getElementById('cargoInput');
     const cargoSelectGroup = document.getElementById('selectCargoGroup');
     const cargoSelect = document.getElementById('cargoSelect');
+    const cargoFinal = document.getElementById('cargoFinal');
 
     dataNascimento.addEventListener('change', function () {
         const nascimento = new Date(dataNascimento.value);
@@ -197,9 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
             idade--;
         }
 
-        if (isNaN(idade)) {
-            return;
-        }
+        if (isNaN(idade)) return;
 
         if (idade < 14) {
             alert("A idade mínima para cadastro é 14 anos.");
@@ -208,13 +207,10 @@ document.addEventListener('DOMContentLoaded', function () {
             cargoSelect.value = "";
             cargoInputGroup.classList.add("d-none");
             cargoSelectGroup.classList.add("d-none");
+            cargoFinal.value = "";
             return;
         }
-        if (nascimento > hoje) {
-            alert("A data de nascimento não pode ser no futuro.");
-            dataNascimento.value = "";
-            return;
-        }
+
         if (idade >= 14 && idade <= 17) {
             cargoInputGroup.classList.add("d-none");
             cargoSelectGroup.classList.remove("d-none");
@@ -223,7 +219,16 @@ document.addEventListener('DOMContentLoaded', function () {
             cargoSelectGroup.classList.add("d-none");
             cargoInputGroup.classList.remove("d-none");
             cargoSelect.value = "";
-            cargoInput.value = "";
+        }
+    });
+
+    // Atualiza o campo final antes do submit
+    const form = document.getElementById('formCompleto');
+    form.addEventListener('submit', function (e) {
+        if (!cargoInputGroup.classList.contains('d-none')) {
+            cargoFinal.value = cargoInput.value;
+        } else if (!cargoSelectGroup.classList.contains('d-none')) {
+            cargoFinal.value = cargoSelect.value;
         }
     });
 });
