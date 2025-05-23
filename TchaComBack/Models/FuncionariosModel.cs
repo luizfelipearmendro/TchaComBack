@@ -62,7 +62,7 @@ namespace TchaComBack.Models
         public EstadoCivilModel EstadoCivilNav { get; set; }
 
         [ValidateNever]
-        public ICollection<ExtratoPonto> ExtratoPonto { get; set; }
+        public ICollection<ExtratoPontoModel> ExtratoPontoModel { get; set; }
 
         public void Desativar()
         {

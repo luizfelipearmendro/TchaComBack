@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TchaComBack.Models
 {
-    public class ExtratoPonto
+    public class ExtratoPontoModel
     {
         public int Id { get; set; }
 
