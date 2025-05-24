@@ -12,13 +12,12 @@ namespace TchaComBack.Data
 
         public DbSet<UsuariosModel> Usuarios { get; set; }
         public DbSet<FuncionariosModel> Funcionarios { get; set; }
+        public DbSet<ExtratoPontoModel> ExtratosPonto { get; set; }
         public DbSet<RacaModel> Raca { get; set; }
         public DbSet<EstadoCivilModel> EstadoCivil { get; set; }
         public DbSet<SetoresModel> Setores { get; set; }
         public DbSet<CategoriaModel> Categorias { get; set; }
         public DbSet<ExtratoPontoModel> ExtratosPonto { get; set; }
-
-        public DbSet<ExtratoPontoModel> ExtratoPonto { get; set; }
 
 
 
@@ -26,8 +25,12 @@ namespace TchaComBack.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Relacionamentos existentes mantidos (sem alteração)
+            // Matricula deve ser única em Funcionários
+            modelBuilder.Entity<FuncionariosModel>()
+                .HasIndex(f => f.Matricula)
+                .IsUnique();
 
+            // Relacionamentos padrões
             modelBuilder.Entity<FuncionariosModel>()
                 .HasOne(f => f.RacaNav)
                 .WithMany(r => r.Funcionarios)
@@ -56,6 +59,20 @@ namespace TchaComBack.Data
                 .HasOne(u => u.Setor)
                 .WithMany(s => s.Usuarios)
                 .HasForeignKey(u => u.SetorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UsuariosModel>()
+                .HasOne(u => u.Funcionario)
+                .WithMany(f => f.UsuariosVinculados)
+                .HasForeignKey(u => u.Matricula)
+                .HasPrincipalKey(f => f.Matricula) 
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ExtratoPontoModel>()
+                .HasOne(ep => ep.Funcionario)
+                .WithMany(f => f.ExtratosDePonto)
+                .HasForeignKey(ep => ep.Matricula)
+                .HasPrincipalKey(f => f.Matricula)  
                 .OnDelete(DeleteBehavior.Restrict);
 
         //    modelBuilder.Entity<FuncionariosModel>()

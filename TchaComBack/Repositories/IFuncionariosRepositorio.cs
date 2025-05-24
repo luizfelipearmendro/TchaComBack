@@ -4,7 +4,7 @@ namespace TchaComBack.Repositories
 {
     public interface IFuncionariosRepositorio
     {
-        List<FuncionariosModel> BuscarTodosFuncionarios(int usuarioId);
+        List<FuncionariosModel> BuscarTodosFuncionarios(int UsuarioResponsavelId );
 
         FuncionariosModel ListarPorId(int id);
 

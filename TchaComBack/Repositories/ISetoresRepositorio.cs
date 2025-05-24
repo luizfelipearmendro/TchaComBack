@@ -4,7 +4,7 @@ namespace TchaComBack.Repositories
 {
     public interface ISetoresRepositorio
     {
-        List<SetoresModel> BuscarTodosSetores(int usuarioId);
+        List<SetoresModel> BuscarTodosSetores(int UsuarioResponsavelId );
 
         SetoresModel ListarPorId(int Id);
 

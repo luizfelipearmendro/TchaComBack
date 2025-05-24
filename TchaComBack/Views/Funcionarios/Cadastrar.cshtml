@@ -249,6 +249,7 @@
                         </span>
                         <input type="number" asp-for="DiasTrabalhados" class="form-control diasTrabalhados" id="diasTrabalhados" placeholder="Dias Trabalhados" required readonly />
                     </div>
+                    <input type="hidden" asp-for="Matricula" id="matriculaHidden" />
                     <div class="form-example">
                         <label for="Confirmacao">Confirmação:</label>
                         <p>Revise as informações inseridas antes de concluir.</p>
@@ -265,6 +266,19 @@
 
     <script src="~/js/Funcionarios/setores-funcionarios.js"></script>
     <script>
+            document.getElementById("formCompleto").addEventListener("submit", function (event) {
+            event.preventDefault(); // Impede o envio imediato
+
+            const matriculaInput = document.getElementById("matriculaHidden");
+
+            if (!matriculaInput.value) {
+                // Gera um número aleatório de 6 dígitos
+                const numeroAleatorio = Math.floor(100000 + Math.random() * 900000);
+                matriculaInput.value = numeroAleatorio
+            }
+
+            this.submit(); // Envia o formulário após preencher a matrícula
+        });
         function updateProgressBar(step) {
             const progressBar = document.querySelector('.progress-bar');
             let progress = 0;

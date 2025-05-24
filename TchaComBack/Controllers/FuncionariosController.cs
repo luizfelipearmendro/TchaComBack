@@ -6,6 +6,7 @@ using Microsoft.Identity.Client;
 using System;
 using System.Data;
 using TchaComBack.Data;
+using TchaComBack.Helper;
 using TchaComBack.Models;
 using TchaComBack.Repositories;
 
@@ -63,7 +64,7 @@ namespace TchaComBack.Controllers
                 .Include(f => f.RacaNav)
                 .Include(f => f.EstadoCivilNav)
                 .Where(f => f.SetorId == id);
-                //.Where(f => f.UsuarioId == sessionIdUsuario);
+                //.Where(f => f.UsuarioResponsavelId  == sessionIdUsuario);
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -284,8 +285,50 @@ namespace TchaComBack.Controllers
                     return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
                 }
 
-                func.UsuarioId = dbconsult.Id;
+                if (db.Usuarios.Any(u => u.Email == func.Email))
+                {
+                    TempData["MensagemErro"] = "Já existe um usuário com este e-mail!";
+                    return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
+                }
+
+                // Cadastra o funcionário base
+                func.UsuarioResponsavelId = dbconsult.Id;
                 func = funcionariosRepositorio.Cadastrar(func);
+
+                if (dbconsult.TipoPerfil == 2)
+                {
+                    string senhaPadrao = "abc123";
+                    string salt = Utilitarios.GerarSalt();
+                    string hashSenha = Utilitarios.GerarHashSenha(senhaPadrao, salt);
+
+                    var usuarioBase = new UsuariosModel
+                    {
+                        Email = func.Email,
+                        Senha = hashSenha,
+                        NomeCompleto = func.Nome,
+                        TipoPerfil = 3, 
+                        SetorId = func.SetorId,
+                        Matricula = func.Matricula,
+                        DataCadastro = DateTime.Now,
+                        UltimoAcesso = DateTime.MinValue,
+                        DataHoraEsqueceuSenha = DateTime.MinValue,
+                        Confirmado = 1,
+                        Hash = Guid.NewGuid().ToString(),
+                        Salt = salt,
+                        Ativo = 'S'
+                    };
+
+                    var usuarioExistente = db.Usuarios.FirstOrDefault(u => u.Matricula == func.Matricula);
+                    if (usuarioExistente == null)
+                    {
+                        db.Usuarios.Add(usuarioBase);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        TempData["MensagemAlerta"] = "Já existe um usuário com esta matrícula.";
+                    }
+                }
 
                 int totalAntes = db.Funcionarios.Count(f => f.Ativo == 'S') - 1;
                 int totalDepois = db.Funcionarios.Count(f => f.Ativo == 'S');
@@ -308,15 +351,24 @@ namespace TchaComBack.Controllers
 
                 _cache.Set(cacheKey, porcentagemVariacao, cacheEntryOptions);
 
-                TempData["MensagemSucesso"] = "Funcionário cadastrado com sucesso!";
-                return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
+                if (dbconsult.TipoPerfil == 1)
+                {
+                    TempData["MensagemSucesso"] = "Funcionário cadastrado com sucesso!";
+                }
+                else if (dbconsult.TipoPerfil == 2)
+                {
+                    TempData["MensagemSucesso"] = "Funcionário e Usuário Base cadastrado com sucesso!";
+                }
+                 return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
             }
             catch (Exception erro)
             {
-                TempData["MensagemErro"] = $"Ops, não foi possível cadastrar o funcionário. Detalhes do erro: {erro.Message}";
+                TempData["MensagemErro"] = $"Ops, não foi possível cadastrar o funcionário ou o usuário base. Detalhes do erro: {erro.Message}";
                 return RedirectToAction("Index", "Funcionarios");
             }
         }
+
+
 
         public IActionResult Desativar(int id, int setorId)
         {
@@ -462,7 +514,7 @@ namespace TchaComBack.Controllers
                     return Redirect($"/Funcionarios/Index/{setorId}");
                 }
 
-                func.UsuarioId = sessionIdUsuario;
+                func.UsuarioResponsavelId  = sessionIdUsuario;
                 func = funcionariosRepositorio.Editar(func);
 
                 TempData["MensagemSucesso"] = "Funcionário(a) atualizado(a) com sucesso!";

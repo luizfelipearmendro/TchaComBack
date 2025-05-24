@@ -20,9 +20,9 @@ namespace TchaComBack.Repositories
             return db.Setores.FirstOrDefault(s => s.Id == id);
         }
 
-        public List<SetoresModel> BuscarTodosSetores(int usuarioId)
+        public List<SetoresModel> BuscarTodosSetores(int UsuarioResponsavelId )
         {
-            return db.Setores.Where(s => s.UsuarioId == usuarioId).ToList();
+            return db.Setores.Where(s => s.UsuarioResponsavelId  == UsuarioResponsavelId ).ToList();
         }
 
         public SetoresModel Cadastrar(SetoresModel setor)

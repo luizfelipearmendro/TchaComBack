@@ -18,12 +18,12 @@ namespace TchaComBack.Repositories
             return db.Funcionarios.FirstOrDefault(f => f.Id == id);
         }
 
-        public List<FuncionariosModel> BuscarTodosFuncionarios(int usuarioId)
+        public List<FuncionariosModel> BuscarTodosFuncionarios(int UsuarioResponsavelId )
         {
             return db.Funcionarios
                      .AsNoTracking()
                      .Include(f => f.Setor)
-                     .Where(f => f.UsuarioId == usuarioId)
+                     .Where(f => f.UsuarioResponsavelId  == UsuarioResponsavelId )
                      .ToList();
         }
 

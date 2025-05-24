@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using System;
 using TchaComBack.Data;
 using TchaComBack.Helper;
 using TchaComBack.Models;
@@ -87,7 +88,8 @@ namespace TchaComBack.Controllers
             ViewBag.TiposPerfilOpcoes = new SelectList(new List<SelectListItem>
             {
                 new SelectListItem { Value = "1", Text = "Administrador" },
-                new SelectListItem { Value = "2", Text = "Coordenador" }
+                new SelectListItem { Value = "2", Text = "Coordenador" },
+                new SelectListItem { Value = "3", Text = "Padrão" }
             }, "Value", "Text", tipoPerfil);
 
           
@@ -159,17 +161,44 @@ namespace TchaComBack.Controllers
 
             if (dbconsult == null) return RedirectToAction("Index", "Login");
 
-            var sessionIdUsuario = dbconsult.Id;
-
-
-
-            var validaEmailExistente = db.Usuarios.Any(u => u.Email == usuario.Email);
-            if (validaEmailExistente)
+            if (db.Usuarios.Any(u => u.Email == usuario.Email))
             {
                 TempData["MensagemErro"] = "Ops, o e-mail informado já existe!";
                 return RedirectToAction("Index", "UsuariosPerfilLogado");
             }
 
+            if (usuario.Matricula.HasValue)
+            {
+                // Se já existe um usuário com essa matrícula
+                if (db.Usuarios.Any(u => u.Matricula == usuario.Matricula))
+                {
+                    TempData["MensagemErro"] = "Já existe um usuário com esta matrícula.";
+                    return RedirectToAction("Index", "UsuariosPerfilLogado");
+                }
+
+                // Se não existe um funcionário com essa matrícula
+                if (!db.Funcionarios.Any(f => f.Matricula == usuario.Matricula))
+                {
+                    TempData["MensagemErro"] = "É necessário cadastrar o funcionário antes de criar o usuário.";
+                    return RedirectToAction("Index", "UsuariosPerfilLogado");
+                }
+            }
+            else
+            {
+                // Tenta encontrar um funcionário com o mesmo e-mail
+                var funcionarioRelacionado = db.Funcionarios.FirstOrDefault(f => f.Email == usuario.Email);
+                if (funcionarioRelacionado != null)
+                {
+                    usuario.Matricula = funcionarioRelacionado.Matricula;
+                }
+                else
+                {
+                    TempData["MensagemErro"] = "Informe a matrícula ou cadastre um funcionário com este e-mail.";
+                    return RedirectToAction("Index", "UsuariosPerfilLogado");
+                }
+            }
+
+            // === VALIDAÇÃO DE SENHA ===
             var salt = Utilitarios.GerarSalt();
             usuario.Salt = salt;
 
@@ -192,16 +221,9 @@ namespace TchaComBack.Controllers
                 int totalAntes = db.Usuarios.Count(f => f.Ativo == 'S') - 1;
                 int totalDepois = db.Usuarios.Count(f => f.Ativo == 'S');
 
-                double porcentagemVariacao = 0;
-
-                if (totalAntes > 0)
-                {
-                    porcentagemVariacao = ((double)(totalDepois - totalAntes) / totalAntes) * 100;
-                }
-                else if (totalDepois > 0)
-                {
-                    porcentagemVariacao = 100;
-                }
+                double porcentagemVariacao = totalAntes > 0
+                    ? ((double)(totalDepois - totalAntes) / totalAntes) * 100
+                    : totalDepois > 0 ? 100 : 0;
 
                 string cacheKey = "PorcentagemAumentoUsuarios";
 
@@ -216,6 +238,8 @@ namespace TchaComBack.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+
 
         public IActionResult AtualizarSenha()
         {

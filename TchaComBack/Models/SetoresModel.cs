@@ -32,7 +32,7 @@ namespace TchaComBack.Models
 
         public char Ativo { get; set; } = 'S';
 
-        public int UsuarioId { get; set; }
+        public int UsuarioResponsavelId  { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "A categoria do setor deve ser selecionada.")]
         public int CategoriaId { get; set; }

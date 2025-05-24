@@ -1,11 +1,12 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TchaComBack.Models
 {
     public class ExtratoPontoModel
     {
         public int Id { get; set; }
+
+        public int? Matricula { get; set; } 
 
         public DateTime DataBatida { get; set; }
 
@@ -17,8 +18,8 @@ namespace TchaComBack.Models
 
         public TimeSpan? HoraSaida2 { get; set; }
 
-        public int FuncionarioId { get; set; }
-        [ForeignKey("FuncionarioId")]
+        [ForeignKey("Matricula")]
+        [ValidateNever]
         public FuncionariosModel Funcionario { get; set; }
     }
 }
