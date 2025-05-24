@@ -135,7 +135,7 @@
 //                                      .Include(f => f.RacaNav)
 //                                      .Include(f => f.EstadoCivilNav)
 //                                      .Include(f => f.Setor)
-//                                      .Where(f => f.UsuarioId == idUsuario);
+//                                      .Where(f => f.UsuarioResponsavelId  == idUsuario);
 
 //            // Filtro por nome
 //            if (!string.IsNullOrEmpty(searchString))
@@ -174,7 +174,7 @@
 
 //            // Lista distinta de setores dos funcionários desse usuário
 //            ViewBag.SetoresOpcoes = new SelectList(db.Funcionarios
-//                .Where(f => f.UsuarioId == idUsuario)
+//                .Where(f => f.UsuarioResponsavelId  == idUsuario)
 //                .Include(f => f.Setor)
 //                .Select(f => f.Setor.Nome)
 //                .Distinct()
@@ -250,7 +250,7 @@
 //                    return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
 //                }
 
-//                func.UsuarioId = sessionIdUsuario;
+//                func.UsuarioResponsavelId  = sessionIdUsuario;
 //                func = funcionariosRepositorio.Cadastrar(func);
 
 //                TempData["MensagemSucesso"] = "Funcionário cadastrado com sucesso!";
@@ -392,7 +392,7 @@
 //                    return Redirect($"/Funcionarios/Index/{setorId}");
 //                }
 
-//                func.UsuarioId = sessionIdUsuario;
+//                func.UsuarioResponsavelId  = sessionIdUsuario;
 //                func = funcionariosRepositorio.Editar(func);
 
 //                TempData["MensagemSucesso"] = "Funcionário(a) atualizado(a) com sucesso!";
@@ -518,7 +518,7 @@
 //            var setoresQuery = db.Setores
 //                                 .AsNoTracking()
 //                                 .Include(s => s.Categoria)
-//                                 .Where(s => s.UsuarioId == sessionIdUsuario);
+//                                 .Where(s => s.UsuarioResponsavelId  == sessionIdUsuario);
 
 //            // Aplica o filtro de busca por nome, descrição ou responsável
 //            if (!string.IsNullOrEmpty(searchString))
@@ -639,7 +639,7 @@
 //                    return RedirectToAction("Index", "Setores");
 //                }
 
-//                setor.UsuarioId = sessionIdUsuario;
+//                setor.UsuarioResponsavelId  = sessionIdUsuario;
 //                setor = setoresRepositorio.Cadastrar(setor);
 
 //                TempData["MensagemSucesso"] = "Setor cadastrado com sucesso!";
@@ -691,7 +691,7 @@
 //                    return RedirectToAction("Index", "Setores");
 //                }
 
-//                setor.UsuarioId = sessionIdUsuario;
+//                setor.UsuarioResponsavelId  = sessionIdUsuario;
 //                setor = setoresRepositorio.Editar(setor);
 
 //                TempData["MensagemSucesso"] = "Setor atualizado com sucesso!";

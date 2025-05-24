@@ -54,27 +54,6 @@ namespace TchaComBack.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Usuarios",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NomeCompleto = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TipoPerfil = table.Column<int>(type: "int", nullable: true),
-                    Hash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Confirmado = table.Column<int>(type: "int", nullable: true),
-                    Salt = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataHoraEsqueceuSenha = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Setores",
                 columns: table => new
                 {
@@ -89,7 +68,7 @@ namespace TchaComBack.Migrations
                     DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Ativo = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioResponsavelId = table.Column<int>(type: "int", nullable: false),
                     CategoriaId = table.Column<int>(type: "int", nullable: false),
                     ImagemSetor = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -105,12 +84,30 @@ namespace TchaComBack.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExtratoPontoModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Matricula = table.Column<int>(type: "int", maxLength: 6, nullable: true),
+                    DataBatida = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HoraEntrada1 = table.Column<TimeSpan>(type: "time", nullable: true),
+                    HoraSaida1 = table.Column<TimeSpan>(type: "time", nullable: true),
+                    HoraEntrada2 = table.Column<TimeSpan>(type: "time", nullable: true),
+                    HoraSaida2 = table.Column<TimeSpan>(type: "time", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExtratoPontoModel", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Funcionarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioResponsavelId = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Sexo = table.Column<string>(type: "nvarchar(1)", nullable: false),
@@ -129,7 +126,8 @@ namespace TchaComBack.Migrations
                     DiasTrabalhados = table.Column<int>(type: "int", nullable: false),
                     DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Ativo = table.Column<string>(type: "nvarchar(1)", nullable: false)
+                    Ativo = table.Column<string>(type: "nvarchar(1)", nullable: false),
+                    Matricula = table.Column<int>(type: "int", maxLength: 6, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -154,6 +152,47 @@ namespace TchaComBack.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NomeCompleto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TipoPerfil = table.Column<int>(type: "int", nullable: true),
+                    Hash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Confirmado = table.Column<int>(type: "int", nullable: true),
+                    Salt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataHoraEsqueceuSenha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SetorId = table.Column<int>(type: "int", nullable: true),
+                    Ativo = table.Column<string>(type: "nvarchar(1)", nullable: false),
+                    UltimoAcesso = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Matricula = table.Column<int>(type: "int", maxLength: 6, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Funcionarios_Matricula",
+                        column: x => x.Matricula,
+                        principalTable: "Funcionarios",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Setores_SetorId",
+                        column: x => x.SetorId,
+                        principalTable: "Setores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExtratoPontoModel_Matricula",
+                table: "ExtratoPontoModel",
+                column: "Matricula");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Funcionarios_EstadoCivil",
                 table: "Funcionarios",
@@ -170,25 +209,63 @@ namespace TchaComBack.Migrations
                 column: "SetorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Funcionarios_UsuarioResponsavelId",
+                table: "Funcionarios",
+                column: "UsuarioResponsavelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Setores_CategoriaId",
                 table: "Setores",
                 column: "CategoriaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_Matricula",
+                table: "Usuarios",
+                column: "Matricula");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_SetorId",
+                table: "Usuarios",
+                column: "SetorId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_ExtratoPontoModel_Funcionarios_Matricula",
+                table: "ExtratoPontoModel",
+                column: "Matricula",
+                principalTable: "Funcionarios",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Funcionarios_Usuarios_UsuarioResponsavelId",
+                table: "Funcionarios",
+                column: "UsuarioResponsavelId",
+                principalTable: "Usuarios",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Funcionarios");
+            migrationBuilder.DropForeignKey(
+                name: "FK_Usuarios_Funcionarios_Matricula",
+                table: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "ExtratoPontoModel");
+
+            migrationBuilder.DropTable(
+                name: "Funcionarios");
 
             migrationBuilder.DropTable(
                 name: "EstadoCivil");
 
             migrationBuilder.DropTable(
                 name: "Raca");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "Setores");

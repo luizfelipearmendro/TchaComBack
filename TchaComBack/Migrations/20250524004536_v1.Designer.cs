@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TchaComBack.Data;
 
@@ -11,9 +12,11 @@ using TchaComBack.Data;
 namespace TchaComBack.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250524004536_v1")]
+    partial class v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,13 +93,14 @@ namespace TchaComBack.Migrations
                         .HasColumnType("time");
 
                     b.Property<int?>("Matricula")
+                        .HasMaxLength(6)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Matricula");
 
-                    b.ToTable("ExtratosPonto");
+                    b.ToTable("ExtratoPontoModel");
                 });
 
             modelBuilder.Entity("TchaComBack.Models.FuncionariosModel", b =>
@@ -149,7 +153,8 @@ namespace TchaComBack.Migrations
                     b.Property<int>("EstadoCivil")
                         .HasColumnType("int");
 
-                    b.Property<int>("Matricula")
+                    b.Property<int?>("Matricula")
+                        .HasMaxLength(6)
                         .HasColumnType("int");
 
                     b.Property<string>("Naturalidade")
@@ -182,9 +187,6 @@ namespace TchaComBack.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EstadoCivil");
-
-                    b.HasIndex("Matricula")
-                        .IsUnique();
 
                     b.HasIndex("Raca");
 
@@ -299,6 +301,7 @@ namespace TchaComBack.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Matricula")
+                        .HasMaxLength(6)
                         .HasColumnType("int");
 
                     b.Property<string>("NomeCompleto")
@@ -334,7 +337,6 @@ namespace TchaComBack.Migrations
                     b.HasOne("TchaComBack.Models.FuncionariosModel", "Funcionario")
                         .WithMany("ExtratosDePonto")
                         .HasForeignKey("Matricula")
-                        .HasPrincipalKey("Matricula")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Funcionario");
@@ -390,9 +392,7 @@ namespace TchaComBack.Migrations
                 {
                     b.HasOne("TchaComBack.Models.FuncionariosModel", "Funcionario")
                         .WithMany("UsuariosVinculados")
-                        .HasForeignKey("Matricula")
-                        .HasPrincipalKey("Matricula")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Matricula");
 
                     b.HasOne("TchaComBack.Models.SetoresModel", "Setor")
                         .WithMany("Usuarios")

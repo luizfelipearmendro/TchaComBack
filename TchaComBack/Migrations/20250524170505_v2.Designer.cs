@@ -12,8 +12,8 @@ using TchaComBack.Data;
 namespace TchaComBack.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250512204721_v1")]
-    partial class v1
+    [Migration("20250524170505_v2")]
+    partial class v2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,6 +69,39 @@ namespace TchaComBack.Migrations
                     b.ToTable("EstadoCivil");
                 });
 
+            modelBuilder.Entity("TchaComBack.Models.ExtratoPontoModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DataBatida")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan?>("HoraEntrada1")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan?>("HoraEntrada2")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan?>("HoraSaida1")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan?>("HoraSaida2")
+                        .HasColumnType("time");
+
+                    b.Property<int?>("Matricula")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Matricula");
+
+                    b.ToTable("ExtratosPonto");
+                });
+
             modelBuilder.Entity("TchaComBack.Models.FuncionariosModel", b =>
                 {
                     b.Property<int>("Id")
@@ -119,6 +152,9 @@ namespace TchaComBack.Migrations
                     b.Property<int>("EstadoCivil")
                         .HasColumnType("int");
 
+                    b.Property<int>("Matricula")
+                        .HasColumnType("int");
+
                     b.Property<string>("Naturalidade")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -143,16 +179,21 @@ namespace TchaComBack.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int>("UsuarioResponsavelId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EstadoCivil");
 
+                    b.HasIndex("Matricula")
+                        .IsUnique();
+
                     b.HasIndex("Raca");
 
                     b.HasIndex("SetorId");
+
+                    b.HasIndex("UsuarioResponsavelId");
 
                     b.ToTable("Funcionarios");
                 });
@@ -222,7 +263,7 @@ namespace TchaComBack.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int>("UsuarioResponsavelId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -240,6 +281,10 @@ namespace TchaComBack.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Ativo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)");
+
                     b.Property<int?>("Confirmado")
                         .HasColumnType("int");
 
@@ -256,6 +301,9 @@ namespace TchaComBack.Migrations
                     b.Property<string>("Hash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Matricula")
+                        .HasColumnType("int");
+
                     b.Property<string>("NomeCompleto")
                         .HasColumnType("nvarchar(max)");
 
@@ -266,12 +314,32 @@ namespace TchaComBack.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SetorId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TipoPerfil")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("UltimoAcesso")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("Matricula");
+
+                    b.HasIndex("SetorId");
+
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("TchaComBack.Models.ExtratoPontoModel", b =>
+                {
+                    b.HasOne("TchaComBack.Models.FuncionariosModel", "Funcionario")
+                        .WithMany("ExtratosDePonto")
+                        .HasForeignKey("Matricula")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Funcionario");
                 });
 
             modelBuilder.Entity("TchaComBack.Models.FuncionariosModel", b =>
@@ -294,11 +362,19 @@ namespace TchaComBack.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("TchaComBack.Models.UsuariosModel", "UsuarioResponsavel")
+                        .WithMany()
+                        .HasForeignKey("UsuarioResponsavelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("EstadoCivilNav");
 
                     b.Navigation("RacaNav");
 
                     b.Navigation("Setor");
+
+                    b.Navigation("UsuarioResponsavel");
                 });
 
             modelBuilder.Entity("TchaComBack.Models.SetoresModel", b =>
@@ -312,6 +388,23 @@ namespace TchaComBack.Migrations
                     b.Navigation("Categoria");
                 });
 
+            modelBuilder.Entity("TchaComBack.Models.UsuariosModel", b =>
+                {
+                    b.HasOne("TchaComBack.Models.FuncionariosModel", "Funcionario")
+                        .WithMany("UsuariosVinculados")
+                        .HasForeignKey("Matricula")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("TchaComBack.Models.SetoresModel", "Setor")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("SetorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Funcionario");
+
+                    b.Navigation("Setor");
+                });
+
             modelBuilder.Entity("TchaComBack.Models.CategoriaModel", b =>
                 {
                     b.Navigation("Setores");
@@ -322,6 +415,13 @@ namespace TchaComBack.Migrations
                     b.Navigation("Funcionarios");
                 });
 
+            modelBuilder.Entity("TchaComBack.Models.FuncionariosModel", b =>
+                {
+                    b.Navigation("ExtratosDePonto");
+
+                    b.Navigation("UsuariosVinculados");
+                });
+
             modelBuilder.Entity("TchaComBack.Models.RacaModel", b =>
                 {
                     b.Navigation("Funcionarios");
@@ -330,6 +430,8 @@ namespace TchaComBack.Migrations
             modelBuilder.Entity("TchaComBack.Models.SetoresModel", b =>
                 {
                     b.Navigation("Funcionarios");
+
+                    b.Navigation("Usuarios");
                 });
 #pragma warning restore 612, 618
         }
