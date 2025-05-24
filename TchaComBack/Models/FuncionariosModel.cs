@@ -56,8 +56,7 @@ namespace TchaComBack.Models
 
         public DateTime DataIngresso { get; set; } // Pode adicionar Required se for obrigatório
 
-        [Required(ErrorMessage = "Os dias trabalhados são obrigatórios.")]
-        [Range(0, 365, ErrorMessage = "Os dias trabalhados devem estar entre 0 e 365.")]
+
         public int DiasTrabalhados { get; set; }
 
         public DateTime DataCadastro { get; set; }
@@ -66,8 +65,8 @@ namespace TchaComBack.Models
 
         public char Ativo { get; set; } = 'S';
 
-        [StringLength(6, ErrorMessage = "A matrícula deve ter exatamente 6 caracteres.")]
-        public string? Matricula { get; set; }
+        [Required]
+        public int? Matricula { get; set; }
 
         // Relacionamentos
 

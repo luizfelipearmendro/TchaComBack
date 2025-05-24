@@ -291,45 +291,43 @@ namespace TchaComBack.Controllers
                     return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
                 }
 
-                if (string.IsNullOrEmpty(func.Matricula))
-                {
-                    func.Matricula = GenerateUniqueMatricula();
-                }
-
                 // Cadastra o funcionário base
                 func.UsuarioResponsavelId = dbconsult.Id;
                 func = funcionariosRepositorio.Cadastrar(func);
 
-                string senhaPadrao = "abc123"; //  senha fixa
-                string salt = Utilitarios.GerarSalt(); 
-                string hashSenha = Utilitarios.GerarHashSenha(senhaPadrao, salt); 
+                if (dbconsult.TipoPerfil == 2)
+                {
+                    string senhaPadrao = "abc123";
+                    string salt = Utilitarios.GerarSalt();
+                    string hashSenha = Utilitarios.GerarHashSenha(senhaPadrao, salt);
 
-                var usuarioBase = new UsuariosModel
-                {
-                    Email = func.Email,
-                    Senha = hashSenha,
-                    NomeCompleto = func.Nome,
-                    TipoPerfil = 3, // Usuário base
-                    SetorId = func.SetorId,
-                    Matricula = func.Matricula,
-                    DataCadastro = DateTime.Now,
-                    UltimoAcesso = DateTime.MinValue,
-                    DataHoraEsqueceuSenha = DateTime.MinValue,
-                    Confirmado = 1,
-                    Hash = Guid.NewGuid().ToString(),
-                    Salt = salt,
-                    Ativo = 'S'
-                };
+                    var usuarioBase = new UsuariosModel
+                    {
+                        Email = func.Email,
+                        Senha = hashSenha,
+                        NomeCompleto = func.Nome,
+                        TipoPerfil = 3, 
+                        SetorId = func.SetorId,
+                        Matricula = func.Matricula,
+                        DataCadastro = DateTime.Now,
+                        UltimoAcesso = DateTime.MinValue,
+                        DataHoraEsqueceuSenha = DateTime.MinValue,
+                        Confirmado = 1,
+                        Hash = Guid.NewGuid().ToString(),
+                        Salt = salt,
+                        Ativo = 'S'
+                    };
 
-                var usuarioExistente = db.Usuarios.FirstOrDefault(u => u.Matricula == func.Matricula);
-                if (usuarioExistente == null)
-                {
-                    db.Usuarios.Add(usuarioBase);
-                    db.SaveChanges();
-                }
-                else
-                {
-                    TempData["MensagemAlerta"] = "Já existe um usuário com esta matrícula.";
+                    var usuarioExistente = db.Usuarios.FirstOrDefault(u => u.Matricula == func.Matricula);
+                    if (usuarioExistente == null)
+                    {
+                        db.Usuarios.Add(usuarioBase);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        TempData["MensagemAlerta"] = "Já existe um usuário com esta matrícula.";
+                    }
                 }
 
                 int totalAntes = db.Funcionarios.Count(f => f.Ativo == 'S') - 1;
@@ -353,8 +351,15 @@ namespace TchaComBack.Controllers
 
                 _cache.Set(cacheKey, porcentagemVariacao, cacheEntryOptions);
 
-                TempData["MensagemSucesso"] = "Funcionário e usuário base cadastrados com sucesso!";
-                return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
+                if (dbconsult.TipoPerfil == 1)
+                {
+                    TempData["MensagemSucesso"] = "Funcionário cadastrado com sucesso!";
+                }
+                else if (dbconsult.TipoPerfil == 2)
+                {
+                    TempData["MensagemSucesso"] = "Funcionário e Usuário Base cadastrado com sucesso!";
+                }
+                 return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
             }
             catch (Exception erro)
             {
@@ -363,11 +368,8 @@ namespace TchaComBack.Controllers
             }
         }
 
-        private string GenerateUniqueMatricula()
-        {
-            var timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
-            return "MAT-" + timestamp;
-        }
+
+
         public IActionResult Desativar(int id, int setorId)
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");

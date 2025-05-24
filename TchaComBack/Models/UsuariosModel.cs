@@ -36,8 +36,7 @@ namespace TchaComBack.Models
         [ValidateNever]
         public SetoresModel Setor { get; set; }
 
-        [StringLength(6)]
-        public string? Matricula { get; set; } // Agora é anulável
+        public int? Matricula { get; set; } // Agora é anulável
 
         [ForeignKey("Matricula")]
         [ValidateNever]

@@ -10,23 +10,23 @@ namespace TchaComBack.Data
         }
 
         public DbSet<UsuariosModel> Usuarios { get; set; }
-
         public DbSet<FuncionariosModel> Funcionarios { get; set; }
-
+        public DbSet<ExtratoPontoModel> ExtratosPonto { get; set; }
         public DbSet<RacaModel> Raca { get; set; }
-
         public DbSet<EstadoCivilModel> EstadoCivil { get; set; }
-
         public DbSet<SetoresModel> Setores { get; set; }
-
         public DbSet<CategoriaModel> Categorias { get; set; }
-
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            // Matricula deve ser única em Funcionários
+            modelBuilder.Entity<FuncionariosModel>()
+                .HasIndex(f => f.Matricula)
+                .IsUnique();
+
+            // Relacionamentos padrões
             modelBuilder.Entity<FuncionariosModel>()
                 .HasOne(f => f.RacaNav)
                 .WithMany(r => r.Funcionarios)
@@ -54,7 +54,21 @@ namespace TchaComBack.Data
             modelBuilder.Entity<UsuariosModel>()
                 .HasOne(u => u.Setor)
                 .WithMany(s => s.Usuarios)
-                .HasForeignKey(s => s.SetorId)
+                .HasForeignKey(u => u.SetorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UsuariosModel>()
+                .HasOne(u => u.Funcionario)
+                .WithMany(f => f.UsuariosVinculados)
+                .HasForeignKey(u => u.Matricula)
+                .HasPrincipalKey(f => f.Matricula) 
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ExtratoPontoModel>()
+                .HasOne(ep => ep.Funcionario)
+                .WithMany(f => f.ExtratosDePonto)
+                .HasForeignKey(ep => ep.Matricula)
+                .HasPrincipalKey(f => f.Matricula)  
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

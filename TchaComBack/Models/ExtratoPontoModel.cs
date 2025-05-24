@@ -8,8 +8,7 @@ namespace TchaComBack.Models
     {
         public int Id { get; set; }
 
-        [StringLength(6, ErrorMessage = "A matrícula deve ter exatamente 6 caracteres.")]
-        public string? Matricula { get; set; } 
+        public int? Matricula { get; set; } 
 
         public DateTime DataBatida { get; set; }
 

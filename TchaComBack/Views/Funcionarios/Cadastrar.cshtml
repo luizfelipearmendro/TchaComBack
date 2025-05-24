@@ -277,7 +277,7 @@
             if (!matriculaInput.value) {
                 // Gera um número aleatório de 6 dígitos
                 const numeroAleatorio = Math.floor(100000 + Math.random() * 900000);
-                matriculaInput.value = numeroAleatorio.toString(); // Garante que seja string
+                matriculaInput.value = numeroAleatorio
             }
 
             this.submit(); // Envia o formulário após preencher a matrícula

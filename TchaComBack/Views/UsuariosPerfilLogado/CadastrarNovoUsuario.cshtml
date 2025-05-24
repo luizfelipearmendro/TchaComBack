@@ -73,6 +73,7 @@
                     <option value="">Selecione</option>
                     <option value="1">Administrador</option>
                     <option value="2">Coordenador</option>
+                    <option value="3">Padrão</option>
                 </select>
             </div>
 
@@ -90,6 +91,8 @@
                 <span class="input-group-text cursor-pointer" onclick="togglePassword()">
                     <i class="bi bi-eye-fill" id="eye-icon"></i>
                 </span>
+                    <input type="hidden" asp-for="Matricula" id="matriculaHidden" />
+
             </div>
                 <div class="form-example">
                     <label for="Confirmacao">Atenção:</label>
