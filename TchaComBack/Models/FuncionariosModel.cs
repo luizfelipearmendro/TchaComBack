@@ -68,6 +68,24 @@ namespace TchaComBack.Models
         [Required]
         public int? Matricula { get; set; }
 
+
+        // crud
+        public void Desativar()
+        {
+            this.Ativo = 'N';
+        }
+
+        public void Reativar()
+        {
+            this.Ativo = 'S';
+        }
+
+        public bool EstaAtivo()
+        {
+            return this.Ativo == 'S';
+        }
+
+
         // Relacionamentos
 
         [InverseProperty("Funcionario")]
@@ -87,20 +105,5 @@ namespace TchaComBack.Models
 
         [ValidateNever]
         public UsuariosModel UsuarioResponsavel { get; set; }
-
-        public void Desativar()
-        {
-            this.Ativo = 'N';
-        }
-
-        public void Reativar()
-        {
-            this.Ativo = 'S';
-        }
-
-        public bool EstaAtivo()
-        {
-            return this.Ativo == 'S';
-        }
     }
 }

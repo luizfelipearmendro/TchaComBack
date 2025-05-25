@@ -337,7 +337,14 @@ namespace TchaComBack.Controllers
                 if (usuario != null)
                 {
                     usuario.Confirmado = novoStatus;
-                    usuario.Ativo = 'N';
+                    if(novoStatus == 0 || novoStatus == 1)
+                    {
+                        usuario.Ativo = 'S';
+                    }
+                    else
+                    {
+                        usuario.Ativo = 'N';
+                    }
                 }
             }
 
