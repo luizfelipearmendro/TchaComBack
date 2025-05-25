@@ -297,37 +297,7 @@ namespace TchaComBack.Controllers
 
                 if (dbconsult.TipoPerfil == 2)
                 {
-                    string senhaPadrao = "abc123";
-                    string salt = Utilitarios.GerarSalt();
-                    string hashSenha = Utilitarios.GerarHashSenha(senhaPadrao, salt);
-
-                    var usuarioBase = new UsuariosModel
-                    {
-                        Email = func.Email,
-                        Senha = hashSenha,
-                        NomeCompleto = func.Nome,
-                        TipoPerfil = 3, 
-                        SetorId = func.SetorId,
-                        Matricula = func.Matricula,
-                        DataCadastro = DateTime.Now,
-                        UltimoAcesso = DateTime.MinValue,
-                        DataHoraEsqueceuSenha = DateTime.MinValue,
-                        Confirmado = 1,
-                        Hash = Guid.NewGuid().ToString(),
-                        Salt = salt,
-                        Ativo = 'S'
-                    };
-
-                    var usuarioExistente = db.Usuarios.FirstOrDefault(u => u.Matricula == func.Matricula);
-                    if (usuarioExistente == null)
-                    {
-                        db.Usuarios.Add(usuarioBase);
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        TempData["MensagemAlerta"] = "Já existe um usuário com esta matrícula.";
-                    }
+                    CadastrarUsuarioBase(func);
                 }
 
                 int totalAntes = db.Funcionarios.Count(f => f.Ativo == 'S') - 1;
@@ -368,6 +338,43 @@ namespace TchaComBack.Controllers
             }
         }
 
+
+        public void CadastrarUsuarioBase(FuncionariosModel func)
+        {
+            string senhaPadrao = "abc123";
+            string salt = Utilitarios.GerarSalt();
+            string hashSenha = Utilitarios.GerarHashSenha(senhaPadrao, salt);
+
+            var usuarioBase = new UsuariosModel
+            {
+                Email = func.Email,
+                Senha = hashSenha,
+                NomeCompleto = func.Nome,
+                TipoPerfil = 3,
+                SetorId = func.SetorId,
+                Matricula = func.Matricula,
+                DataCadastro = DateTime.Now,
+                UltimoAcesso = DateTime.MinValue,
+                DataHoraEsqueceuSenha = DateTime.MinValue,
+                Confirmado = 1,
+                Hash = Guid.NewGuid().ToString(),
+                Salt = salt,
+                Ativo = 'S'
+            };
+
+
+            var usuarioExistente = db.Usuarios.FirstOrDefault(u => u.Matricula == func.Matricula);
+            if (usuarioExistente == null)
+            {
+                db.Usuarios.Add(usuarioBase);
+                db.SaveChanges();
+            }
+            else
+            {
+                TempData["MensagemAlerta"] = "Já existe um usuário com esta matrícula.";
+            }
+
+        }
 
 
         public IActionResult Desativar(int id, int setorId)

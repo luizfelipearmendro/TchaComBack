@@ -37,21 +37,7 @@ namespace TchaComBack.Controllers
                     }
 
 
-                    // 0 - usuário com perfil ainda não confirmado pelo adm
-                    // 1 - usuário com perfil confirmado pelo adm
-                    // 2 - usuário com perfil bloqueado pelo adm
-                    if (usuario.Confirmado == 0)
-                    {
-                        TempData["MensagemErro"] = $"Desculpe! O seu acesso ainda não foi liberado pelo administrador.";
-                        return View("Index");
-                    }
-                    else if (usuario.Confirmado == 2)
-                    {
-                        TempData["MensagemErro"] = $"Desculpe! O seu acesso foi recusado pelo administrador.";
-                        return View("Index");
-                    }
-                    else
-                    {
+                  
 
                         if (senhaHash == usuario.Senha)
                         {
@@ -73,7 +59,7 @@ namespace TchaComBack.Controllers
                             return View("Index");
                         }
                     }
-                }
+                
 
                 TempData["MensagemErro"] = $"Ops, usuário não encontrado!";
                 return View("Index");

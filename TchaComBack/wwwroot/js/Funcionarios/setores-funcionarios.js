@@ -222,15 +222,40 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Atualiza o campo final antes do submit
-    const form = document.getElementById('formCompleto');
-    form.addEventListener('submit', function (e) {
-        if (!cargoInputGroup.classList.contains('d-none')) {
+    document.getElementById("formCompleto").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const matriculaInput = document.getElementById("matriculaHidden");
+        const cargoInputGroup = document.getElementById("inputCargoGroup");
+        const cargoInput = document.getElementById("cargoInput");
+        const cargoSelectGroup = document.getElementById("selectCargoGroup");
+        const cargoSelect = document.getElementById("cargoSelect");
+        const cargoFinal = document.getElementById("cargoFinal");
+
+        if (!cargoInputGroup.classList.contains("d-none")) {
+            if (!cargoInput.value.trim()) {
+                alert("Por favor, informe o cargo.");
+                return;
+            }
+
             cargoFinal.value = cargoInput.value;
-        } else if (!cargoSelectGroup.classList.contains('d-none')) {
+        } else if (!cargoSelectGroup.classList.contains("d-none")) {
+            if (!cargoSelect.value.trim()) {
+                alert("Por favor, selecione um cargo.");
+                return;
+            }
+
             cargoFinal.value = cargoSelect.value;
         }
+
+        if (!matriculaInput.value) {
+            const numeroAleatorio = Math.floor(100000 + Math.random() * 900000);
+            matriculaInput.value = numeroAleatorio;
+        }
+
+        this.submit(); 
     });
+
 });
 
 
@@ -241,7 +266,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const hoje = new Date();
         const ingresso = new Date(dataIngresso.value);
 
-        // Normalizar horas para evitar problemas com fuso/horário
         hoje.setHours(0, 0, 0, 0);
         ingresso.setHours(0, 0, 0, 0);
 
