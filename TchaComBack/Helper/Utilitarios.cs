@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 
 namespace TchaComBack.Helper
 {
@@ -91,6 +92,52 @@ namespace TchaComBack.Helper
             }
 
             return true;
+        }
+
+        public void EnviarEmail(string para, string assunto, string mensagemCorpo, bool isHtml = false)
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("TchaComBack", "tchacomback@gmail.com"));
+            message.To.Add(new MailboxAddress("tchacomback@gmail.com", para));
+            message.Subject = assunto;
+
+            var bodyBuilder = new BodyBuilder();
+
+            if (isHtml)
+            {
+                bodyBuilder.HtmlBody = mensagemCorpo;
+
+                if (mensagemCorpo.Contains("cid:logo"))
+                {
+                    var logoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "TCG.png");
+                    var logo = bodyBuilder.LinkedResources.Add(logoPath);
+                    logo.ContentId = "logo";
+                }
+            }
+            else
+            {
+                bodyBuilder.TextBody = mensagemCorpo;
+            }
+
+            message.Body = bodyBuilder.ToMessageBody();
+
+            using (var client = new MailKit.Net.Smtp.SmtpClient())
+            {
+                try
+                {
+                    client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                    client.Authenticate("tchacomback@gmail.com", "qark grzc ltgk arsz ");
+                    client.Send(message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Erro ao enviar e-mail: " + ex.Message);
+                }
+                finally
+                {
+                    client.Disconnect(true);
+                }
+            }
         }
     }
 }

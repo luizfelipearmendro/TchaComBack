@@ -97,30 +97,31 @@ namespace TchaComBack.Controllers
             return RedirectToAction("Index", "Login");
         }
 
-        public void EnviarEmail(string para, string assunto, string mensagemCorpo)
+        public void EnviarEmail(string para, string assunto, string mensagemCorpo, bool isHtml = false)
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("TchaComBack", "tchacomback@gmail.com"));
             message.To.Add(new MailboxAddress("tchacomback@gmail.com", para));
             message.Subject = assunto;
 
-            var bodyBuilder = new BodyBuilder
+            var bodyBuilder = new BodyBuilder();
+
+            if (isHtml)
             {
-                HtmlBody = @"
-                <html>
-                    <body>
-                        <img src='cid:logo' alt='Logo TCB' width='70' height='60' />
-                        <p>" + mensagemCorpo + @"</p>
-                    </body>
-                </html>"
-            };
+                bodyBuilder.HtmlBody = mensagemCorpo;
 
-            // Caminho físico da imagem
-            var logoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "TCG.png");
-
-            // Adicionando a logo como anexo inline
-            bodyBuilder.Attachments.Add(logoPath, new ContentType("image", "png") { Name = "TCG.png" })
-                         .ContentId = "logo";
+                // Se o corpo do e-mail faz referência a "cid:logo", então anexa a imagem
+                if (mensagemCorpo.Contains("cid:logo"))
+                {
+                    var logoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "TCG.png");
+                    var logo = bodyBuilder.LinkedResources.Add(logoPath);
+                    logo.ContentId = "logo";
+                }
+            }
+            else
+            {
+                bodyBuilder.TextBody = mensagemCorpo;
+            }
 
             message.Body = bodyBuilder.ToMessageBody();
 
@@ -128,7 +129,6 @@ namespace TchaComBack.Controllers
             {
                 try
                 {
-                    //Utilizar mailtrap.io ou mailgun
                     client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
                     client.Authenticate("tchacomback@gmail.com", "qark grzc ltgk arsz ");
                     client.Send(message);
@@ -140,7 +140,6 @@ namespace TchaComBack.Controllers
                 finally
                 {
                     client.Disconnect(true);
-                    client.Dispose();
                 }
             }
         }
@@ -182,7 +181,37 @@ namespace TchaComBack.Controllers
 
                     string resetLink = Url.Action("AtualizarSenha", "Usuarios", new { id = usuario.Id, hash = usuario.Hash }, protocol: HttpContext.Request.Scheme);
 
-                    EnviarEmail(usuario.Email, "Recuperação de Senha", $"Olá {usuario.NomeCompleto}, você solicitou a recuperação de sua senha, clique para <a href='{resetLink}'>Redefinir sua Senha</a>");
+                    string corpoEmail = $@"
+                                           <table style='width:100%; max-width:600px; font-family: Calibri, sans-serif; border:1px solid #ddd; padding:20px;'>
+                                                <tr>
+                                                    <td style='text-align:center; padding:30px 20px 10px 20px;'>
+                                                        <img src='https://i.postimg.cc/pTRwypv7/TCG.png' alt='Logo TCB' width='150' height='70' style='margin-bottom:10px;' />
+                                                        <h2 style='margin:0; color: #FFA500; font-size: 1.8rem;'>Redefinição de Senha</h2>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='padding:10px 0; font-size: 1.2rem; color:#333;'>
+                                                        Olá <strong>{usuario.NomeCompleto}</strong>,
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='padding:10px 0; font-size: 1rem; color:#333;'>
+                                                        Você solicitou a redefinição de senha.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='padding:20px 0; text-align:center; background: linear-gradient(90deg,#8A2BE2, #FFA500); color: white;'>
+                                                        <a href='{resetLink}' style='background-color:#3498db; color:#fff; padding:12px 20px; text-decoration:none; border-radius:5px; font-weight:bold; font-size: 1rem;'>Redefinir Senha</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='padding-top:30px; font-size:13px; color:#888; text-align:center;'>
+                                                        Se você não reconhece este e-mail, apenas ignore esta mensagem.
+                                                    </td>
+                                                </tr>
+                                            </table>";
+
+                    EnviarEmail(usuario.Email, "RedefinirSenha", corpoEmail,isHtml: true);
 
                     TempData["MensagemSucesso"] = "Email de recuperação enviado com sucesso!";
                     return RedirectToAction("Index", "Login");

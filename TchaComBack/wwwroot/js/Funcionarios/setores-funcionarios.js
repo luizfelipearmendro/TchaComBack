@@ -223,16 +223,41 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Atualiza o campo final antes do submit
-    const form = document.getElementById('formCompleto');
-    form.addEventListener('submit', function (e) {
+    document.getElementById("formCompleto").addEventListener("submit", function (event) {
+        event.preventDefault(); // Impede o envio imediato
+
+        const matriculaInput = document.getElementById("matriculaHidden");
+        const cargoInputGroup = document.getElementById('inputCargoGroup');
+        const cargoInput = document.getElementById('cargoInput');
+        const cargoSelectGroup = document.getElementById('selectCargoGroup');
+        const cargoSelect = document.getElementById('cargoSelect');
+        const cargoFinal = document.getElementById('cargoFinal');
+
+        // Preenche cargoFinal
         if (!cargoInputGroup.classList.contains('d-none')) {
+            if (!cargoInput.value.trim()) {
+                alert("Por favor, informe o cargo.");
+                return;
+            }
             cargoFinal.value = cargoInput.value;
         } else if (!cargoSelectGroup.classList.contains('d-none')) {
+            if (!cargoSelect.value.trim()) {
+                alert("Por favor, selecione um cargo.");
+                return;
+            }
             cargoFinal.value = cargoSelect.value;
         }
-    });
-});
 
+        // Preenche matrícula se necessário
+        if (!matriculaInput.value) {
+            const numeroAleatorio = Math.floor(100000 + Math.random() * 900000);
+            matriculaInput.value = numeroAleatorio;
+        }
+
+        this.submit(); // Agora sim envia o formulário completo
+    });
+
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     const dataIngresso = document.getElementById('dataIngresso');

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Identity.Client;
+using MimeKit;
 using System;
 using System.Data;
 using TchaComBack.Data;
@@ -280,7 +281,7 @@ namespace TchaComBack.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                {
+               {
                     TempData["MensagemErro"] = "Dados inválidos!";
                     return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
                 }
@@ -317,6 +318,49 @@ namespace TchaComBack.Controllers
                         Salt = salt,
                         Ativo = 'S'
                     };
+
+                    string resetLink = Url.Action("Index", "Login", new { id = usuarioBase.Id }, protocol: HttpContext.Request.Scheme);
+
+                    string corpoEmail = $@"
+                                            <table style='width:100%; max-width:600px; font-family:Calibri, sans-serif; border:1px solid #ddd; padding:20px;'>
+                                                <tr>
+                                                    <td style='text-align:center; padding:30px 20px 10px 20px;'>
+                                                        <img src='https://i.postimg.cc/pTRwypv7/TCG.png' alt='Logo TCB' width='150' height='80' style='margin-bottom:10px;' />
+                                                        <h2 style='margin:0; color: #FFA500; font-size:1.8rem;'>Bem-vindo ao Sistema</h2>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='padding:10px 0; font-size:1.2rem; color:#333;'>
+                                                        Olá <strong>{usuarioBase.NomeCompleto}</strong>,
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='padding:10px 0; font-size:1rem; color:#333;'>
+                                                        Seu acesso ao sistema foi criado com sucesso. Utilize os dados abaixo para fazer login:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='padding:10px 0;font-size:1.2rem;'>
+                                                        <strong>E-mail:</strong>{usuarioBase.Email}<br/>
+                                                        <strong>Senha:</strong> abc123
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='padding:20px 0; text-align:center;'>
+                                                        <a href='{resetLink}' style='background: linear-gradient(90deg,#8A2BE2, #FFA500); color: white; padding:12px 20px; text-decoration:none; border-radius:5px; font-weight:bold;font-size: 1rem;'>Acessar o sistema</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='padding-top:30px; font-size:13px; color:#888; text-align:center;'>
+                                                        Se você não reconhece este e-mail, apenas ignore esta mensagem.
+                                                    </td>
+                                                </tr>
+                                            </table>";
+
+                    var utilitarios = new Utilitarios();
+                    utilitarios.EnviarEmail(usuarioBase.Email, "Login do Funcionário", corpoEmail, isHtml: true);
+
+                    //TempData["MensagemSucesso"] = "Email com o login do funcionário, enviado com sucesso!";
 
                     var usuarioExistente = db.Usuarios.FirstOrDefault(u => u.Matricula == func.Matricula);
                     if (usuarioExistente == null)
@@ -359,7 +403,7 @@ namespace TchaComBack.Controllers
                 {
                     TempData["MensagemSucesso"] = "Funcionário e Usuário Base cadastrado com sucesso!";
                 }
-                 return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
+                return RedirectToAction("Index", "Funcionarios", new { id = func.SetorId });
             }
             catch (Exception erro)
             {
@@ -367,8 +411,6 @@ namespace TchaComBack.Controllers
                 return RedirectToAction("Index", "Funcionarios");
             }
         }
-
-
 
         public IActionResult Desativar(int id, int setorId)
         {
@@ -417,6 +459,7 @@ namespace TchaComBack.Controllers
                 return Redirect($"/Funcionarios/Index/{setorId}");
             }
         }
+
         public IActionResult Reativar(int id, int setorId)
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");
