@@ -900,3 +900,8 @@ font-family: "Montserrat", sans-serif;
 #btnImprimir{
 margin-left: 50px;
 }
+
+.card-funcionario.coordenador {
+    border: 2px solid #daa520;
+    background-color: #fdefdb;
+}

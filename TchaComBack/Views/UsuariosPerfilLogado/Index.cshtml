@@ -287,7 +287,7 @@
                                 <p><span>Ativo</span> <span class="card-dado">@(usuario.Ativo == 'S' ? "Sim" : "Não")</span></p>
                             </div>
                             <div class="card-footer">
-                                <small class="text-body-secondary">Último acesso a <strong>@usuario.UltimoAcesso</strong> </small>
+                                <small class="text-body-secondary">Último acesso: <strong>@(usuario.UltimoAcesso == DateTime.MinValue ? "Ainda não Acessado" : usuario.UltimoAcesso)</strong> </small>
                             </div>
                         }
                         else

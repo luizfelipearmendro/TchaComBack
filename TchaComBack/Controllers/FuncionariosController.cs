@@ -65,6 +65,7 @@ namespace TchaComBack.Controllers
                 .Include(f => f.RacaNav)
                 .Include(f => f.EstadoCivilNav)
                 .Where(f => f.SetorId == id);
+
                 //.Where(f => f.UsuarioResponsavelId  == sessionIdUsuario);
 
             if (!string.IsNullOrEmpty(searchString))
@@ -325,8 +326,8 @@ namespace TchaComBack.Controllers
                                             <table style='width:100%; max-width:600px; font-family:Calibri, sans-serif; border:1px solid #ddd; padding:20px;'>
                                                 <tr>
                                                     <td style='text-align:center; padding:30px 20px 10px 20px;'>
-                                                        <img src='https://i.postimg.cc/pTRwypv7/TCG.png' alt='Logo TCB' width='150' height='80' style='margin-bottom:10px;' />
-                                                        <h2 style='margin:0; color: #FFA500; font-size:1.8rem;'>Bem-vindo ao Sistema</h2>
+                                                        <img src='https://i.postimg.cc/pTRwypv7/TCG.png' alt='Logo TCB' width='130' height='80' style='margin-bottom:10px;' />
+                                                        <h2 style='margin:0; color: #FFA500; font-size:2rem;'><strong>Bem-vindo ao Sistema</strong></h2>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -423,13 +424,23 @@ namespace TchaComBack.Controllers
 
             try
             {
+                var cargoCoord = db.Funcionarios
+                                   .Where(f => f.Id == id)
+                                   .Select(f => f.Cargo)
+                                   .FirstOrDefault();
+
+                if (cargoCoord != null && cargoCoord.IndexOf("coordenador", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    TempData["MensagemErro"] = "Atenção! O funcionário que está tentando desativar é o coordenador do setor, contate o RH para efetuar a desativação.";
+                    return RedirectToAction("Funcionarios");
+                }
+
                 bool desativado = funcionariosRepositorio.Desativar(id);
 
                 int totalAntes = db.Funcionarios.Count(f => f.Ativo == 'S');
                 int totalDepois = totalAntes - 1;
 
                 double porcentagemVariacao = 0;
-
                 if (totalAntes > 0)
                 {
                     porcentagemVariacao = ((double)(totalDepois - totalAntes) / totalAntes) * 100;
@@ -438,14 +449,7 @@ namespace TchaComBack.Controllers
                 string cacheKey = "PorcentagemAumentoFuncionarios";
                 _cache.Set(cacheKey, porcentagemVariacao, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1)));
 
-                if (desativado)
-                {
-                    TempData["MensagemSucesso"] = "Funcionário desativado com sucesso!";
-                }
-                else
-                {
-                    TempData["MensagemErro"] = "Erro ao desativar o funcionário.";
-                }
+                TempData["MensagemSucesso"] = "Funcionário desativado com sucesso!";
 
                 if (setorId == 0)
                 {

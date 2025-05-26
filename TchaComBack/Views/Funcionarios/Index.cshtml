@@ -247,8 +247,10 @@
 
             </div>
             <div class="flex-body-funcionarios">
-                @foreach (var funcionario in Model.Funcionarios)
+                @foreach (var funcionario in Model.Funcionarios.OrderBy(f => f.DataCadastro))
                 {
+                    var statusClass = funcionario.Ativo != 'S' ? "inativo" : "ativo";
+                    var cargoClass = funcionario.Cargo?.ToLower().Contains("coordenador") == true ? "coordenador" : "";
                     var acaoHtml = funcionario.Ativo == 'S'
                     ? $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalDesativarFuncionario' func-id='{funcionario.Id}' func-nome='{funcionario.Nome}' data-setor='{funcionario.SetorId}'>Desativar</a>"
                     : $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalReativarFuncionario' data-id='{funcionario.Id}' data-nome='{funcionario.Nome}' data-setor='{funcionario.SetorId}'>Reativar</a>";
@@ -265,8 +267,8 @@
                     </div>
                     </div>";
 
-                    <div class="card-funcionario @(funcionario.Ativo != 'S' ? "inativo" : "ativo")">
-
+                    @* <div class="card-funcionario @(funcionario.Ativo != 'S' ? "inativo" : "ativo")"> *@
+                    <div class="card-funcionario @statusClass @cargoClass">
                         <div class="flex-imagem-funcionario">
                             <div class="flex-botao-edition">
                                 <button type="button"
@@ -294,7 +296,7 @@
                         <div class="flex-body-card">
                             @if (funcionario.Ativo == 'S')
                             {
-                            <div class="flex-onda"></div>
+                                <div class="flex-onda"></div>
 
                            
                                 <div class="body-card ">

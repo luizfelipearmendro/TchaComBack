@@ -291,6 +291,12 @@ namespace TchaComBack.Controllers
 
             var usuario = db.Usuarios.FirstOrDefault(u => u.Id == model.Id && u.Hash == model.Hash);
 
+            if (!Utilitarios.SenhaEhForte(usuario.Senha, out string mensagemErro))
+            {
+                TempData["MensagemErro"] = mensagemErro;
+                return RedirectToAction("AtualizarSenha", "UsuariosPerfilLogado");
+            }
+
             if (usuario != null)
             {
                 if (model.NovaSenha == model.ConfirmarSenha)
