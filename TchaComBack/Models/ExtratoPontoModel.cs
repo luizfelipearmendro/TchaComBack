@@ -11,13 +11,19 @@ namespace TchaComBack.Models
 
         public DateTime DataBatida { get; set; }
 
-        public TimeSpan? HoraEntrada1 { get; set; }
+        public TimeOnly? HoraEntrada1 { get; set; } //entrada manhã
 
-        public TimeSpan? HoraSaida1 { get; set; }
+        public TimeOnly? HoraSaida1 { get; set; } //saida manhã
 
-        public TimeSpan? HoraEntrada2 { get; set; }
+        public TimeOnly? HoraEntrada2 { get; set; } //entrada tarde
 
-        public TimeSpan? HoraSaida2 { get; set; }
+        public TimeOnly? HoraSaida2 { get; set; }   //saída tarde
+
+        public TimeOnly? HorasFaltas { get; set; }
+
+        public TimeOnly? HorasExtras { get; set; }
+
+        public string? Justificativa { get; set; } // justificativa para faltas ou atrasos
 
         [ForeignKey("Matricula")]
         [ValidateNever]

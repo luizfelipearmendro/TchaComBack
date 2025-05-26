@@ -24,10 +24,10 @@
 
             <div class="input-group mb-3">
                 <span class="input-group-text"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      data-bs-custom-class="custom-tooltip"
-                      data-bs-title="Nome completo do usuário">
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-custom-class="custom-tooltip"
+                data-bs-title="Nome completo do usuário">
                     <i class="bi bi-person-fill"></i>
                 </span>
                 <input type="text" class="form-control" value="@ViewBag.NomeCompleto" readonly />
@@ -35,10 +35,10 @@
 
             <div class="input-group mb-3">
                 <span class="input-group-text"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      data-bs-custom-class="custom-tooltip"
-                      data-bs-title="E-mail do usuário">
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-custom-class="custom-tooltip"
+                data-bs-title="E-mail do usuário">
                     <i class="bi bi-envelope-fill"></i>
                 </span>
                 <input type="email" class="form-control" value="@ViewBag.Email" readonly />
@@ -46,13 +46,25 @@
 
             <div class="input-group mb-3">
                 <span class="input-group-text"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      data-bs-custom-class="custom-tooltip"
-                      data-bs-title="Tipo de perfil do usuário">
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-custom-class="custom-tooltip"
+                data-bs-title="Tipo de perfil do usuário">
                     <i class="bi bi-person-fill-gear"></i>
                 </span>
-                <input type="text" class="form-control" value="@(ViewBag.TipoPerfil == 1 ? "Administrador" : "Coordenador")" readonly />
+                @if(ViewBag.TipoPerfil == 1)
+                {
+                    <input type="text" class="form-control" value="Administrador" readonly />
+                }else
+                if(ViewBag.TipoPerfil == 2)
+                {
+                    <input type="text" class="form-control" value="Coordenador" readonly />
+                }
+                else
+                {
+                    <input type="text" class="form-control" value="Funcionário" readonly />
+                }
+
             </div>
 
             <div class="input-group mb-3">

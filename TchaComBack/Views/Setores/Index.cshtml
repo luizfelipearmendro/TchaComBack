@@ -23,7 +23,7 @@
         </div>
         <script>
             setTimeout(() => {
-                document.getElementById("successAlert").style.display = 'none';
+            document.getElementById("successAlert").style.display = 'none';
             }, 5000);
         </script>
     }
@@ -36,7 +36,7 @@
         </div>
         <script>
             setTimeout(() => {
-                document.getElementById("errorAlert").style.display = 'none';
+            document.getElementById("errorAlert").style.display = 'none';
             }, 5000);
         </script>
     }
@@ -64,7 +64,7 @@
             return texto;
         }
     }
-   
+
         <section class="sessao-setores">
         <form asp-controller="Setores" asp-action="Index" method="get" class="form-inline mb-4 text-center filtro p-4 border-2 " id="id-filtro">
             <h1>Setores</h1>
@@ -72,21 +72,21 @@
                 <div class="flex-input-group filtro-content">
                     <div class="form-floating mb-3">
                         @Html.DropDownList(
-                                 "categoriaId",
-                                 ViewBag.CategoriasOpcoes as SelectList,
-                                 "Todas as Categorias",
-                                 new { @class = "form-select", id = "floatingCategoria" }
-                                 )
+                                          "categoriaId",
+                                          ViewBag.CategoriasOpcoes as SelectList,
+                                          "Todas as Categorias",
+                                          new { @class = "form-select", id = "floatingCategoria" }
+                                          )
                         <label for="floatingCategoria">Categorias</label>
                     </div>
 
                     <div class="form-floating mb-3">
                         @Html.DropDownList(
-                                 "ativo",
-                                 ViewBag.StatusOpcoes as SelectList,
-                                 "Todos",
-                                 new { @class = "form-select", id = "floatingCategoria" }
-                                 )
+                                          "ativo",
+                                          ViewBag.StatusOpcoes as SelectList,
+                                          "Todos",
+                                          new { @class = "form-select", id = "floatingCategoria" }
+                                          )
                         <label for="floatingAtivo">Status</label>
                     </div>
                 </div>
@@ -95,12 +95,15 @@
                         <input name="searchString" value="@ViewBag.SearchString" type="text" class="form-control" id="floatingInput" placeholder="Buscar setor...">
                         <label for="floatingInput">Buscar setor...</label>
                     </div>
-                    <a role="button" class="botao-adicionar mb-2 " style="color:white;" data-bs-toggle="modal" data-bs-target="#modalCadastrarSetor">
-                        <span>
-                            <i class="bi bi-building-fill-add"></i>
-                            Cadastrar
-                        </span>
-                    </a>
+                    @if(ViewBag.TipoPerfil == 1)
+                    {
+                        <a role="button" class="botao-adicionar mb-2 " style="color:white;" data-bs-toggle="modal" data-bs-target="#modalCadastrarSetor">
+                            <span>
+                                <i class="bi bi-building-fill-add"></i>
+                                Cadastrar
+                            </span>
+                        </a>
+                    }
                     <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@( new ViewDataDictionary(ViewData){
                              { "Texto", "Filtrar" },
                              { "Url", "/Login" },
