@@ -65,6 +65,8 @@ namespace TchaComBack.Models
 
         public char Ativo { get; set; } = 'S';
 
+        public string TipoContrato { get; set; }
+
         [Required]
         public int? Matricula { get; set; }
 

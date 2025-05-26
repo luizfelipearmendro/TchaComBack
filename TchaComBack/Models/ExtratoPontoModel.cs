@@ -7,17 +7,20 @@ namespace TchaComBack.Models
     {
         public int Id { get; set; }
 
-        public int? Matricula { get; set; } 
+        public int? Matricula { get; set; }
 
         public DateTime DataBatida { get; set; }
 
-        public TimeSpan? HoraEntrada1 { get; set; }
-
-        public TimeSpan? HoraSaida1 { get; set; }
-
-        public TimeSpan? HoraEntrada2 { get; set; }
-
-        public TimeSpan? HoraSaida2 { get; set; }
+        // Todos os horários agora são inteiros representando minutos (por exemplo)
+        public int? HoraEntrada1 { get; set; }
+        public int? HoraSaida1 { get; set; }
+        public int? HoraEntrada2 { get; set; }
+        public int? HoraSaida2 { get; set; }
+        public int? HorasTrabalhadas { get; set; }
+        public int? HorasExtras { get; set; }
+        public int? HorasNegativas { get; set; }
+        public int? HorasPositivas { get; set; }
+        public int? HorasACumprir { get; set; }
 
         [ForeignKey("Matricula")]
         [ValidateNever]

@@ -198,7 +198,6 @@ namespace TchaComBack.Controllers
                 }
             }
 
-            // === VALIDAÇÃO DE SENHA ===
             var salt = Utilitarios.GerarSalt();
             usuario.Salt = salt;
 

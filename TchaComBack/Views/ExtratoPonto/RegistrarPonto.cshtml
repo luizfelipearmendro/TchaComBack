@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@model ExtratoPontoViewModel
+@{
+    <title>@ViewData["Title"] </title>
+}
+
+<link href="~/css/ExtratoPonto/extratoponto.css" rel="stylesheet" />
+
+
+@if (TempData["Mensagem"] != null)
+{
+    <p class="alert alert-success">@TempData["Mensagem"]</p>
+}
+
+@if (TempData["Erro"] != null)
+{
+    <p class="alert alert-danger">@TempData["Erro"]</p>
+}
+<section class="flex-sessao-extratoponto">
+
+    <form id="formBatida" asp-controller="ExtratoPonto" asp-action="RegistrarBatida" method="post">
+        <div class="flex-btn-ponto">
+            <div id="btnBaterPonto" class="btn-bater-ponto">
+                <button type="button">Arraste para lado</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="flex-espelhoponto">
+        <h2>Bem-vindo(a), @ViewBag.Email</h2>
+        <h3>Espelho do ponto de hoje</h3>
+
+      
+    </div>
+
+</section>
+
+@section Scripts {
+    <script>
+        const btn = document.getElementById('btnBaterPonto');
+        const btnText = btn.querySelector('button');
+        const form = document.getElementById('formBatida');
+
+        let startX = null, isDragging = false;
+
+        btn.addEventListener('mousedown', function (e) {
+            startX = e.clientX;
+            isDragging = false;
+            btn.classList.remove('batidada');
+            btn.classList.add('ativo');
+            btnText.textContent = 'Segure e arraste';
+        });
+
+        window.addEventListener('mousemove', function (e) {
+            if (startX === null) return;
+
+            const diff = e.clientX - startX;
+            if (Math.abs(diff) > 50 && !isDragging) {
+                isDragging = true;
+                btn.classList.remove('ativo');
+                btn.classList.add('batidada');
+                btnText.textContent = 'Batida efetuada';
+
+                // Submete o formulário após pequeno delay
+                setTimeout(() => {
+                    form.submit();
+                }, 300);
+            }
+        });
+
+        window.addEventListener('mouseup', function () {
+            if (startX !== null && !isDragging) {
+                resetBtn();
+            }
+            startX = null;
+        });
+
+        function resetBtn() {
+            btn.classList.remove('ativo', 'batidada');
+            btnText.textContent = 'Clique no botão para bater o ponto';
+        }
+    </script>
+}

@@ -222,6 +222,21 @@
                         <input type="text" id="cargoInput" class="form-control" placeholder="Informe o cargo" />
                     </div>
 
+                    <div class="input-group mb-3">
+                        <label class="input-group-text"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               data-bs-custom-class="custom-tooltip"
+                               data-bs-title="Selecione o Tipo Contrato"
+                               for="Tipo Contrato">
+                            <i class="fa-solid fa-heart"></i>
+                        </label>
+                        <select asp-for="TipoContrato" class="form-select">
+                            <option value="">Selecione o Estado Civil</option>
+                            <option value="1">CLT</option>
+                            <option value="2">Aprendiz/Estagiario</option>
+                        </select>
+                    </div>
                     <div class="input-group mb-3" style="margin-top: 1rem;">
                         <span class="input-group-text" 
                                 data-bs-toggle="tooltip" 
