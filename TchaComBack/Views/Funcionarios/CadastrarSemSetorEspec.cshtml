@@ -198,21 +198,24 @@
             <div id="step3" class="step" style="display: none;">
                 <h3>Etapa 3: Informações Finais</h3>
 
-                    <!-- Campo oculto real, que será enviado -->
-                    <input type="hidden" asp-for="Cargo" id="cargoFinal" />
+                <input type="hidden" asp-for="Cargo" id="cargoFinal" />
 
-                    <!-- Select para menores de idade -->
-                    <div id="selectCargoGroup" class="d-none">
+                <div id="selectCargoGroup" class="d-none input-group mb-3">
                         <select id="cargoSelect" class="form-select">
                             <option value="">Selecione o cargo</option>
                             <option value="Jovem Aprendiz">Jovem Aprendiz</option>
                             <option value="Estágio">Estágio</option>
-                            <!-- outros cargos -->
                         </select>
                     </div>
 
-                    <!-- Input para maiores de idade -->
-                    <div id="inputCargoGroup" class="d-none">
+                    <div id="inputCargoGroup" class="d-none input-group mb-3">
+                        <span class="input-group-text"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              data-bs-title="Informe o Celular">
+                              <i class="fas fa-user"></i>
+                        </span>
                         <input type="text" id="cargoInput" class="form-control" placeholder="Informe o cargo" />
                     </div>
                     <div class="input-group mb-3">

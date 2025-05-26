@@ -258,8 +258,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-});
-
 document.addEventListener('DOMContentLoaded', function () {
     const dataIngresso = document.getElementById('dataIngresso');
 
