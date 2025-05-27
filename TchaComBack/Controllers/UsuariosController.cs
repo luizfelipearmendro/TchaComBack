@@ -200,8 +200,8 @@ namespace TchaComBack.Controllers
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style='padding:20px 0; text-align:center; background: linear-gradient(90deg,#8A2BE2, #FFA500); color: white;'>
-                                                        <a href='{resetLink}' style='background-color:#3498db; color:#fff; padding:12px 20px; text-decoration:none; border-radius:5px; font-weight:bold; font-size: 1rem;'>Redefinir Senha</a>
+                                                    <td style='padding:20px 0; text-align:center;'>
+                                                        <a href='{resetLink}' style='linear-gradient(90deg,#8A2BE2, #FFA500); color: white; padding:12px 20px; text-decoration:none; border-radius:5px; font-weight:bold; font-size: 1rem;'>Redefinir Senha</a>
                                                     </td>
                                                 </tr>
                                                 <tr>

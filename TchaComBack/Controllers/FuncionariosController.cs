@@ -18,6 +18,7 @@ namespace TchaComBack.Controllers
         private readonly ApplicationDbContext db;
         private readonly IFuncionariosRepositorio funcionariosRepositorio;
         private readonly IMemoryCache _cache;
+
         public FuncionariosController(ApplicationDbContext db, IFuncionariosRepositorio _funcionariosRepositorio, IMemoryCache cache)
         {
             this.db = db;
