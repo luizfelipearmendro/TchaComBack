@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using TchaComBack.Repositories;
+using static System.Formats.Asn1.AsnWriter;
+using TchaComBack.Helper;
+using TchaComBack.Models;
 //using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +27,7 @@ builder.Services.AddSession();
 
 builder.Services.AddScoped<ISetoresRepositorio, SetoresRepositorio>();
 builder.Services.AddScoped<IFuncionariosRepositorio, FuncionariosRepositorio>();
-builder.Services.AddMemoryCache(); 
+builder.Services.AddMemoryCache();
 var app = builder.Build();
 
 app.Use(async (context, next) =>

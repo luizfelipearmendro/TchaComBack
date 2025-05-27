@@ -77,32 +77,26 @@ namespace TchaComBack.Migrations
                     b.Property<DateTime>("DataBatida")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("HoraEntrada1")
-                        .HasColumnType("int");
+                    b.Property<TimeOnly?>("HoraEntrada1")
+                        .HasColumnType("time");
 
-                    b.Property<int?>("HoraEntrada2")
-                        .HasColumnType("int");
+                    b.Property<TimeOnly?>("HoraEntrada2")
+                        .HasColumnType("time");
 
-                    b.Property<int?>("HoraSaida1")
-                        .HasColumnType("int");
+                    b.Property<TimeOnly?>("HoraSaida1")
+                        .HasColumnType("time");
 
-                    b.Property<int?>("HoraSaida2")
-                        .HasColumnType("int");
+                    b.Property<TimeOnly?>("HoraSaida2")
+                        .HasColumnType("time");
 
-                    b.Property<int?>("HorasACumprir")
-                        .HasColumnType("int");
+                    b.Property<TimeOnly?>("HorasExtras")
+                        .HasColumnType("time");
 
-                    b.Property<int?>("HorasExtras")
-                        .HasColumnType("int");
+                    b.Property<TimeOnly?>("HorasFaltas")
+                        .HasColumnType("time");
 
-                    b.Property<int?>("HorasNegativas")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HorasPositivas")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HorasTrabalhadas")
-                        .HasColumnType("int");
+                    b.Property<string>("Justificativa")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Matricula")
                         .HasColumnType("int");
@@ -190,10 +184,6 @@ namespace TchaComBack.Migrations
                     b.Property<string>("Sexo")
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
-
-                    b.Property<string>("TipoContrato")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UsuarioResponsavelId")
                         .HasColumnType("int");
