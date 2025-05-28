@@ -1,0 +1,80 @@
+﻿@model List<ConfiguracoesModel>
+@{
+    ViewData["Title"] = "Configurações";
+}
+
+<link href="~/css/Home/home.css" rel="stylesheet" />
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div id="successAlert" class="custom-alert success">
+        <span><strong>Sucesso!</strong> @TempData["MensagemSucesso"]</span>
+        <span class="closebtn" onclick="closeAlert('successAlert')">&times;</span>
+    </div>
+    <script>
+        setTimeout(() => {
+        document.getElementById("successAlert").style.display = 'none';
+        }, 5000);
+    </script>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div id="errorAlert" class="custom-alert error">
+        <span><strong>Atenção!</strong> @TempData["MensagemErro"]</span>
+        <span class="closebtn" onclick="closeAlert('errorAlert')">&times;</span>
+    </div>
+    <script>
+        setTimeout(() => {
+        document.getElementById("errorAlert").style.display = 'none';
+        }, 5000);
+    </script>
+}
+
+<h2>Configurações</h2>
+<a asp-controller="Configuracoes" asp-action="Criar" class="btn btn-primary mb-3">Nova Configuração</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Início</th>
+            <th>Intervalo</th>
+            <th>Fim</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NomeConfiguracao</td>
+                <td>@item.InicioExpediente</td>
+                <td>@item.IntervaloInicio - @item.IntervaloFim</td>
+                <td>@item.FimExpediente</td>
+                <td>
+                    @if (item.Ativo)
+                    {
+                        <span class="badge bg-success">Ativa</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inativa</span>
+                    }
+                </td>
+                <td>
+                    @if (!item.Ativo)
+                    {
+                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Ativar", new { id = item.Id })">Ativar</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-sm btn-outline-danger" href="@Url.Action("Desativar", new { id = item.Id })">Desativar</a>
+                    }
+                    <a class="btn btn-sm btn-secondary" href="@Url.Action("Editar", new { id = item.Id })">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

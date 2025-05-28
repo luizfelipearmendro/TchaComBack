@@ -1,0 +1,44 @@
+﻿@model ConfiguracoesModel
+@{
+    ViewData["Title"] = "Nova Configuração";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-controller="Configuracoes" asp-action="Criar" method="post">
+    <div class="mb-3">
+        <label>Nome</label>
+        <input asp-for="NomeConfiguracao" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Início Expediente</label>
+        <input asp-for="InicioExpediente" type="time" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Início Intervalo</label>
+        <input asp-for="IntervaloInicio" type="time" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Fim Intervalo</label>
+        <input asp-for="IntervaloFim" type="time" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Fim Expediente</label>
+        <input asp-for="FimExpediente" type="time" class="form-control" />
+    </div>
+    <div class="mb-3">
+    <label>Primeiro Dia de Expediente</label>
+        <select asp-for="PrimeiroDiaExpediente" class="form-control" asp-items="ViewBag.DiasSemana">
+            <option value="">Selecione</option>
+        </select>
+    </div>
+    <div class="mb-3">
+    <label>Último Dia de Expediente</label>
+        <select asp-for="UltimoDiaExpediente" class="form-control" asp-items="ViewBag.DiasSemana">
+            <option value="">Selecione</option>
+        </select>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a asp-controller="Configuracoes" asp-action="Index" class="btn btn-secondary">Voltar</a>
+</form>

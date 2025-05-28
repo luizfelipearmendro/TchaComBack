@@ -226,8 +226,8 @@
             @foreach (var usuario in Model.Usuarios)
             {
                 var acaoHtml = usuario.Ativo == 'S'
-                ? $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalDesativarFuncionario' func-id='{usuario.Id}' func-nome='{usuario.Email}' data-setor='{usuario.SetorId}'>Desativar</a>"
-                : $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalReativarFuncionario' data-id='{usuario.Id}' data-nome='{usuario.Email}' data-setor='{usuario.SetorId}'>Reativar</a>";
+                ? $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalDesativarUsuario' usuario-id='{usuario.Id}' usuario-nome='{usuario.NomeCompleto}'>Desativar</a>"
+                : $"<a role='button' class='rota-btn' data-bs-toggle='modal' data-bs-target='#modalReativarUsuario' data-id='{usuario.Id}' data-nome='{usuario.NomeCompleto}'>Reativar</a>";
 
 
                 var popoverHtml = $@"
@@ -278,7 +278,7 @@
                                         }
                                         else if (usuario.TipoPerfil == 3)
                                         {
-                                            @:Padrão
+                                            @:Funcionário
                                         }
                                     </span>
                                 </p>
@@ -330,5 +330,81 @@
             </ul>
         </nav>
     }
-
 </div>
+
+<div class="modal fade" id="modalDesativarUsuario" tabindex="-1" aria-labelledby="modalDesativarUsuarioLabel" aria-hidden="true" style="z-index:100000001;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-black" id="modalDesativarUsuarioLabel" style="font-weight:bold">Desativar Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-onda-header"></div>
+            <div class="modal-body text-black">
+                Tem certeza que deseja desativar o usuário <span id="modalUserName"></span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-step-secundario" data-bs-dismiss="modal">Cancelar</button>
+                <a id="confirmDesativeButton" role="button" class="btn btn-danger">Desativar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalReativarUsuario" tabindex="-1" aria-labelledby="modalReativarUsuarioLabel" aria-hidden="true" style="z-index:100000001;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-black" id="modalReativarUsuarioLabel" style="font-weight:bold">Reativar Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-onda-header"></div>
+
+            <div class="modal-body text-black">
+                Tem certeza que deseja reativar o usuário <span id="modalUserNameReativo"></span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-step-secundario  " data-bs-dismiss="modal">Cancelar</button>
+                <a id="confirmReativeButton" role="button" class="btn btn-warning">Reativar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", function (event) {
+            if (event.target.matches("[data-bs-target='#modalDesativarUsuario']")) {
+                var button = event.target;
+                var usuarioId = button.getAttribute('usuario-id');
+                var usuarioName = button.getAttribute('usuario-nome');
+                var modalUserName = document.getElementById('modalUserName');
+                var confirmDesativeButton = document.getElementById('confirmDesativeButton');
+
+                if (modalUserName && usuarioName) {
+                    modalUserName.textContent = usuarioName;
+                }
+                if (confirmDesativeButton && usuarioId) {
+                    confirmDesativeButton.href = '/UsuariosPerfilLogado/Desativar/' + usuarioId;
+                }
+            }
+        });
+
+        document.addEventListener("click", function (event) {
+            if (event.target.matches("[data-bs-target='#modalReativarUsuario']")) {
+                var button = event.target;
+                var usuarioIdReativo = button.getAttribute('data-id');
+                var usuarioName = button.getAttribute('data-nome');
+                var modalUserNameReativo = document.getElementById('modalUserNameReativo');
+                var confirmReativeButton = document.getElementById('confirmReativeButton');
+
+                if (modalUserNameReativo && usuarioName) {
+                    modalUserNameReativo.textContent = usuarioName;
+                }
+                if (confirmReativeButton && usuarioIdReativo) {
+                    confirmReativeButton.href = '/UsuariosPerfilLogado/Reativar/' + usuarioIdReativo;
+                }
+            }
+        });
+    });
+</script>

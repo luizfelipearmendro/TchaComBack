@@ -6,6 +6,7 @@ using System;
 using TchaComBack.Data;
 using TchaComBack.Helper;
 using TchaComBack.Models;
+using TchaComBack.Repositories;
 
 namespace TchaComBack.Controllers
 {
@@ -102,7 +103,6 @@ namespace TchaComBack.Controllers
             return View(viewModel);
         }
 
-
         public IActionResult MeusDados()
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");
@@ -123,6 +123,7 @@ namespace TchaComBack.Controllers
            
             return View();
         }
+
         public IActionResult CadastrarNovoUsuario()
         {
             var idUsuario = HttpContext.Session.GetInt32("idUsuario");
@@ -146,8 +147,6 @@ namespace TchaComBack.Controllers
 
             return View();
         }
-
-
 
         [HttpPost]
         public IActionResult CadastrarNovoUsuario(UsuariosModel usuario)
@@ -372,6 +371,80 @@ namespace TchaComBack.Controllers
 
             TempData["MensagemSucesso"] = "Confirmações atualizadas com sucesso!";
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Desativar(int id, string nome)
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios.Find(idUsuario);
+            if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
+                return RedirectToAction("Index", "Login");
+
+            var usuarioDesativado = db.Usuarios.FirstOrDefault(u => u.Id == id);
+
+            try
+            {
+                if(usuarioDesativado != null)
+                {
+                    if(usuarioDesativado.Id == idUsuario)
+                    {
+                        TempData["MensagemErro"] = "Não é possível desativar a si mesmo!";
+                        return RedirectToAction("Index", "UsuariosPerfilLogado");
+                    }
+                    if (usuarioDesativado.TipoPerfil == 1)
+                    {
+                        TempData["MensagemErro"] = "Não é possível desativar um usuário administrador!";
+                        return RedirectToAction("Index", "UsuariosPerfilLogado");
+                    }
+
+                    usuarioDesativado.Ativo = 'N';
+                    db.SaveChanges();
+                }
+
+                TempData["MensagemSucesso"] = "Usuário desativado com sucesso!";
+
+                return RedirectToAction("Index", "UsuariosPerfilLogado");
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não foi possível desativar o usuário. Detalhes do erro: {erro.Message}";
+                return RedirectToAction("Index", "UsuariosPerfilLogado");
+            }
+        }
+
+        public IActionResult Reativar(int id, string nome)
+        {
+            var idUsuario = HttpContext.Session.GetInt32("idUsuario");
+            if (idUsuario == null) return RedirectToAction("Index", "Login");
+
+            var dbconsult = db.Usuarios.Find(idUsuario);
+            if (dbconsult == null || dbconsult.Hash != HttpContext.Session.GetString("hash"))
+                return RedirectToAction("Index", "Login");
+
+            var usuarioReativado = db.Usuarios.FirstOrDefault(u => u.Id == id);
+
+            try
+            {
+                if (usuarioReativado != null)
+                {
+                    usuarioReativado.Ativo = 'S';
+                    db.SaveChanges();
+                    TempData["MensagemSucesso"] = "Usuário reativado com sucesso!";
+                    return RedirectToAction("Index", "UsuariosPerfilLogado");
+                }
+                else
+                {
+                    TempData["MensagemErro"] = "Erro ao reativar o usuário.";
+                    return RedirectToAction("Index", "UsuariosPerfilLogado");
+                }
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não foi possível reativar o usuário. Detalhes do erro: {erro.Message}";
+                return RedirectToAction("Index", "UsuariosPerfilLogado");
+            }
         }
     }
 }
