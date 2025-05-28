@@ -11,7 +11,7 @@ namespace TchaComBack.Data
 
         public DbSet<UsuariosModel> Usuarios { get; set; }
         public DbSet<FuncionariosModel> Funcionarios { get; set; }
-        public DbSet<ExtratoPontoModel> ExtratoPonto { get; set; }
+        public DbSet<ExtratoPontoModel> ExtratosPonto { get; set; }
         public DbSet<RacaModel> Raca { get; set; }
         public DbSet<EstadoCivilModel> EstadoCivil { get; set; }
         public DbSet<SetoresModel> Setores { get; set; }

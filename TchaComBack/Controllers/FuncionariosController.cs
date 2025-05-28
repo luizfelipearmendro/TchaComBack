@@ -387,6 +387,7 @@ namespace TchaComBack.Controllers
                                                 </tr>
                                                 <tr>
                                                     <td style='padding:10px 0;font-size:1.2rem;'>
+                                                        <strong>Matricula:</strong>{usuarioBase.Matricula}<br/>
                                                         <strong>E-mail:</strong>{usuarioBase.Email}<br/>
                                                         <strong>Senha:</strong> abc123
                                                     </td>
@@ -635,11 +636,6 @@ namespace TchaComBack.Controllers
 
                 return Redirect($"/Funcionarios/Index/{setorId}");
             }
-        }
-
-        public IActionResult GerarPDF(int id)
-        {
-            return View("FuncionariosPdf");
         }
 
     }

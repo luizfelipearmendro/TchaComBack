@@ -240,6 +240,20 @@ namespace TchaComBack.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult ValidarMatricula(int matricula)
+        {
+            var funcionario = db.Funcionarios.FirstOrDefault(f => f.Matricula == matricula);
+            if (funcionario == null)
+                return Json(new { success = false, message = "Matrícula não encontrada." });
+
+            return Json(new
+            {
+                success = true,
+                nome = funcionario.Nome,
+                email = funcionario.Email
+            });
+        }
 
         public IActionResult AtualizarSenha()
         {

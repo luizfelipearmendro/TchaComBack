@@ -47,7 +47,19 @@
         </div>
         <div class="menu-hamburger">
             <h2>TCB</h2>
-            <partial name="~/Views/Componentes/Menu-Hamburger/MenuHamburguer.cshtml" />
+             <partial name="~/Views/Componentes/Menu-Hamburger/MenuHamburguer.cshtml"
+             view-data=@(new ViewDataDictionary(ViewData)
+             {
+                 {
+                     "Links", new List<dynamic>
+                     {
+                         new { Texto = "Página Inicial", Url = Url.Action("Index", "Home"), SubLinks = new List<dynamic>() },
+                         new { Texto = "Serviços", Url = "", SubLinks = new List<dynamic> () },
+                         new { Texto = "Sobre Nós", Url = "", SubLinks = new List<dynamic> () },
+                         new { Texto = "Contatos", Url = "#", SubLinks = new List<dynamic> () }
+                     }
+                 }
+             }) />
         </div>
     </div>
     <div id="rolagem-animação">
@@ -69,8 +81,8 @@
                                     <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
                                              view-data=@(new ViewDataDictionary(ViewData)
                                              {
-                                             { "Texto", "Cadastrar-se" },
-                                             { "Url", "/Usuarios/Cadastrar" },
+                                             { "Texto", "Contate Agora!" },
+                                             { "Url", "https://wa.me/5565984152703?text=Vamos%20Tomar%20um%20Tcha!!%20,%20gostaria%20de%20mais%20informações%20sobre%20a%20TCB!" },
                                              { "ClasseExtra", "botao-cadastrar" },
                                              { "Id", "btn-cadastrar" },
                                              { "Elemento", "a"}

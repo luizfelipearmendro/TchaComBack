@@ -347,15 +347,13 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="modalLabel-@funcionario.Id">Ficha Cadastral do(a) Funcionário(a)</h1>
-                                    <a asp-controller="Funcionarios"
-                                       asp-action="GerarPDF"
-                                       asp-route-id="@funcionario.Id"
-                                       class="btn btn-sm btn-warning"
-                                       id="btnImprimir"
-                                       data-bs-toggle="tooltip"
-                                       data-bs-placement="top"
-                                       data-bs-title="Exportar Ficha do Funcionário"
-                                       target="_blank">
+                                    <a onclick="exportarFichaFuncionario(@funcionario.Id)"
+                                        class="btn btn-sm btn-warning"
+                                        id="btnImprimir"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Exportar Ficha do Funcionário"
+                                        target="_blank">
                                         <i class="bi bi-printer" style="font-size:17px"></i>
                                     </a>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -521,6 +519,7 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 <script>
         document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("click", function (event) {

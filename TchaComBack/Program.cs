@@ -6,6 +6,8 @@ using TchaComBack.Repositories;
 using static System.Formats.Asn1.AsnWriter;
 using TchaComBack.Helper;
 using TchaComBack.Models;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 //using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +30,7 @@ builder.Services.AddSession();
 builder.Services.AddScoped<ISetoresRepositorio, SetoresRepositorio>();
 builder.Services.AddScoped<IFuncionariosRepositorio, FuncionariosRepositorio>();
 builder.Services.AddMemoryCache();
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 var app = builder.Build();
 
 app.Use(async (context, next) =>
