@@ -268,7 +268,7 @@
                     </div>";
 
                     @* <div class="card-funcionario @(funcionario.Ativo != 'S' ? "inativo" : "ativo")"> *@
-                    <div class="card-funcionario @statusClass @cargoClass">
+                    <div class="card-funcionario @statusClass ">
                         <div class="flex-imagem-funcionario">
                             <div class="flex-botao-edition">
                                 <button type="button"
@@ -296,13 +296,12 @@
                         <div class="flex-body-card">
                             @if (funcionario.Ativo == 'S')
                             {
-                                <div class="flex-onda"></div>
+                                <div class="flex-onda @cargoClass"></div>
 
-                           
-                                <div class="body-card ">
+
+                                <div class="body-card @cargoClass ">
                                     <p><span>Nome</span> <span class="card-dado">@GetPrimeiroEUltimoNome(funcionario.Nome)</span></p>
                                     <p><span>Cargo</span> <span class="card-dado">@funcionario.Cargo</span></p>
-                                    <p><span>Email</span> <span class="card-dado">@funcionario.Email</span></p>
                                     <p><span>Telefone</span> <span class="card-dado">@funcionario.Celular</span></p>
                                     <p><span>Ativo</span> <span class="card-dado">@(funcionario.Ativo == 'S' ? "Sim" : "Não")</span></p>
                                     <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
@@ -327,7 +326,6 @@
                                 <div class="body-card-inativo placeholder-glow" >
                                     <p aria-hidden="true"><span class="placeholder " style="width: auto;">Nome</span> <span class="placeholder" style="width: auto;">@GetPrimeiroEUltimoNome(funcionario.Nome)</span></p>
                                     <p aria-hidden="true"><span class="placeholder " style="width: auto;">Cargo</span> <span class="placeholder " style="width: auto;">@funcionario.Cargo</span></p>
-                                    <p aria-hidden="true"><span class="placeholder " style="width: auto;">Email</span> <span class="placeholder " style="width: auto;">@funcionario.Email</span></p>
                                     <p aria-hidden="true"><span class="placeholder " style="width: auto;">Telefone</span> <span class="placeholder " style="width: auto;">@funcionario.Celular</span></p>
                                     <p aria-hidden="true"><span class="placeholder " style="width: auto;">Ativo</span> <span class="placeholder " style="width: auto;">@(funcionario.Ativo == 'S' ? "Sim" : "Não")</span></p>
                                     <partial name="~/Views/Componentes/Botao-Secundario/BotaoSecundario.cshtml"
@@ -349,15 +347,17 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="modalLabel-@funcionario.Id">Ficha Cadastral do(a) Funcionário(a)</h1>
-                                    <button type="button"
-                                            class="btn btn-sm btn-warning"
-                                            id="btnImprimir"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            data-bs-title="Exportar Ficha do Funcionário"
-                                            onclick="exportarFichaFuncionario(@funcionario.Id)">
+                                    <a asp-controller="Funcionarios"
+                                       asp-action="GerarPDF"
+                                       asp-route-id="@funcionario.Id"
+                                       class="btn btn-sm btn-warning"
+                                       id="btnImprimir"
+                                       data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       data-bs-title="Exportar Ficha do Funcionário"
+                                       target="_blank">
                                         <i class="bi bi-printer" style="font-size:17px"></i>
-                                    </button>
+                                    </a>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-onda-header"></div>

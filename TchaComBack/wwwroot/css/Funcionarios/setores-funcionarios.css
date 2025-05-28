@@ -793,9 +793,26 @@ align-items: center;
     pointer-events: none;
     opacity: 0.6;
 }
+.flex-onda.coordenador {
+    background-color: #FFA500;
+}
+.flex-onda.coordenador::after {
+    background-color: #FFA500;
+}
+.body-card.coordenador {
+    background-color: #FFA500;
+}
+.body-card.coordenador p {
+    color: #fafafa;
+    font-weight:500;
+}
+.body-card.coordenador .card-dado {
+    color: black;
+}
+
 
 @keyframes fadeIn {
-from {
+    from {
 opacity: 0;
 transform: translateY(-20px);
 }
@@ -901,7 +918,3 @@ font-family: "Montserrat", sans-serif;
 margin-left: 50px;
 }
 
-.card-funcionario.coordenador {
-    border: 2px solid #daa520;
-    background-color: #fdefdb;
-}

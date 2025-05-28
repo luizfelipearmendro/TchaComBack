@@ -11,6 +11,7 @@ using TchaComBack.Helper;
 using TchaComBack.Models;
 using TchaComBack.Repositories;
 
+
 namespace TchaComBack.Controllers
 {
     public class FuncionariosController : Controller
@@ -634,5 +635,11 @@ namespace TchaComBack.Controllers
                 return Redirect($"/Funcionarios/Index/{setorId}");
             }
         }
+
+        public IActionResult GerarPDF(int id)
+        {
+            return View("FuncionariosPdf");
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Meus Dados";
 }
+@using Microsoft.AspNetCore.Html
 <link href="~/css/Usuarios/meusDados.css" rel="stylesheet" />
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
@@ -12,81 +13,92 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 <section class="flex-sessao-meus-dados">
-    <div class="flex-cabecalho-meus-dados">
-        <div class="flex-icon-user-meus-dados">
-            <img src="~/img/luiz.jpeg" alt="Responsável" class="small-avatar" />
+    <div class="subox-meus-dados">
+        <div class="flex-cabecalho-meusdados"></div>
+
+        <div class="div-onda-meusdados"></div>
+        <div class="row g-0">
+            <div class="col-md-4 flex-imagem-meus-dados">
+                <img src="https://i.ibb.co/DPymZqqd/image-removebg-preview-1.png" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2 class="mb-4 titulo-meusdados">Meus Dados</h2>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              data-bs-title="Nome completo do usuário">
+                            <i class="bi bi-person-fill"></i>
+                        </span>
+                        <input type="text" class="form-control" value="@ViewBag.NomeCompleto" readonly />
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              data-bs-title="E-mail do usuário">
+                            <i class="bi bi-envelope-fill"></i>
+                        </span>
+                        <input type="email" class="form-control" value="@ViewBag.Email" readonly />
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              data-bs-title="Tipo de perfil do usuário">
+                            <i class="bi bi-person-fill-gear"></i>
+                        </span>
+                        @if (ViewBag.TipoPerfil == 1)
+                        {
+                            <input type="text" class="form-control" value="Administrador" readonly />
+                        }
+                        else
+                        if (ViewBag.TipoPerfil == 2)
+                        {
+                            <input type="text" class="form-control" value="Coordenador" readonly />
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" value="Funcionário" readonly />
+                        }
+
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              data-bs-title="Senha atual do usuário">
+                            <i class="bi bi-key-fill"></i>
+                        </span>
+                        <input type="text" id="senhaTexto" class="form-control" value="********" disabled readonly />
+                        <button disabled class="btn btn-outline-secondary" type="button" onclick="toggleSenha()">Mostrar</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="container mt-5">
-        <div class="card p-4">
-            <h2 class="mb-4">Meus Dados</h2>
-
-            <div class="input-group mb-3">
-                <span class="input-group-text"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                data-bs-custom-class="custom-tooltip"
-                data-bs-title="Nome completo do usuário">
-                    <i class="bi bi-person-fill"></i>
-                </span>
-                <input type="text" class="form-control" value="@ViewBag.NomeCompleto" readonly />
-            </div>
-
-            <div class="input-group mb-3">
-                <span class="input-group-text"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                data-bs-custom-class="custom-tooltip"
-                data-bs-title="E-mail do usuário">
-                    <i class="bi bi-envelope-fill"></i>
-                </span>
-                <input type="email" class="form-control" value="@ViewBag.Email" readonly />
-            </div>
-
-            <div class="input-group mb-3">
-                <span class="input-group-text"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                data-bs-custom-class="custom-tooltip"
-                data-bs-title="Tipo de perfil do usuário">
-                    <i class="bi bi-person-fill-gear"></i>
-                </span>
-                @if(ViewBag.TipoPerfil == 1)
-                {
-                    <input type="text" class="form-control" value="Administrador" readonly />
-                }else
-                if(ViewBag.TipoPerfil == 2)
-                {
-                    <input type="text" class="form-control" value="Coordenador" readonly />
-                }
-                else
-                {
-                    <input type="text" class="form-control" value="Funcionário" readonly />
-                }
-
-            </div>
-
-            <div class="input-group mb-3">
-                <span class="input-group-text"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      data-bs-custom-class="custom-tooltip"
-                      data-bs-title="Senha atual do usuário">
-                    <i class="bi bi-key-fill"></i>
-                </span>
-                <input type="text" id="senhaTexto" class="form-control" value="********" disabled readonly />
-                <button disabled class="btn btn-outline-secondary" type="button" onclick="toggleSenha()">Mostrar</button>
-            </div>
-
-            <div class="mt-4 d-flex justify-content-end gap-2">
-                <a asp-controller="UsuariosPerfilLogado" asp-action="AtualizarSenha" class="btn btn-warning">
-                    <i class="bi bi-key me-1"></i> Alterar Senha
-                </a>
-                <a asp-controller="UsuariosPerfilLogado" asp-action="EditarMeusDados" class="btn btn-primary">
-                    <i class="bi bi-pencil-square me-1"></i> Editar Dados
-                </a>
-            </div>
+        <div class="d-flex justify-content-end gap-2 flex-botao-meusdados">
+            <a asp-controller="UsuariosPerfilLogado" asp-action="AtualizarSenha" class="btn btn-warning" style="display:flex;justify-content:center;align-items:center;">
+                <i class="bi bi-key me-1"></i> Alterar Senha
+            </a>
+            <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml" view-data=@( new ViewDataDictionary(ViewData){
+                     { "Texto", "Editar dados" },
+                     { "Url", "#" },
+                     { "ClasseExtra", "botao-editar" },
+                     { "Id", "" },
+                     { "Type", "submit" },
+                     { "elemento", "Button"},
+                     { "ConteudoHtml", new HtmlString("<i class='bi bi-pencil-square me-1'></i> ") }
+                     }) 
+            />
         </div>
     </div>
 </section>
