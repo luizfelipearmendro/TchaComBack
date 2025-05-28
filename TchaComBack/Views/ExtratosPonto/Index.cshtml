@@ -1,0 +1,147 @@
+﻿@model EspelhoPontoViewModel
+@functions {
+    public string GetPrimeiroEUltimoNome(string nomeCompleto)
+    {
+        if (string.IsNullOrWhiteSpace(nomeCompleto))
+            return "";
+
+        var partes = nomeCompleto.Trim().Split(' ');
+
+        if (partes.Length == 1)
+            return partes[0];
+
+        return $"{partes[0]} {partes[^1]}";
+    }
+}
+
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css" rel="stylesheet">
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!-- Arquivo de idioma português (pt) -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+<!-- Plugin Month Select -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css" rel="stylesheet">
+<link href="~/css/ExtratosPonto/extratosponto.css" rel="stylesheet" />
+
+
+<div class="input-group col-md-3" id="filtroCalendario">
+    <i class="bi bi-calendar-date" style="font-size:25px; margin-right:10px;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Filtro calendário"></i>
+    <div>
+        <input type="text" id="filtroMesAno" class="form-control" />
+    </div>
+
+    <div>
+        <a asp-action="ExportarEspelhoPontos" asp-route-mes="@Model.Mes" asp-route-ano="@Model.Ano" class="btn btn-success mb-3"
+           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Exportar Espelho Pontos"
+           style="margin-left: 1.5rem;">
+            <i class="bi bi-printer" style="font-size:17px"></i>
+        </a>
+    </div>
+</div>
+
+<div class="flex-espelhoponto text-center">
+    <h2>Seu espelho de pontos, @GetPrimeiroEUltimoNome(@ViewBag.NomeCompleto)</h2>
+</div>
+
+<table class="table table-bordered table-striped" style="margin-top: 1rem;">
+    <thead>
+        @if(ViewBag.Cargo == true)
+        {
+            <tr>
+                <th class="text-center">Data</th>
+                <th class="text-center">Entrada</th>
+                <th class="text-center">Saída</th>
+                <th class="text-center">Horas Faltas</th>
+                <th class="text-center">Justificativa</th>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <th class="text-center">Data</th>
+                <th class="text-center">Entrada Manhã</th>
+                <th class="text-center">Saída Manhã</th>
+                <th class="text-center">Entrada Tarde</th>
+                <th class="text-center">Saída Tarde</th>
+                <th class="text-center">Horas Extras</th>
+                <th class="text-center">Horas Faltas</th>
+                <th class="text-center">Justificativa</th>
+            </tr>
+        }
+    </thead>
+    <tbody>
+        @foreach (var ponto in Model.Pontos)
+        {
+            @if(ViewBag.Cargo == true)
+            {
+                <tr>
+                    <td class="text-center">@ponto.DataBatida.ToString("dd/MM/yyyy")</td>
+                    <td class="text-center">@(ponto.HoraEntrada1?.ToString("HH:mm") ?? "-")</td>
+                    <td class="text-center">@(ponto.HoraSaida2?.ToString("HH:mm") ?? "-")</td>
+                    <td class="text-center">@(ponto.HorasFaltas?.ToString("HH:mm") ?? "-")</td>
+                    <td class="text-center">@(string.IsNullOrWhiteSpace(ponto.Justificativa) ? "-" : ponto.Justificativa)</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td class="text-center">@ponto.DataBatida.ToString("dd/MM/yyyy")</td>
+                    <td class="text-center">@(ponto.HoraEntrada1?.ToString("HH:mm") ?? "-")</td>
+                    <td class="text-center">@(ponto.HoraSaida1?.ToString("HH:mm") ?? "-")</td>
+                    <td class="text-center">@(ponto.HoraEntrada2?.ToString("HH:mm") ?? "-")</td>
+                    <td class="text-center">@(ponto.HoraSaida2?.ToString("HH:mm") ?? "-")</td>
+                    <td class="text-center">@(ponto.HorasExtras?.ToString("HH:mm") ?? "-")</td>
+                    <td class="text-center">@(ponto.HorasFaltas?.ToString("HH:mm") ?? "-")</td>
+                    <td class="text-center">@(string.IsNullOrWhiteSpace(ponto.Justificativa) ? "-" : ponto.Justificativa)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        flatpickr("#filtroMesAno", {
+            dateFormat: "Y-m",
+            defaultDate: "@ViewBag.MesAnoAtual",
+            altInput: true,
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true,
+                    dateFormat: "Y-m",
+                    altFormat: "F-Y"
+                })
+            ],
+            locale: 'pt',
+            onChange: function (selectedDates, dateStr, instance) {
+                filtrarExtratosPonto(dateStr);
+            }
+        });
+    });
+
+        function filtrarExtratosPonto(mesAno) {
+        if (mesAno) {
+            console.log("Valor do filtro:", mesAno);
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '@Url.Action("Index", "ExtratosPonto")';
+
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'mesAno';
+            input.value = mesAno;
+            form.appendChild(input);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    });
+</script>

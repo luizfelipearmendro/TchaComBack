@@ -905,3 +905,15 @@ margin-left: 50px;
     border: 2px solid #daa520;
     background-color: #fdefdb;
 }
+
+#modalMoverUsuario {
+    font-family: "Montserrat", sans-serif;
+}
+
+#modalDesativarUsuario {
+    font-family: "Montserrat", sans-serif;
+}
+
+#modalReativarUsuario {
+    font-family: "Montserrat", sans-serif;
+}

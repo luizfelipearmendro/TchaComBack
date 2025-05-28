@@ -1,16 +1,117 @@
-﻿@model ExtratoPontoModel
+﻿@using Microsoft.AspNetCore.Http
+@model ExtratoPontoModel
 @{
-    ViewData["Title"] = "Registrar Ponto";
+    <title>@ViewData["Title"] </title>
+    var horario = ViewBag.Horario as TimeOnly?;
 }
-<link rel="stylesheet" href="~/css/Shared/site.css">
+@functions {
+    public string GetPrimeiroEUltimoNome(string nomeCompleto)
+    {
+        if (string.IsNullOrWhiteSpace(nomeCompleto))
+            return "";
 
-<h2>Registrar Ponto</h2>
+        var partes = nomeCompleto.Trim().Split(' ');
 
-<form asp-controller="ExtratosPonto" asp-action="RegistrarPonto" method="post">
-    <button type="submit" class="btn btn-primary">Registrar Agora</button>
-</form>
+        if (partes.Length == 1)
+            return partes[0];
 
-@if (TempData["Mensagem"] != null)
+        return $"{partes[0]} {partes[^1]}";
+    }
+}
+
+<link href="~/css/ExtratosPonto/extratosponto.css" rel="stylesheet" />
+
+@if (TempData["MensagemSucesso"] != null)
 {
-    <div class="alert alert-success">@TempData["Mensagem"]</div>
+    <div id="successAlert" class="custom-alert success">
+        <span><strong>Sucesso!</strong> @TempData["MensagemSucesso"]</span>
+        <span class="closebtn" onclick="closeAlert('successAlert')">&times;</span>
+    </div>
+    <script>
+        setTimeout(() => {
+        document.getElementById("successAlert").style.display = 'none';
+        }, 5000);
+    </script>
 }
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div id="errorAlert" class="custom-alert error">
+        <span><strong>Atenção!</strong> @TempData["MensagemErro"]</span>
+        <span class="closebtn" onclick="closeAlert('errorAlert')">&times;</span>
+    </div>
+    <script>
+        setTimeout(() => {
+        document.getElementById("errorAlert").style.display = 'none';
+        }, 5000);
+    </script>
+}
+
+<section class="flex-sessao-extratoponto">
+    <form id="formBatida" asp-controller="ExtratosPonto" asp-action="RegistrarPonto" method="post">
+        <div class="flex-btn-ponto">
+            <div id="btnBaterPonto" class="btn-bater-ponto">
+                <button type="button">Arraste para lado</button>
+            </div>
+        </div>
+    </form>
+    <div class="flex-espelhoponto">
+        @if (horario >= new TimeOnly(5, 0) && horario < new TimeOnly(11, 0))
+        {
+            <h2>Bom dia, @GetPrimeiroEUltimoNome(@ViewBag.NomeCompleto) 😊. Registre seu ponto.</h2>
+        }
+        else if (horario >= new TimeOnly(11, 0) && horario < new TimeOnly(17, 30))
+        {
+            <h2>Boa tarde, @GetPrimeiroEUltimoNome(@ViewBag.NomeCompleto) 😊. Registre seu ponto.</h2>
+        }
+        else
+        {
+            <h2>Boa noite, @GetPrimeiroEUltimoNome(@ViewBag.NomeCompleto) 😊. Registre seu ponto e até amanhã.</h2>
+        }
+    </div>
+</section>
+
+<script>
+    const btn = document.getElementById('btnBaterPonto');
+    const btnText = btn.querySelector('button');
+    const form = document.getElementById('formBatida');
+
+    let startX = null, isDragging = false;
+
+    btn.addEventListener('mousedown', function (e) {
+        startX = e.clientX;
+        isDragging = false;
+        btn.classList.remove('batidada');
+        btn.classList.add('ativo');
+        btnText.textContent = 'Segure e arraste';
+    });
+
+    window.addEventListener('mousemove', function (e) {
+        if (startX === null) return;
+
+        const diff = e.clientX - startX;
+        if (Math.abs(diff) > 50 && !isDragging) {
+            isDragging = true;
+            btn.classList.remove('ativo');
+            btn.classList.add('batidada');
+            btnText.textContent = 'Ponto registrado';
+
+
+            setTimeout(() => {
+                form.submit();
+            }, 300);
+        }
+    });
+
+    window.addEventListener('mouseup', function () {
+        if (startX !== null && !isDragging) {
+            resetBtn();
+        }
+        startX = null;
+    });
+
+    function resetBtn() {
+        btn.classList.remove('ativo', 'batidada');
+        btnText.textContent = 'Clique no botão para bater o ponto';
+    }
+</script>
