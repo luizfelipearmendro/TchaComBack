@@ -119,6 +119,9 @@ namespace TchaComBack.Controllers
                  cargo.ToLower().Contains("estagiário")     ||
                  cargo.ToLower().Contains("jovem aprendiz"  ));
 
+            var hoje = DateTime.Today;
+            var extratoHoje = db.ExtratosPonto.FirstOrDefault(p => p.Matricula == dbconsult.Matricula && p.DataBatida == hoje);
+            ViewBag.ExtratoHoje = extratoHoje;
             ViewBag.NomeCompleto = dbconsult.NomeCompleto;
             ViewBag.Email = dbconsult.Email;
             ViewBag.TipoPerfil = dbconsult.TipoPerfil;
@@ -179,6 +182,7 @@ namespace TchaComBack.Controllers
             var ponto = db.ExtratosPonto
                           .FirstOrDefault(p => p.Matricula == matricula && p.DataBatida == hoje);
 
+            // Se não existe registro do dia, cria um novo
             if (ponto == null)
             {
                 ponto = new ExtratoPontoModel
@@ -191,42 +195,60 @@ namespace TchaComBack.Controllers
 
                 if (agora <= limiteEntrada)
                     ponto.HoraEntrada1 = agora;
-
                 else
                     ponto.HoraEntrada2 = agora;
 
                 db.ExtratosPonto.Add(ponto);
             }
-            else if (ponto.HoraEntrada1 != null && ponto.HoraSaida2 == null)
+            else
             {
-                if (isAprendiz)
+                // Verifica se todas as 4 batidas já foram feitas
+                bool todasBatidasFeitas = ponto.HoraEntrada1.HasValue &&
+                                          ponto.HoraSaida1.HasValue &&
+                                          ponto.HoraEntrada2.HasValue &&
+                                          ponto.HoraSaida2.HasValue;
+
+                if (todasBatidasFeitas)
+                {
+                    TempData["MensagemErro"] = "Você já realizou todas as 4 batidas de hoje. Novas batidas só podem ser feitas no próximo dia útil.";
+                    return RedirectToAction("RegistrarPonto");
+                }
+
+                // Identifica qual é a próxima batida a ser registrada
+                if (!ponto.HoraEntrada1.HasValue)
+                {
+                    ponto.HoraEntrada1 = agora;
+                }
+                else if (!ponto.HoraSaida1.HasValue && !isAprendiz)
+                {
+                    ponto.HoraSaida1 = agora;
+                }
+                else if (!ponto.HoraEntrada2.HasValue && !isAprendiz)
+                {
+                    ponto.HoraEntrada2 = agora;
+                }
+                else if (!ponto.HoraSaida2.HasValue)
                 {
                     ponto.HoraSaida2 = agora;
                 }
                 else
                 {
-                    if (ponto.HoraSaida1 == null)
-                        ponto.HoraSaida1 = agora;
-
-                    else if (ponto.HoraEntrada2 == null)
-                        ponto.HoraEntrada2 = agora;
-
-                    else if (ponto.HoraSaida2 == null)
-                        ponto.HoraSaida2 = agora;
+                    TempData["MensagemErro"] = "Não foi possível identificar a próxima batida a ser registrada.";
+                    return RedirectToAction("RegistrarPonto");
                 }
             }
-            else if (ponto.HoraEntrada1 == null && ponto.HoraEntrada2 != null && !isAprendiz)
-            {
-                ponto.HoraSaida2 = agora;
-            }
 
-            if (ponto.HoraEntrada1 != null && ponto.HoraSaida2 != null)
+            // Cálculo de horas trabalhadas e justificativa
+            if (ponto.HoraEntrada1.HasValue && ponto.HoraSaida2.HasValue)
             {
-                TimeSpan totalTrabalhado = isAprendiz ? ponto.HoraSaida2.Value - ponto.HoraEntrada1.Value : CalcularTotalHoras(ponto);
+                TimeSpan totalTrabalhado = isAprendiz
+                    ? ponto.HoraSaida2.Value - ponto.HoraEntrada1.Value
+                    : CalcularTotalHoras(ponto);
 
-                TimeSpan cargaEsperada = isAprendiz ? configuracoes.FimExpediente - configuracoes.InicioExpediente
-                      : (configuracoes.IntervaloInicio - configuracoes.InicioExpediente)
-                      + (configuracoes.FimExpediente - configuracoes.IntervaloFim);
+                TimeSpan cargaEsperada = isAprendiz
+                    ? configuracoes.FimExpediente - configuracoes.InicioExpediente
+                    : (configuracoes.IntervaloInicio - configuracoes.InicioExpediente) +
+                      (configuracoes.FimExpediente - configuracoes.IntervaloFim);
 
                 if (totalTrabalhado > cargaEsperada)
                 {
@@ -249,34 +271,37 @@ namespace TchaComBack.Controllers
                         ponto.Justificativa = "Saída antecipada";
                 }
             }
-            else if (ponto.HoraEntrada1 == null && ponto.HoraEntrada2 != null && !isAprendiz)
+            else if (!ponto.HoraEntrada1.HasValue && ponto.HoraEntrada2.HasValue && !isAprendiz)
             {
-                TimeSpan totalTrabalhado = isAprendiz ? ponto.HoraSaida2.Value - ponto.HoraEntrada1.Value : CalcularTotalHoras(ponto);
-
-                TimeSpan cargaEsperada = isAprendiz ? configuracoes.FimExpediente - configuracoes.InicioExpediente
-                      : (configuracoes.IntervaloInicio - configuracoes.InicioExpediente)
-                      + (configuracoes.FimExpediente - configuracoes.IntervaloFim);
-
-                if (totalTrabalhado > cargaEsperada)
-                {
-                    ponto.HorasExtras = TimeOnly.FromTimeSpan(totalTrabalhado - cargaEsperada);
-                }
-                else if (totalTrabalhado < cargaEsperada)
-                {
-                    ponto.HorasFaltas = TimeOnly.FromTimeSpan(cargaEsperada - totalTrabalhado);
-                }
-
                 if (string.IsNullOrEmpty(ponto.Justificativa))
                 {
-                    if (!isAprendiz && ponto.HoraEntrada1 == null && ponto.HoraSaida1 == null && ponto.HoraEntrada2.HasValue)
-                        ponto.Justificativa = "Não esteve presente no primeiro período do expediente";
-
-                    else if (ponto.HoraSaida2.HasValue && ponto.HoraSaida2 < configuracoes.FimExpediente)
-                        ponto.Justificativa = "Saída antecipada";
+                    ponto.Justificativa = "Não esteve presente no primeiro período do expediente";
                 }
             }
 
-                db.SaveChanges();
+            // Verificação de tempo limite para registrar cada batida
+            if (!isAprendiz)
+            {
+                if ((ponto.HoraEntrada1 == null && DateTime.Now.TimeOfDay > configuracoes.InicioExpediente.AddMinutes(30).ToTimeSpan()) ||
+                    (ponto.HoraSaida1 == null && DateTime.Now.TimeOfDay > configuracoes.IntervaloInicio.AddMinutes(30).ToTimeSpan()) ||
+                    (ponto.HoraEntrada2 == null && DateTime.Now.TimeOfDay > configuracoes.IntervaloFim.AddMinutes(30).ToTimeSpan()) ||
+                    (ponto.HoraSaida2 == null && DateTime.Now.TimeOfDay > configuracoes.FimExpediente.AddMinutes(30).ToTimeSpan()))
+                {
+                    TempData["MensagemErro"] = "Não é possível realizar batidas após o horário estipulado para cada período.";
+                    return RedirectToAction("RegistrarPonto");
+                }
+            }
+            else
+            {
+                if ((ponto.HoraEntrada1 == null && DateTime.Now.TimeOfDay > configuracoes.InicioExpediente.AddMinutes(30).ToTimeSpan()) ||
+                    (ponto.HoraSaida2 == null && DateTime.Now.TimeOfDay > configuracoes.FimExpediente.AddMinutes(30).ToTimeSpan()))
+                {
+                    TempData["MensagemErro"] = "Não é possível realizar batidas após o horário estipulado para aprendizes.";
+                    return RedirectToAction("RegistrarPonto");
+                }
+            }
+
+            db.SaveChanges();
             TempData["MensagemSucesso"] = "Ponto registrado com sucesso!";
             return RedirectToAction("RegistrarPonto");
         }

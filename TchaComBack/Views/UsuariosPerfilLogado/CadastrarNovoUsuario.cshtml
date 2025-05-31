@@ -137,7 +137,7 @@
         const grupoCoordenador = document.getElementById("grupoCoordenador");
 
         tipoPerfil.addEventListener("change", function () {
-            grupoCoordenador.style.display = tipoPerfil.value === "2" ? "flex" : "none";
+            grupoCoordenador.style.display = tipoPerfil.value === "2" || "3" ? "flex" : "none";
         });
     });
 function irParaStep2() {

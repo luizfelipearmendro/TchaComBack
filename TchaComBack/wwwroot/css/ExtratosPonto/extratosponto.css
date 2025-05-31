@@ -42,11 +42,111 @@
         background-color: green;
     }
 
-.flex-espelhoponto {
-    border: 1px solid #ccc;
+.titulo-espelhopontodetalhado {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15vh;
+}
+.titulo-espelhopontodetalhado h2 {
+    background: linear-gradient(90deg, #8A2BE2, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.card-espelhopontohoje {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2vh;
+    padding: 4vh;
+
+}
+.onda-espelhoponto{
+    position: relative;
+    width: 100%;
+    height: 1vh;
+    background-color: white;
+}
+.onda-espelhoponto::before {
+    content: "";
+    position: absolute;
+    width: 10%;
+    height: 5vh;
+    background-color: black;
+    top: 0;
+    left:0;
+}
+.onda-espelhoponto::after {
+    content: "";
+    position: absolute;
+    width: 10%;
+    height: 5vh;
+    background-color: white;
+    top: 0;
+    left:0;
+    border-top-left-radius: 2vw;
+}
+.subox-espelhoponto{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+
+}
+.subox-espelhoponto h2{
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-family: "Montserrat";
+    color: #8A2BE2;
+}
+.subox-espelhoponto p{
+    font-size: 1.1rem;
+}
+.flex-titulo-card-espelhoponto {
+    padding: 4vh;
+    background-color: black;
+}
+.flex-titulo-card-espelhoponto h2 {
+    background: linear-gradient(90deg, #8A2BE2, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.flex-titulo-card-espelhoponto h2 span {
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: initial;
+    color: white;
+}
+.flex-titulo-card-espelhoponto p{
+    font-weight: #fafafa;
+    color:white;
+}
+.flex-justificativa {
+    padding-top: 2vh;
+    display:flex;
+    justify-content:flex-start;
+}
+.flex-justificativa h2{
+   font-size: 1rem;
+   font-weight: 600;
+   color: #FFA500;
+}
+.flex-justificativa p{
+    color: #808080;
+}
+
+.flex-card-espelhopontodetalhes {
+    background-color: #fafafa;
+    height: 100% !important;
+    padding: 2vw;
     border-radius: 10px;
-    padding: 20px;
-    background-color: #f9f9f9;
+    background: #fafafa;
+/*    box-shadow: -20px 20px 60px #d5d5d5, 20px -20px 60px #ffffff;*/
 }
 
 @media (max-width: 768px) {

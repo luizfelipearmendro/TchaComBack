@@ -2,13 +2,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-@{
-    var totalFuncionarios = Model.TotalDeFuncionarios;
 
-    var totalSetores = Model.TotalDeSetores;
-
-    var totalUsuarios = Model.TotalDeUsuarios;
-}
 <link rel="stylesheet" href="~/css/Home/home.css">
 <script src="~/js/Home/home.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,208 +53,16 @@
     }
 
     <section class="container-home">
-        <article class="box-one-home">
-            <div class="card-box-one">
-                <div class="flex-subox-one">
-                    <div class="flex-icon">
-                        <i class="bi bi-people-fill"></i>
-                    </div>
-                    <div class="flex-info-card-home">
-                        <h1>@totalFuncionarios</h1>
-                        <p>Funcionarios Ativos</p>
-                    </div>
-                </div>
-                <div class="flex-subox-two">
-                    <p class="title-flex-subox-two">Total acumulativo</p>
-                    <div>
-
-                    </div>
-                    @{
-                        var porcentagem = Model.PorcentagemAumentoFuncionarios;
-                        string sinal = porcentagem switch
-                        {
-                            > 0 => "+",
-                            < 0 => "-",
-                            _ => ""
-                        };
-
-                        string classeCor = porcentagem switch
-                        {
-                            > 0 => "text-success",
-                            < 0 => "text-danger",
-                            _ => ""
-                        };
-                    }
-
-                    @if (porcentagem != 0)
-                    {
-                        <div>
-                            <span class="@classeCor" >@sinal</span>
-                            <strong class="@classeCor">@Math.Abs(porcentagem).ToString("F2")%</strong>
-                        </div>
-                    }
-                    else
-                    {
-                        <div style="color: black;" >0%</div>
-                    }
-                </div>
-              
-            </div>
-            <div class="card-box-one">
-                <div class="flex-subox-one">
-                    <div class="flex-icon-secondary">
-                        <i class="bi bi-building-fill"></i>
-                    </div>
-                    <div class="flex-info-card-home">
-                        <h1>@totalSetores</h1>
-                        <p>Setores Ativos</p>
-                    </div>
-                </div>
-                <div class="flex-subox-two">
-                    <p class="title-flex-secondary-subox-two">Total acumulativo</p>
-                    @{
-                        var porcentagem2 = Model.PorcentagemAumentoSetores;
-                        string sinal2 = porcentagem2 switch
-                        {
-                            > 0 => "+",
-                            < 0 => "-",
-                            _ => ""
-                        };
-
-                        string classeCor2 = porcentagem2 switch
-                        {
-                            > 0 => "text-success",
-                            < 0 => "text-danger",
-                            _ => ""
-                        };
-                    }
-
-                    @if (porcentagem2 != 0)
-                    {
-                        <div>
-                            <span class="@classeCor2">@sinal2</span>
-                            <strong class="@classeCor2">@Math.Abs(porcentagem2).ToString("F2")%</strong>
-                        </div>
-                    }
-                    else
-                    {
-                        <div style="color: white" >0%</div>
-                    }
-                </div>
-            </div>
-            <div class="card-box-one">
-                <div class="flex-subox-one">
-                    <div class="flex-icon-secondary">
-                        <i class="bi bi-person-fill-gear"></i>
-                    </div>
-                    <div class="flex-info-card-home">
-                        <h1>@totalUsuarios</h1>
-                        <p>Usuários Ativos</p>
-                    </div>
-                </div>
-                <div class="flex-subox-two">
-                    <p class="title-flex-secondary-subox-two">Total acumulativo</p>
-                    @{
-                        var porcentagem3 = Model.PorcentagemAumentoUsuarios;
-                        string sinal3 = porcentagem3 switch
-                        {
-                            > 0 => "+",
-                            < 0 => "-",
-                            _ => ""
-                        };
-
-                        string classeCor3 = porcentagem3 switch
-                        {
-                            > 0 => "text-success",
-                            < 0 => "text-danger",
-                            _ => ""
-                        };
-                    }
-
-                    @if (porcentagem3 != 0)
-                    {
-                        <div>
-                            <span class="@classeCor3" >@sinal3</span>
-                            <strong class="@classeCor3">@Math.Abs(porcentagem3).ToString("F2")%</strong>
-                        </div>
-                    }
-                    else
-                    {
-                        <div style="color: white;">0%</div>
-                    }
-                </div>
-            </div>
-        </article>
         <article class="box-two-home">
             <article class="sub-box-home">
-                <h2>Funcionários Ativos e Inativos por Setor</h2>
+                <h2>Graficos Horas Extras X Horas Faltas</h2>
                 <div>
-                    <canvas id="idGraficoFuncionariosPorSetores"></canvas>
+                    @* <canvas id="idGraficoHorasExtrasxHorasFaltas"></canvas> *@
                 </div>
                 <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
                          view-data=@(new ViewDataDictionary(ViewData){
                          { "Texto", "Acessar" },
                          { "Url", "/Funcionarios/Funcionarios" },
-                         { "ClasseExtra", "btn-dash" },
-                         { "Id", "" },
-                         { "Elemento", "a"}
-                         }) />
-            </article>
-        </article>
-        <article class="box-three-home" >
-            <article class="sub-box-home">
-                <h2>Usuários Ativos e Inativos por Perfil</h2>
-                <div>
-                    <canvas id="idGraficoUsuariosPorPerfil"></canvas>
-                </div>
-                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                         view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Acessar" },
-                         { "Url", "/UsuariosPerfilLogado" },
-                         { "ClasseExtra", "btn-dash" },
-                         { "Id", "" },
-                         { "Elemento", "a"}
-                         }) />
-            </article>
-            <article class="sub-box-home">
-                <h2>Setores Ativos e Inativos por Categorias</h2>
-                <div>
-                    <canvas id="idGraficoSetoresPorCategorias"  ></canvas>
-                </div>
-                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                         view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Acessar" },
-                         { "Url", "/Setores" },
-                         { "ClasseExtra", "btn-dash" },
-                         { "Id", "" },
-                         { "Elemento", "a"}
-                         }) />
-            </article>
-        </article>
-        <article class="box-foor-home">
-            <article class="sub-box-home">
-                <h2>Quantidade de Funcionarios por Sexo</h2>
-                <div style="display:flex; justify-content:center; align-items:center;">
-                    <canvas id="idGraficoFuncionariosPorSexo"></canvas>
-                </div>
-                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                         view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Acessar" },
-                         { "Url", "/Funcionarios/Funcionarios" },
-                         { "ClasseExtra", "btn-dash" },
-                         { "Id", "" },
-                         { "Elemento", "a"}
-                         }) />
-            </article>
-            <article class="sub-box-home">
-                <h2>Ranking de Setores com Mais Funcionarios</h2>
-                <div>
-                   <canvas id="idGraficoRankingSetores" ></canvas>
-                </div>
-                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                         view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Acessar" },
-                         { "Url", "/Setores" },
                          { "ClasseExtra", "btn-dash" },
                          { "Id", "" },
                          { "Elemento", "a"}
@@ -271,93 +73,78 @@
     </section>
 </section>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Solicitação de Acesso</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-            </div>
-            <div class="modal-body">
-                @TempData["MensagemAtraso"]
+@* <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> *@
+@*     <div class="modal-dialog modal-lg"> *@
+@*         <div class="modal-content"> *@
+@*             <div class="modal-header"> *@
+@*                 <h1 class="modal-title fs-5" id="exampleModalLabel">Solicitação de Acesso</h1> *@
+@*                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button> *@
+@*             </div> *@
+@*             <div class="modal-body"> *@
+@*                 @TempData["MensagemAtraso"] *@
 
-                <form asp-controller="UsuariosPerfilLogado" asp-action="AtualizarConfirmacoes" method="post">
-                    @Html.AntiForgeryToken()
-                    <table class="table table-hover" id="table1">
-                        <thead>
-                            <tr>
-                                <th style="width:20px; text-align: center;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Liberar Acesso">
-                                    <i class="bi bi-check" style="font-size:20px; color: #00a95cff; display: inline-block;"></i>
-                                </th>
-                                <th class="padrao60 text-center">Data Cadastro</th>
-                                <th class="padrao500 text-center">Nome</th>
-                                <th class="padrao500 text-center">E-mail</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model != null)
-                            {
-                                foreach (var usuario in Model.UsuarioNaoConfirmado)
-                                {
-                                    if (usuario.Confirmado == 0)
-                                    {
-                                        <tr>
-                                            <td style="width: 60rem;">
-                                                <select class="form-select form-select-sm" name="Confirmacoes[@usuario.Id]">
-                                                    <option value="0" selected="@(usuario.Confirmado == 0)">Manter sem Acesso</option>
-                                                    <option value="1" selected="@(usuario.Confirmado == 1)">Confirmar Acesso</option>
-                                                    <option value="2" selected="@(usuario.Confirmado == 2)">Recusar Acesso</option>
-                                                </select>
-                                            </td>
-                                            <td class="col1 text-center">@usuario.DataCadastro.ToShortDateString()</td>
-                                            <td class="col3">@usuario.NomeCompleto</td>
-                                            <td class="col3">@usuario.Email</td>
-                                        </tr>
-                                    }
-                                }
-                            }
-                        </tbody>
-                    </table>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Salvar Decisões</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+@*                 <form asp-controller="UsuariosPerfilLogado" asp-action="AtualizarConfirmacoes" method="post"> *@
+@*                     @Html.AntiForgeryToken() *@
+@*                     <table class="table table-hover" id="table1"> *@
+@*                         <thead> *@
+@*                             <tr> *@
+@*                                 <th style="width:20px; text-align: center;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Liberar Acesso"> *@
+@*                                     <i class="bi bi-check" style="font-size:20px; color: #00a95cff; display: inline-block;"></i> *@
+@*                                 </th> *@
+@*                                 <th class="padrao60 text-center">Data Cadastro</th> *@
+@*                                 <th class="padrao500 text-center">Nome</th> *@
+@*                                 <th class="padrao500 text-center">E-mail</th> *@
+@*                             </tr> *@
+@*                         </thead> *@
+@*                         <tbody> *@
+@*                             @if (Model != null) *@
+@*                             { *@
+@*                                 foreach (var usuario in Model.UsuarioNaoConfirmado) *@
+@*                                 { *@
+@*                                     if (usuario.Confirmado == 0) *@
+@*                                     { *@
+@*                                         <tr> *@
+@*                                             <td style="width: 60rem;"> *@
+@*                                                 <select class="form-select form-select-sm" name="Confirmacoes[@usuario.Id]"> *@
+@*                                                     <option value="0" selected="@(usuario.Confirmado == 0)">Manter sem Acesso</option> *@
+@*                                                     <option value="1" selected="@(usuario.Confirmado == 1)">Confirmar Acesso</option> *@
+@*                                                     <option value="2" selected="@(usuario.Confirmado == 2)">Recusar Acesso</option> *@
+@*                                                 </select> *@
+@*                                             </td> *@
+@*                                             <td class="col1 text-center">@usuario.DataCadastro.ToShortDateString()</td> *@
+@*                                             <td class="col3">@usuario.NomeCompleto</td> *@
+@*                                             <td class="col3">@usuario.Email</td> *@
+@*                                         </tr> *@
+@*                                     } *@
+@*                                 } *@
+@*                             } *@
+@*                         </tbody> *@
+@*                     </table> *@
+@*                     <div class="modal-footer"> *@
+@*                         <button type="submit" class="btn btn-primary">Salvar Decisões</button> *@
+@*                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button> *@
+@*                     </div> *@
+@*                 </form> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-<script src="~/js/Home/graficoSetoresPorCategorias.js" ></script>
-<script src="~/js/Home/graficoFuncionariosPorSetores.js"></script>
-<script src="~/js/Home/graficoUsuariosPerfil.js"></script>
-<script src="~/js/Home/graficoQuantidadeFuncionariosPorSexo.js"></script>
-<script src="~/js/Home/graficoSetoresComMaisFuncionarios.js"></script>
+@* <script src="~/js/Home/graficoHorasExtrasxHorasFaltas ></script> *@
 
-<script id="dadosGraficos" type="application/json">
-    {
-        "labelsCategorias": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.NomesCategorias)),
-        "dataSetoresAtivos": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeSetorAtivos)),
-        "dataSetoresInativos": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeSetorInativos)),
+ 
 
-        "labelsSetores": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.NomesSetores)),
-        "dataFuncionariosAtivos": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeFuncionariosAtivos)),
-        "dataFuncionariosInativos": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeFuncionariosInativos)),
+@*  <script id="dadosGraficos" type="application/json">
+{
+    "labelsSetores": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.NomesSetoresOuUsuarios)),
+    "dataHorasExtras": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeHorasExtras)),
+    "dataHorasFaltas": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeHorasFaltas))
+}
+</script> *@
 
-        "labelsPerfis": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.NomesPerfis)),
-        "usuariosAtivosPorPerfil": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeUsuariosAtivosPorPerfil)),
-        "usuariosInativosPorPerfil": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeUsuariosInativosPorPerfil)),
 
-        "labelsSexoFuncionarios": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsSexoFuncionarios)),
-        "quantidadeFuncionariosPorSexo": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeFuncionariosPorSexo)),
-
-        "labelsRankingSetores": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsRankingSetores)),
-        "quantidadeFuncionariosRankingSetores": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeFuncionariosRankingSetores))
-
-    }
-</script>
 
 
 <script>

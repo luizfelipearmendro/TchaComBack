@@ -104,7 +104,12 @@ height: 100%;
 }
 
 .flex-link-principal {
-padding-bottom: 20vh;
+display:flex;
+flex-direction:column;
+justify-content: flex-start;
+margin-bottom: 30%;    
+
+
 }
 
 .flex-menu-logo {

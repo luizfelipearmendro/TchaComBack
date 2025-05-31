@@ -25,80 +25,82 @@
 <link href="~/css/ExtratosPonto/extratosponto.css" rel="stylesheet" />
 
 
-<div class="input-group col-md-3" id="filtroCalendario">
-    <i class="bi bi-calendar-date" style="font-size:25px; margin-right:10px;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Filtro calendário"></i>
-    <div>
-        <input type="text" id="filtroMesAno" class="form-control" />
-    </div>
-
-    <div>
-        <a asp-action="ExportarEspelhoPontos" asp-route-mes="@Model.Mes" asp-route-ano="@Model.Ano" class="btn btn-success mb-3"
-           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Exportar Espelho Pontos"
-           style="margin-left: 1.5rem;">
-            <i class="bi bi-printer" style="font-size:17px"></i>
-        </a>
-    </div>
-</div>
-
-<div class="flex-espelhoponto text-center">
+<div class="titulo-espelhopontodetalhado text-center">
     <h2>Seu espelho de pontos, @GetPrimeiroEUltimoNome(@ViewBag.NomeCompleto)</h2>
 </div>
+<div class="onda-espelhoponto"></div>
+<div class="flex-card-espelhopontodetalhes">
+    <div class="input-group col-md-3" id="filtroCalendario">
+        <i class="bi bi-calendar-date" style="font-size:25px; margin-right:10px;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Filtro calendário"></i>
+        <div>
+            <input type="text" id="filtroMesAno" class="form-control" />
+        </div>
 
-<table class="table table-bordered table-striped" style="margin-top: 1rem;">
-    <thead>
-        @if(ViewBag.Cargo == true)
-        {
-            <tr>
-                <th class="text-center">Data</th>
-                <th class="text-center">Entrada</th>
-                <th class="text-center">Saída</th>
-                <th class="text-center">Horas Faltas</th>
-                <th class="text-center">Justificativa</th>
-            </tr>
-        }
-        else
-        {
-            <tr>
-                <th class="text-center">Data</th>
-                <th class="text-center">Entrada Manhã</th>
-                <th class="text-center">Saída Manhã</th>
-                <th class="text-center">Entrada Tarde</th>
-                <th class="text-center">Saída Tarde</th>
-                <th class="text-center">Horas Extras</th>
-                <th class="text-center">Horas Faltas</th>
-                <th class="text-center">Justificativa</th>
-            </tr>
-        }
-    </thead>
-    <tbody>
-        @foreach (var ponto in Model.Pontos)
-        {
+        <div>
+            <a asp-action="ExportarEspelhoPontos" asp-route-mes="@Model.Mes" asp-route-ano="@Model.Ano" class="btn btn-success mb-3"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Exportar Espelho Pontos"
+                style="margin-left: 1.5rem;">
+                <i class="bi bi-printer" style="font-size:17px"></i>
+            </a>
+        </div>
+    </div>
+        <table class="table " style="margin-top: 1rem;">
+        <thead>
             @if(ViewBag.Cargo == true)
             {
                 <tr>
-                    <td class="text-center">@ponto.DataBatida.ToString("dd/MM/yyyy")</td>
-                    <td class="text-center">@(ponto.HoraEntrada1?.ToString("HH:mm") ?? "-")</td>
-                    <td class="text-center">@(ponto.HoraSaida2?.ToString("HH:mm") ?? "-")</td>
-                    <td class="text-center">@(ponto.HorasFaltas?.ToString("HH:mm") ?? "-")</td>
-                    <td class="text-center">@(string.IsNullOrWhiteSpace(ponto.Justificativa) ? "-" : ponto.Justificativa)</td>
+                    <th class="text-center">Data</th>
+                    <th class="text-center">Entrada</th>
+                    <th class="text-center">Saída</th>
+                    <th class="text-center">Horas Faltas</th>
+                    <th class="text-center">Justificativa</th>
                 </tr>
             }
             else
             {
                 <tr>
-                    <td class="text-center">@ponto.DataBatida.ToString("dd/MM/yyyy")</td>
-                    <td class="text-center">@(ponto.HoraEntrada1?.ToString("HH:mm") ?? "-")</td>
-                    <td class="text-center">@(ponto.HoraSaida1?.ToString("HH:mm") ?? "-")</td>
-                    <td class="text-center">@(ponto.HoraEntrada2?.ToString("HH:mm") ?? "-")</td>
-                    <td class="text-center">@(ponto.HoraSaida2?.ToString("HH:mm") ?? "-")</td>
-                    <td class="text-center">@(ponto.HorasExtras?.ToString("HH:mm") ?? "-")</td>
-                    <td class="text-center">@(ponto.HorasFaltas?.ToString("HH:mm") ?? "-")</td>
-                    <td class="text-center">@(string.IsNullOrWhiteSpace(ponto.Justificativa) ? "-" : ponto.Justificativa)</td>
+                    <th class="text-center">Data</th>
+                    <th class="text-center">Entrada Manhã</th>
+                    <th class="text-center">Saída Manhã</th>
+                    <th class="text-center">Entrada Tarde</th>
+                    <th class="text-center">Saída Tarde</th>
+                    <th class="text-center">Horas Extras</th>
+                    <th class="text-center">Horas Faltas</th>
+                    <th class="text-center">Justificativa</th>
                 </tr>
             }
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var ponto in Model.Pontos)
+            {
+                @if(ViewBag.Cargo == true)
+                {
+                    <tr>
+                        <td class="text-center">@ponto.DataBatida.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center">@(ponto.HoraEntrada1?.ToString("HH:mm") ?? "-")</td>
+                        <td class="text-center">@(ponto.HoraSaida2?.ToString("HH:mm") ?? "-")</td>
+                        <td class="text-center">@(ponto.HorasFaltas?.ToString("HH:mm") ?? "-")</td>
+                        <td class="text-center">@(string.IsNullOrWhiteSpace(ponto.Justificativa) ? "-" : ponto.Justificativa)</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-center">@ponto.DataBatida.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center">@(ponto.HoraEntrada1?.ToString("HH:mm") ?? "-")</td>
+                        <td class="text-center">@(ponto.HoraSaida1?.ToString("HH:mm") ?? "-")</td>
+                        <td class="text-center">@(ponto.HoraEntrada2?.ToString("HH:mm") ?? "-")</td>
+                        <td class="text-center">@(ponto.HoraSaida2?.ToString("HH:mm") ?? "-")</td>
+                        <td class="text-center">@(ponto.HorasExtras?.ToString("HH:mm") ?? "-")</td>
+                        <td class="text-center">@(ponto.HorasFaltas?.ToString("HH:mm") ?? "-")</td>
+                        <td class="text-center">@(string.IsNullOrWhiteSpace(ponto.Justificativa) ? "-" : ponto.Justificativa)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
 
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function () {

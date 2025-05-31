@@ -56,18 +56,71 @@
         </div>
     </form>
     <div class="flex-espelhoponto">
+        <div>
+
         @if (horario >= new TimeOnly(5, 0) && horario < new TimeOnly(11, 0))
         {
-            <h2>Bom dia, @GetPrimeiroEUltimoNome(@ViewBag.NomeCompleto) 😊. Registre seu ponto.</h2>
+            <div class="flex-titulo-card-espelhoponto">
+                <h2>Bom dia, @GetPrimeiroEUltimoNome(@ViewBag.NomeCompleto) <span>😊</span> </h2>
+                <p class="me-2">Registre seu ponto.</p>
+            </div>
+         
         }
         else if (horario >= new TimeOnly(11, 0) && horario < new TimeOnly(17, 30))
         {
-            <h2>Boa tarde, @GetPrimeiroEUltimoNome(@ViewBag.NomeCompleto) 😊. Registre seu ponto.</h2>
+             <div class="flex-titulo-card-espelhoponto">
+                <h2>Boa tarde, @GetPrimeiroEUltimoNome(@ViewBag.NomeCompleto) <span>😊</span></h2>
+                 <p class="me-2">Registre seu ponto.</p>
+              </div>
         }
         else
         {
-            <h2>Boa noite, @GetPrimeiroEUltimoNome(@ViewBag.NomeCompleto) 😊. Registre seu ponto e até amanhã.</h2>
+            <div class="flex-titulo-card-espelhoponto">
+                <h2>Boa noite, @GetPrimeiroEUltimoNome(@ViewBag.NomeCompleto) <span>😊</span></h2>
+                <p class="me-2">Registre seu ponto e até amanhã.</p>
+            </div>
         }
+        <div class="onda-espelhoponto"></div>
+        </div>
+        @if (ViewBag.ExtratoHoje != null)
+        {
+            var ponto = ViewBag.ExtratoHoje;
+            <div class="card-espelhopontohoje">
+                <div class="subox-espelhoponto">
+                    <div>
+                        <h2>Entrada 1</h2>
+                        <p>@(ponto.HoraEntrada1?.ToString("HH:mm") ?? "-")</p>
+                    </div>
+                    <div>
+                        <h2>Saída 1</h2>
+                        <p>@(ponto.HoraSaida1?.ToString("HH:mm") ?? "-")</p>
+                    </div>
+                </div>
+                 <div class="subox-espelhoponto">
+                    <div>
+                        <h2>Entrada 2</h2>
+                        <p>@(ponto.HoraEntrada2?.ToString("HH:mm") ?? "-")</p>
+                    </div>
+                    <div>
+                        <h2>Saída 2</h2>
+                        <p>@(ponto.HoraSaida2?.ToString("HH:mm") ?? "-")</p>
+                    </div>
+                </div>
+                  <div class="subox-espelhoponto flex-justificativa">
+                    <div>
+                        <h2>Justificativa</h2>
+                        <p>@(ponto.Justificativa ?? "-")</p>
+                    </div>
+                </div>
+            </div>
+       
+        }
+        else
+        {
+            <p>Nenhum registro de ponto encontrado para hoje.</p>
+        }
+
+        
     </div>
 </section>
 
