@@ -1,0 +1,52 @@
+﻿form {
+    font-family: "Montserrat";
+}
+
+h3 {
+    font-family: "Montserrat";
+    position: relative;
+    font-size: 1.8rem !important;
+    font-weight: 500 !important;
+}
+
+    h3:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        height: .3vh;
+        width: 10%;
+        background-color: #FFA500;
+    }
+
+.table-bordered {
+    font-family: "Montserrat";
+}
+
+.botao-primario {
+    color: white;
+    font-family: "Montserrat";
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(90deg,#8A2BE2, #FFA500);
+    border-radius: .5vw;
+    padding: 1vh;
+    width: fit-content;
+    border: none;
+}
+
+    .botao-primario:hover {
+        background: #FFA500;
+        transition: .5s ease-in-out;
+    }
+
+
+@media(max-width: 968px){
+    .table-bordered {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 100%;
+        font-family: "Montserrat";
+    }
+}

@@ -4,6 +4,7 @@
 }
 
 <link href="~/css/Home/home.css" rel="stylesheet" />
+<link href="~/css/Configuracoes/configuracoes.css" rel="stylesheet" />
 
 @if (TempData["MensagemSucesso"] != null)
 {
@@ -31,18 +32,18 @@
     </script>
 }
 
-<h2>Configurações</h2>
-<a asp-controller="Configuracoes" asp-action="Criar" class="btn btn-primary mb-3">Nova Configuração</a>
+<h3>Configurações</h3>
+<a asp-controller="Configuracoes" asp-action="Criar" class="btn btn-primary mb-3 botao-primario" style="margin-top: 1rem;">Nova Configuração</a>
 
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Nome</th>
-            <th>Início</th>
-            <th>Intervalo</th>
-            <th>Fim</th>
-            <th>Status</th>
-            <th>Ações</th>
+            <th class="text-center" style="width: 25%;">Nome</th>
+            <th class="text-center">Início</th>
+            <th class="text-center">Intervalo</th>
+            <th class="text-center">Fim</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -50,10 +51,10 @@
         {
             <tr>
                 <td>@item.NomeConfiguracao</td>
-                <td>@item.InicioExpediente</td>
-                <td>@item.IntervaloInicio - @item.IntervaloFim</td>
-                <td>@item.FimExpediente</td>
-                <td>
+                <td class="text-center">@item.InicioExpediente</td>
+                <td class="text-center">@item.IntervaloInicio - @item.IntervaloFim</td>
+                <td class="text-center">@item.FimExpediente</td>
+                <td class="text-center">
                     @if (item.Ativo)
                     {
                         <span class="badge bg-success">Ativa</span>
@@ -63,14 +64,14 @@
                         <span class="badge bg-secondary">Inativa</span>
                     }
                 </td>
-                <td>
+                <td class="text-center">
                     @if (!item.Ativo)
                     {
-                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Ativar", new { id = item.Id })">Ativar</a>
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("Ativar", new { id = item.Id })">Ativar</a>
                     }
                     else
                     {
-                        <a class="btn btn-sm btn-outline-danger" href="@Url.Action("Desativar", new { id = item.Id })">Desativar</a>
+                        <a class="btn btn-sm btn-danger" href="@Url.Action("Desativar", new { id = item.Id })">Desativar</a>
                     }
                     <a class="btn btn-sm btn-secondary" href="@Url.Action("Editar", new { id = item.Id })">Editar</a>
                 </td>

@@ -2,10 +2,11 @@
 @{
     ViewData["Title"] = "Nova Configuração";
 }
+<link rel="stylesheet" href="~/css/Configuracoes/configuracoes.css">
 
-<h2>@ViewData["Title"]</h2>
+<h3>Nova Configuração</h3>
 
-<form asp-controller="Configuracoes" asp-action="Criar" method="post">
+<form asp-controller="Configuracoes" asp-action="Criar" method="post" style="margin-top: 1rem;">
     <div class="mb-3">
         <label>Nome</label>
         <input asp-for="NomeConfiguracao" class="form-control" />
@@ -39,6 +40,8 @@
         </select>
     </div>
     <br />
-    <button type="submit" class="btn btn-success">Salvar</button>
-    <a asp-controller="Configuracoes" asp-action="Index" class="btn btn-secondary">Voltar</a>
+    <div style="gap: 1rem; display: flex;">
+        <a asp-controller="Configuracoes" asp-action="Index" class="btn btn-secondary w-50">Voltar</a>
+        <button type="submit" class="btn btn-success w-50 botao-primario">Salvar</button>
+    </div>
 </form>
