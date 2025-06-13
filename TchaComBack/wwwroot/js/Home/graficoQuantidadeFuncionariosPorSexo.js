@@ -26,16 +26,27 @@
                 borderWidth: 1
             }]
         },
+        datalabels: {
+            anchor: 'end',
+            align: 'bottom',
+            formatter: function (value) {
+                return formatDecimalToTime(value);
+            },
+            font: {
+                weight: 'bold',
+                size: 14
+            }
+        },
         options: {
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'top',
+                    position: 'bottom',
                     labels: {
-                        color: 'white'
                     }
                 }
-            }
-        }
+            },
+        },
+        plugins: [ChartDataLabels]
     });
 });

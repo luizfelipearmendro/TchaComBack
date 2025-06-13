@@ -1,0 +1,493 @@
+﻿
+
+.custom-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 350px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+    .custom-alert.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .custom-alert.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .custom-alert .closebtn {
+        cursor: pointer;
+        font-size: 18px;
+        margin-left: 15px;
+        transition: color 0.3s ease;
+    }
+
+        .custom-alert .closebtn:hover {
+            color: #000;
+        }
+
+.container-home {
+    display: flex;
+    flex-direction: column;
+    gap: 8vh;
+    padding: 1.5vw;
+}
+
+.box-one-home {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+}
+
+    .box-one-home .card-box-one {
+        width: 100%;
+        height: 22vh;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 10px 10px 50px #d9d9d9, -10px -10px 50px #ffffff;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding-top: 2vh;
+    }
+
+.flex-info-card-home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.flex-subox-two {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100%;
+    padding: 1vh
+}
+
+.title-flex-subox-two {
+    color: rgba(0,0,0,0.5);
+    font-family: "Montserrat";
+    font-weight: 500;
+}
+
+.title-flex-secondary-subox-two {
+    color: #ccc;
+    font-family: "Montserrat";
+    font-weight: 500;
+}
+
+.card-box-one h1,
+.card-box-one p {
+    font-family: "Montserrat";
+}
+
+.card-box-one h1 {
+    font-size: 2rem;
+}
+
+.box-one-home .card-box-one:first-of-type {
+    background-color: #FFA500;
+}
+
+.box-one-home .card-box-one:nth-of-type(2) {
+    background-color: black;
+}
+
+.box-one-home .card-box-one:nth-of-type(3) {
+    background-color: black;
+}
+
+.flex-subox-one {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2vh;
+}
+
+.flex-icon i {
+    font-size: 1.5vw;
+    color: white;
+}
+
+.flex-icon-secondary i {
+    font-size: 1.5vw;
+    color: black;
+}
+
+.flex-subox-one p {
+    margin-top: 1vh;
+}
+
+.flex-icon {
+    width: 3.5vw;
+    height: 3.5vw;
+    background-color: black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-icon-secondary {
+    width: 3.5vw;
+    height: 3.5vw;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-three-home {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: stretch;
+    gap: 2vw;
+}
+
+.sub-box-home {
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    border-radius: 1.2vw;
+    background: #ffffff;
+    box-shadow: 20px 20px 60px #d9d9d9, 20px 20px 60px #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5vh;
+}
+
+.sub-box-home h2 {
+text-align: start;
+font-size: 1.1rem;
+font-weight: 600;
+color: black;
+font-family: "Montserrat";
+}
+
+.flex-cabecalho-box-two {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+
+}
+
+.flex-cabecalho-box-two h2 {
+    text-align: start;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: black;
+    font-family: "Montserrat";
+}
+
+.box-two-home .sub-box-home canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.box-foor-home {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: stretch;
+    gap: 2vw;
+}
+
+#idGraficoFuncionariosPorSexo {
+    height: 40vh !important;
+}
+
+.btn-dash {
+    padding: 1.2vh !important;
+    font-weight: normal !important;
+}
+.cabecalho-box-two{
+    display:flex;
+    justify-content: space-between;
+    gap: 1vw;
+}
+.cabecalho-box-two a{
+    color: #8A2BE2;
+}
+.links-graf{
+    display:flex;
+    justify-content:flex-end;
+    width: 20%;
+}
+.links-graf a {
+    width: fit-content;
+    text-align:center;
+    font-size: .9rem;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+
+@media (max-width: 1400px) {
+    .box-one-home .card-box-one {
+        width: 100%;
+        height: 22vh;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 10px 10px 50px #d9d9d9, -10px -10px 50px #ffffff;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding-top: 2vh;
+        padding: 1vw;
+    }
+
+    .flex-info-card-home {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        width: fit-content;
+        font-size: .8rem !important;
+    }
+
+    .flex-subox-two {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between !important;
+        align-items: flex-end;
+        height: 110%;
+    }
+
+    .title-flex-subox-two {
+        color: rgba(0,0,0,0.5);
+        font-family: "Montserrat";
+        font-weight: 500;
+        font-size: .9rem;
+        width: fit-content;
+    }
+
+    .title-flex-secondary-subox-two {
+        color: #ccc;
+        font-family: "Montserrat";
+        font-weight: 500;
+        font-size: .9rem;
+        width: fit-content;
+    }
+
+    .card-box-one h1,
+    .card-box-one p {
+        font-family: "Montserrat";
+        width: fit-content;
+    }
+
+    .card-box-one h1 {
+        font-size: 1.5rem;
+        width: fit-content;
+    }
+
+    .box-one-home .card-box-one:first-of-type {
+        background-color: #FFA500;
+    }
+
+    .box-one-home .card-box-one:nth-of-type(2) {
+        background-color: black;
+    }
+
+    .box-one-home .card-box-one:nth-of-type(3) {
+        background-color: black;
+    }
+
+    .flex-subox-one {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-start;
+        gap: 2vh;
+    }
+
+    .flex-icon i {
+        font-size: 1.5vw;
+        color: white;
+    }
+
+    .flex-icon-secondary i {
+        font-size: 1.5vw;
+        color: black;
+    }
+
+    .flex-subox-one p {
+        margin-top: 1vh;
+        width: fit-content;
+    }
+
+    .flex-icon {
+        width: 3.5vw;
+        height: 3.5vw;
+        background-color: black;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .flex-icon-secondary {
+        width: 3.5vw;
+        height: 3.5vw;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+.modal-header h5 {
+    background: linear-gradient(90deg, #8A2BE2, #FFA500 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: 100%;
+    font-weight: bold;
+    font-family: "Bebas Neue", sans-serif;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    text-decoration: none;
+}
+
+
+.modal-header {
+    background-color: black;
+}
+
+
+.botao-proxima-etapa {
+    background: linear-gradient(90deg,#8A2BE2, #FFA500);
+    border-radius: .5vw;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+}
+
+.modal-header .btn-close {
+    background-color: #FFA500 !important;
+}
+
+.form-example {
+    color: gray
+}
+
+.btn-step-primary {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    background: linear-gradient(90deg,#8A2BE2, #FFA500);
+    border-radius: .5vw;
+    width: fit-content;
+    border: none;
+}
+
+    .btn-step-primary:hover {
+        color: white;
+    }
+
+.btn-step-secundario {
+    background: black;
+    border-radius: .5vw;
+    border: 1px solid white;
+    color: white;
+    text-decoration: none;
+    width: fit-content
+}
+
+    .btn-step-secundario:hover {
+        border: 1px solid white;
+        color: white !important;
+        background-color: black !important;
+    }
+
+.form-example label {
+    color: #FFA500;
+}
+
+.form-example p {
+    color: white;
+}
+
+.modal-onda-header {
+    width: 100%;
+    height: 5vh;
+    background-color: white;
+    position: relative;
+}
+
+    .modal-onda-header:after {
+        content: "";
+        position: absolute;
+        top: -.5px !important;
+        right: 0;
+        width: 10%;
+        height: 5vh;
+        background-color: white;
+        border-top-right-radius: 10vw;
+    }
+
+    .modal-onda-header:before {
+        position: absolute;
+        content: "";
+        top: 0;
+        right: 0;
+        width: 10%;
+        height: 5vh;
+        background-color: black;
+    }
+
+.modal-footer {
+    background-color: white !important;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}

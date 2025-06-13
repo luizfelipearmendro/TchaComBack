@@ -9,7 +9,7 @@
 
     var totalUsuarios = Model.TotalDeUsuarios;
 }
-<link rel="stylesheet" href="~/css/Home/home.css">
+<link rel="stylesheet" href="~/css/Dashboards/dashboards.css">
 <script src="~/js/Home/home.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -180,78 +180,80 @@
         </article>
         <article class="box-two-home">
             <article class="sub-box-home">
-                <h2>Funcionários Ativos e Inativos por Setor</h2>
+                <div class="cabecalho-box-two">
+                    <div class="flex-cabecalho-box-two">
+                        <h2>Funcionários Ativos e Inativos por Setor</h2>
+                        <p>Visualize a distribuição dos colaboradores em atividade e os inativos em cada setor — uma análise eficiente.</p>
+                    </div>
+                    <div class="links-graf">
+                        <a href="/Funcionarios/Funcionarios">View All</a>
+                    </div>
+                </div>
                 <div>
                     <canvas id="idGraficoFuncionariosPorSetores"></canvas>
                 </div>
-                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                         view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Acessar" },
-                         { "Url", "/Funcionarios/Funcionarios" },
-                         { "ClasseExtra", "btn-dash" },
-                         { "Id", "" },
-                         { "Elemento", "a"}
-                         }) />
             </article>
         </article>
         <article class="box-three-home" >
             <article class="sub-box-home">
-                <h2>Usuários Ativos e Inativos por Perfil</h2>
+                <div class="cabecalho-box-two">
+                    <div class="flex-cabecalho-box-two">
+                        <h2>Usuários Ativos e Inativos por Perfil</h2>
+                        <p>Veja o status dos usuários em cada perfil de acesso.</p>
+                    </div>
+                    <div class="links-graf">
+                        <a href="/UsuariosPerfilLogado">View All</a>
+                    </div>
+                </div>
                 <div>
                     <canvas id="idGraficoUsuariosPorPerfil"></canvas>
                 </div>
-                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                         view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Acessar" },
-                         { "Url", "/UsuariosPerfilLogado" },
-                         { "ClasseExtra", "btn-dash" },
-                         { "Id", "" },
-                         { "Elemento", "a"}
-                         }) />
             </article>
             <article class="sub-box-home">
-                <h2>Setores Ativos e Inativos por Categorias</h2>
+                <div class="cabecalho-box-two">
+                    <div class="flex-cabecalho-box-two">
+                        <h2>Setores Ativos e Inativos por Categorias</h2>
+                        <p>Visualize a distribuição de setores conforme sua categoria e status.</p>
+                    </div>
+                    <div class="links-graf">
+                        <a href="/Setores">View All</a>
+                    </div>
+                </div>
                 <div>
                     <canvas id="idGraficoSetoresPorCategorias"  ></canvas>
                 </div>
-                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                         view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Acessar" },
-                         { "Url", "/Setores" },
-                         { "ClasseExtra", "btn-dash" },
-                         { "Id", "" },
-                         { "Elemento", "a"}
-                         }) />
             </article>
         </article>
         <article class="box-foor-home">
             <article class="sub-box-home">
-                <h2>Quantidade de Funcionarios por Sexo</h2>
-                <div style="display:flex; justify-content:center; align-items:center;">
-                    <canvas id="idGraficoFuncionariosPorSexo"></canvas>
+                <div class="cabecalho-box-two">
+                    <div class="flex-cabecalho-box-two">
+                        <h2>Quantidade de Funcionários por Sexo</h2>
+                        <p>Veja o total de colaboradores distribuídos por sexo.</p>
+                    </div>
+                    <div class="links-graf">
+                        <a href="/Setores">View All</a>
+                    </div>
                 </div>
-                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                         view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Acessar" },
-                         { "Url", "/Funcionarios/Funcionarios" },
-                         { "ClasseExtra", "btn-dash" },
-                         { "Id", "" },
-                         { "Elemento", "a"}
-                         }) />
+                    <div style="display:flex; justify-content:center; align-items:center;">
+                        <canvas id="idGraficoFuncionariosPorSexo"></canvas>
+                    </div>
+           
             </article>
             <article class="sub-box-home">
-                <h2>Ranking de Setores com Mais Funcionarios</h2>
-                <div>
-                   <canvas id="idGraficoRankingSetores" ></canvas>
+                <div class="cabecalho-box-two">
+                    <div class="flex-cabecalho-box-two">
+                        <h2>Ranking de Setores com Mais Funcionários</h2>
+                        <p>Confira os setores com maior número de colaboradores.</p>
+                    </div>
+                    <div class="links-graf">
+                        <a href="/Setores">View All</a>
+                    </div>
                 </div>
-                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                         view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Acessar" },
-                         { "Url", "/Setores" },
-                         { "ClasseExtra", "btn-dash" },
-                         { "Id", "" },
-                         { "Elemento", "a"}
-                         }) />
+                    <div>
+                       <canvas id="idGraficoRankingSetores" ></canvas>
+                    </div>
+               
             </article>
         </article>
        

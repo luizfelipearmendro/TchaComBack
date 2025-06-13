@@ -32,35 +32,46 @@
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'top',
+                    position: 'bottom',
                     labels: {
-                        color: 'white'
                     }
+                }
+            },
+            datalabels: {
+                anchor: 'end',
+                align: 'bottom',
+                formatter: function (value) {
+                    return formatDecimalToTime(value);
+                },
+                font: {
+                    weight: 'bold',
+                    size: 14
                 }
             },
             scales: {
                 y: {
                     beginAtZero: true,
-                    title: {
-                        display: false,
-                        text: 'Quantidade de Usuários',
-                        color: 'white'
-                    },
                     ticks: {
-                        color: 'white' 
+                        // Oculta os números do eixo Y
+                        display: false,
+                    },
+                    // Remove as linhas de grade horizontais
+                    grid: {
+                        display: false
                     }
                 },
                 x: {
                     title: {
                         display: false,
                         text: 'Perfil de Usuário',
-                        color: 'white'
                     },
                     ticks: {
                         color: 'white'
                     }
                 }
             }
-        }
+        },
+        plugins: [ChartDataLabels]
+
     });
 });

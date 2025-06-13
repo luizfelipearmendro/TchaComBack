@@ -40,112 +40,169 @@
         </div>
     }
 
-    @if (TempData["MensagemAtraso"] != null)
-    {
-        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-left: 95%; margin-top: -40px;">
-             <img src="~/img/notification-icon-free-png.png" alt="notificação" width="45" height="50"
-                 data-bs-toggle="tooltip"
-                 data-bs-placement="top"
-                 data-bs-custom-class="custom-tooltip"
-                 data-bs-title="Há uma notificação."/>
-        </button>
-        <div style="margin-top: 20px;"></div>
-    }
-
     <section class="container-home">
+        <article class="seja-bemvindo-home">
+            <h1>Seja Bem-vindo <span class="home-nomebemvindo">@ViewBag.nomeCompleto!</span> </h1>
+            <p>Explore seus dados com facilidade e agilidade.</p>
+        </article>
+        <article class="box-one-home">
+            <article class="card-destaque-box-one">
+                <div class=" card-dias-trabalhados">
+                    <div class="card-body destaque">
+                        <div class="flex-card-body-text-destaque">
+                            <div class="flex-icon-destaque">
+                                <i class="bi bi-calendar-date-fill"></i>
+                            </div>
+                            <div class="flex-card-body-text-destaque-two">
+                                <h5 class="card-title">Dias Trabalhados Acumulados</h5>
+                                <p class="card-text">@Model.TotalDiasTrabalhados dias registrados</p>
+
+                            </div>
+
+                        </div>
+                    </div>
+                 
+                    <div class="flex-graficoDiasTrabalhados">
+                        <canvas id="idGraficoDiasTrabalhados"></canvas>
+                    </div>
+                </div>
+            </article>
+            <article class="flex-card-horas-faltas">
+                <div class="card card-horas-faltas">
+                    <div class="card-body">
+                        <div>
+                            <div class="flex-card-body-text-one">
+                                <div class="flex-icon-secondary">
+                                    <i class="bi bi-clock-fill"></i>
+                                </div>
+                                <div class="flex-card-body-text-two">
+                                    <h5 class="card-title ">Horas Faltas Acumuladas</h5>
+                                    <p class="card-text negativo">@Model.TotalHorasFaltasFormatado</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-horas-faltas">
+                    <div class="card-body">
+                        <div class="flex-card-body-text-one">
+                            <div class="flex-icon-secondary">
+                                <i class="bi bi-clock-fill"></i>
+                            </div>
+                            <div class="flex-card-body-text-two">
+                                <h5 class="card-title ">Horas Extras Acumuladas</h5>
+                                <p class="card-text  positivo">@Model.TotalHorasExtrasFormatado</p>
+                            </<div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+          
+        </article>
         <article class="box-two-home">
             <article class="sub-box-home">
-                <h2>Graficos Horas Extras X Horas Faltas</h2>
-                <div>
-                    @* <canvas id="idGraficoHorasExtrasxHorasFaltas"></canvas> *@
+                <div class="flex-cabecalho-box-two">
+                    <h2>Graficos Horas Extras X Horas Faltas</h2>
+                    <p>Acompanhe a análise visual das batidas concedidas e ausências registradas — uma visão clara e dinâmica .</p>
                 </div>
-                <partial name="~/Views/Componentes/Botao-Primario/BotaoPrimario.cshtml"
-                         view-data=@(new ViewDataDictionary(ViewData){
-                         { "Texto", "Acessar" },
-                         { "Url", "/Funcionarios/Funcionarios" },
-                         { "ClasseExtra", "btn-dash" },
-                         { "Id", "" },
-                         { "Elemento", "a"}
-                         }) />
+                <div>
+                    <canvas id="idGraficoHorasExtrasxHorasFaltas"></canvas> 
+                </div>
             </article>
         </article>
-       
+        <div class="flex-graficos">
+            <article class="box-two-home">
+                <article class="sub-box-home">
+                    <div class="flex-cabecalho-box-two">
+                        <h2>Graficos Horas Faltas</h2>                        
+                        <p>Veja a análise visual das Hora Faltas mês a mês.</p>
+                    </div>
+                    <div>
+                        <canvas id="idGraficoHorasFaltas"></canvas>
+                    </div>
+                </article>
+            </article>
+            <article class="box-two-home">
+                <article class="sub-box-home">
+                    <div class="flex-cabecalho-box-two">
+                        <h2>Graficos Horas Extras</h2>
+                        <p>Veja a análise visual das Hora Extras mês a mês.</p>
+                    </div>
+                    <div>
+                        <canvas id="idGraficoHorasExtras"></canvas>
+                    </div>
+                </article>
+            </article>
+        </div>
+        <div class="flex-graficos">
+            <article class="box-two-home">
+                <article class="sub-box-home">
+                    <div class="flex-cabecalho-box-two">
+                        <h2>Raanking Dias Horas Faltas</h2>
+                        <p>Visualize os dias que concentraram o maior número de horas de ausência.</p>
+                    </div>
+                    <div>
+                        <canvas id="idGraficoBarrasLaterais"></canvas>
+                    </div>
+                </article>
+            </article>
+            <article class="box-two-home">
+                <article class="sub-box-home">
+                    <div class="flex-cabecalho-box-two">
+                        <h2>Justificativas</h2>
+                        <p>Confira quais são as justificativas mais recorrentes registradas.</p>
+                    </div>
+                    <div>
+                        <canvas id="idGraficoJustificativas"></canvas>
+                    </div>
+                </article>
+            </article>
+        </div>
+
     </section>
 </section>
 
-@* <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> *@
-@*     <div class="modal-dialog modal-lg"> *@
-@*         <div class="modal-content"> *@
-@*             <div class="modal-header"> *@
-@*                 <h1 class="modal-title fs-5" id="exampleModalLabel">Solicitação de Acesso</h1> *@
-@*                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button> *@
-@*             </div> *@
-@*             <div class="modal-body"> *@
-@*                 @TempData["MensagemAtraso"] *@
-
-@*                 <form asp-controller="UsuariosPerfilLogado" asp-action="AtualizarConfirmacoes" method="post"> *@
-@*                     @Html.AntiForgeryToken() *@
-@*                     <table class="table table-hover" id="table1"> *@
-@*                         <thead> *@
-@*                             <tr> *@
-@*                                 <th style="width:20px; text-align: center;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Liberar Acesso"> *@
-@*                                     <i class="bi bi-check" style="font-size:20px; color: #00a95cff; display: inline-block;"></i> *@
-@*                                 </th> *@
-@*                                 <th class="padrao60 text-center">Data Cadastro</th> *@
-@*                                 <th class="padrao500 text-center">Nome</th> *@
-@*                                 <th class="padrao500 text-center">E-mail</th> *@
-@*                             </tr> *@
-@*                         </thead> *@
-@*                         <tbody> *@
-@*                             @if (Model != null) *@
-@*                             { *@
-@*                                 foreach (var usuario in Model.UsuarioNaoConfirmado) *@
-@*                                 { *@
-@*                                     if (usuario.Confirmado == 0) *@
-@*                                     { *@
-@*                                         <tr> *@
-@*                                             <td style="width: 60rem;"> *@
-@*                                                 <select class="form-select form-select-sm" name="Confirmacoes[@usuario.Id]"> *@
-@*                                                     <option value="0" selected="@(usuario.Confirmado == 0)">Manter sem Acesso</option> *@
-@*                                                     <option value="1" selected="@(usuario.Confirmado == 1)">Confirmar Acesso</option> *@
-@*                                                     <option value="2" selected="@(usuario.Confirmado == 2)">Recusar Acesso</option> *@
-@*                                                 </select> *@
-@*                                             </td> *@
-@*                                             <td class="col1 text-center">@usuario.DataCadastro.ToShortDateString()</td> *@
-@*                                             <td class="col3">@usuario.NomeCompleto</td> *@
-@*                                             <td class="col3">@usuario.Email</td> *@
-@*                                         </tr> *@
-@*                                     } *@
-@*                                 } *@
-@*                             } *@
-@*                         </tbody> *@
-@*                     </table> *@
-@*                     <div class="modal-footer"> *@
-@*                         <button type="submit" class="btn btn-primary">Salvar Decisões</button> *@
-@*                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button> *@
-@*                     </div> *@
-@*                 </form> *@
-@*             </div> *@
-@*         </div> *@
-@*     </div> *@
-@* </div> *@
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-@* <script src="~/js/Home/graficoHorasExtrasxHorasFaltas ></script> *@
 
- 
+<script src="~/js/Home/graficosHorasExtrasxHorasFaltas.js"></script>
+<script src="~/js/Home/graficoHorasFaltas.js"></script>
+<script src="~/js/Home/graficoHorasExtra.js"></script>
+<script src="~/js/Home/graficoQuantidadeHorasFaltasDiasDaSemana.js"></script>
+<script src="~/js/Home/graficoJustificativas.js"></script>
+<script src="~/js/Home/graficoDiasTrabalhadosPorMes.js"></script>
 
-@*  <script id="dadosGraficos" type="application/json">
-{
-    "labelsSetores": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.NomesSetoresOuUsuarios)),
-    "dataHorasExtras": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeHorasExtras)),
-    "dataHorasFaltas": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeHorasFaltas))
-}
-</script> *@
+<script id="dadosGraficos" type="application/json">
+    {
+        "labelsSetores": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.NomesSetores)),
+        "dataHorasExtras": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeHorasExtras)),
+        "dataHorasFaltas": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeHorasFaltas)),
+        "labelsHorasExtrasFormatadas": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsHorasExtrasFormatadas)),
+        "labelsHorasFaltasFormatadas": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsHorasFaltasFormatadas)),
+
+        "labelsMesesHorasFaltas": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsMesesHorasFaltas)),
+        "dataHorasFaltasPorMes": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeHorasFaltasPorMes)),
+        "labelsHorasFaltasPorMesFormatadas": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsHorasFaltasPorMesFormatadas)),
+
+
+        "labelsMesesHorasExtras": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsMesesHorasExtras)),
+        "dataHorasExtrasPorMes": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeHorasExtrasPorMes)),
+        "labelsHorasExtrasPorMesFormatadas": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsHorasExtrasPorMesFormatadas)),
 
 
 
+        "labelsDiasSemana": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsDiasSemana)),
+        "dataHorasFaltasPorDia": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeHorasFaltasPorDia)),
+        "labelsHorasFaltasPorDiaFormatadas": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsHorasFaltasPorDiaFormatadas)),
+
+         "labelsJustificativas": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsJustificativas)),
+         "dataOcorrenciasPorJustificativa": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.QuantidadeOcorrenciasPorJustificativa)),
+
+        "labelsMesesDiasTrabalhados": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LabelsDiasTrabalhadosPorMes)),
+    "dataDiasTrabalhadosPorMes": @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TotalDiasTrabalhadosPorMes))
+    }
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -1,0 +1,28 @@
+﻿.card-text{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.card-text strong,p{
+   margin-bottom: 1vh;
+   width: 100%;
+
+}
+.card-text strong{
+   font-family: "Montserrat";
+   display: flex;
+   justify-content: flex-start;
+}
+.card-text p{
+   display: flex;
+   justify-content: flex-end;
+}
+.card-header {
+    font-family: "Montserrat";
+    font-weight: 500;
+}
+.status-ativo{
+    color: limegreen;
+}
+.status-inativo {
+    color: red;
+}

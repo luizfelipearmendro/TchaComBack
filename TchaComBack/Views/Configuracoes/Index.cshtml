@@ -3,7 +3,7 @@
     ViewData["Title"] = "Configurações";
 }
 
-<link href="~/css/Home/home.css" rel="stylesheet" />
+<link href="~/css/Configuracoes/configuracoes.css" rel="stylesheet" />
 
 @if (TempData["MensagemSucesso"] != null)
 {
@@ -13,7 +13,7 @@
     </div>
     <script>
         setTimeout(() => {
-        document.getElementById("successAlert").style.display = 'none';
+            document.getElementById("successAlert").style.display = 'none';
         }, 5000);
     </script>
 }
@@ -26,55 +26,48 @@
     </div>
     <script>
         setTimeout(() => {
-        document.getElementById("errorAlert").style.display = 'none';
+            document.getElementById("errorAlert").style.display = 'none';
         }, 5000);
     </script>
 }
 
-<h2>Configurações</h2>
 <a asp-controller="Configuracoes" asp-action="Criar" class="btn btn-primary mb-3">Nova Configuração</a>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Início</th>
-            <th>Intervalo</th>
-            <th>Fim</th>
-            <th>Status</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.NomeConfiguracao</td>
-                <td>@item.InicioExpediente</td>
-                <td>@item.IntervaloInicio - @item.IntervaloFim</td>
-                <td>@item.FimExpediente</td>
-                <td>
-                    @if (item.Ativo)
-                    {
-                        <span class="badge bg-success">Ativa</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary">Inativa</span>
-                    }
-                </td>
-                <td>
-                    @if (!item.Ativo)
-                    {
-                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Ativar", new { id = item.Id })">Ativar</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-sm btn-outline-danger" href="@Url.Action("Desativar", new { id = item.Id })">Desativar</a>
-                    }
-                    <a class="btn btn-sm btn-secondary" href="@Url.Action("Editar", new { id = item.Id })">Editar</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card text-bg-dark mb-3" >
+                <div class="card-header">@item.NomeConfiguracao</div>
+                <div class="card-body">
+                    <h5 class="card-title">Horários</h5>
+                    <p class="card-text">
+                        <strong>Início:</strong> @item.InicioExpediente<br />
+                        <strong>Intervalo:</strong> @item.IntervaloInicio - @item.IntervaloFim<br />
+                        <strong>Fim:</strong> @item.FimExpediente<br />
+                        <strong>Status:</strong>
+                        @if (item.Ativo)
+                        {
+                            <span class="status-ativo">Ativa</span>
+                        }
+                        else
+                        {
+                            <span class="status-inativo">Inativa</span>
+                        }
+                    </p>
+                    <div class="d-flex justify-content-between mt-3">
+                        @if (!item.Ativo)
+                        {
+                            <a class="btn btn-sm btn-success" href="@Url.Action("Ativar", new { id = item.Id })">Ativar</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-sm btn-danger" href="@Url.Action("Desativar", new { id = item.Id })">Desativar</a>
+                        }
+                        <a class="btn btn-sm btn-outline-light" href="@Url.Action("Editar", new { id = item.Id })">Editar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

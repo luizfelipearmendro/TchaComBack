@@ -32,6 +32,7 @@
                 legend: {
                     display: false,
                     labels: {
+                        position: 'bottom',
                         color: 'white'
                     }
                 },
@@ -40,20 +41,35 @@
                     text: 'Ranking dos Setores com Mais Funcionários'
                 }
             },
+            datalabels: {
+                anchor: 'end',
+                align: 'bottom',
+                formatter: function (value) {
+                    return formatDecimalToTime(value);
+                },
+                font: {
+                    weight: 'bold',
+                    size: 14
+                }
+            },
             scales: {
                 x: {
                     beginAtZero: true,
                     ticks: {
-                        color: 'white'
+                        display: false,
+                    },
+                    grid: {
+                        display: false
                     }
                 },
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        color: 'white'
-                    }
+                        
+                    },
                 }
             }
-        }
+        },
+        plugins: [ChartDataLabels]
     });
 });
