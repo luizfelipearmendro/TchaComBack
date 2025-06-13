@@ -8,14 +8,14 @@
 
 }
 .card-text strong{
-   font-family: "Montserrat";
+    font-family: "Montserrat";
    display: flex;
    justify-content: flex-start;
 }
 .card-text p{
    display: flex;
    justify-content: flex-end;
-}
+    }
 .card-header {
     font-family: "Montserrat";
     font-weight: 500;
